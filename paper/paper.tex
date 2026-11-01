@@ -1,0 +1,54 @@
+\documentclass[conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+\usepackage[T1]{fontenc}
+\usepackage{cite}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{adjustbox}
+\usepackage{xcolor}
+\usepackage{url}
+\usepackage[hidelinks]{hyperref}
+\usepackage[protrusion=true,expansion=false]{microtype}
+\def\UrlBreaks{\do\/\do-\do.\do\_\do=\do\&\do?}
+\Urlmuskip=0mu plus 1mu
+\graphicspath{{../output/}}
+
+\renewcommand{\topfraction}{0.95}
+\renewcommand{\dbltopfraction}{0.95}
+\renewcommand{\bottomfraction}{0.6}
+\renewcommand{\textfraction}{0.05}
+\renewcommand{\floatpagefraction}{0.8}
+\renewcommand{\dblfloatpagefraction}{0.8}
+\setcounter{topnumber}{4}
+\setcounter{dbltopnumber}{3}
+\setcounter{totalnumber}{6}
+
+% All result numbers come from output/tables/results.json via src/viz/paper_tex.py.
+\input{numbers.tex}
+
+\newcommand{\repo}{\url{https://github.com/thanatchon36/llm-home-bias}}
+
+\begin{document}
+
+\title{Do Open-Source LLMs Have a Home Bias? Investment Advice from Chinese, American, European and Thai Models}
+
+\author{\IEEEauthorblockN{Thanatchon Chongmankhong}}
+
+\maketitle
+
+\input{sections/abstract}
+\input{sections/introduction}
+\input{sections/method}
+\input{sections/results}
+\input{sections/robustness}
+\input{sections/discussion}
+
+\appendices
+\input{sections/appendix}
+
+\bibliographystyle{IEEEtran}
+\bibliography{refs}
+
+\end{document}

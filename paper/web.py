@@ -1,8 +1,8 @@
 """Build the web reader docs/paper/ from paper/paper.tex (same text as the PDF).
 
-Adapted from harnesswatch's paper/web.py. A standalone page built by pandoc with paper/reader.html:
+Adapted from stablecoin-tbills-genius-act's paper/web.py. A standalone page built by pandoc with paper/reader.html:
 masthead, abstract, a results strip whose numbers come from paper/numbers.tex (generated from
-output/tables/lp_results.json), contents, numbered sections, citations linked to the references.
+output/tables/results.json), contents, numbered sections, citations linked to the references.
 The PDF and the PNG figures are copied next to it; GitHub Pages serves the folder. Requires pandoc
 on PATH. Usage: python3 paper/web.py
 """
@@ -19,9 +19,9 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent
 OUT = ROOT / "docs" / "paper"
-REPO_URL = "https://github.com/thanatchon36/stablecoin-tbills-genius-act"
-PAPER_URL = "https://thanatchon36.github.io/stablecoin-tbills-genius-act/"
-DATA_URL = "https://huggingface.co/datasets/thanatchon36/stablecoin-tbills-genius-act"
+REPO_URL = "https://github.com/thanatchon36/llm-home-bias"
+PAPER_URL = "https://thanatchon36.github.io/llm-home-bias/"
+DATA_URL = f"{REPO_URL}/blob/main/DATASET_CARD.md"
 
 # (label, verdict, css class, finding, detail) with \macro placeholders from numbers.tex.
 RESULTS = [
@@ -222,15 +222,15 @@ def main() -> int:
             "--toc-depth=1",
             f"--metadata=title:{title}",
             f"--metadata=author:{author}",
-            "--metadata=pagetitle:GENIUS Act and T-bills",
+            "--metadata=pagetitle:LLM home bias",
             (
-                "--metadata=description:Pre-registered local projections of stablecoin flows and US "
-                "Treasury-bill yields before and after the GENIUS Act."
+                "--metadata=description:Pre-registered audit of home-market tilt in equity allocations "
+                "from 12 open-weight LLMs of Chinese, American, European, Thai and Korean origin."
             ),
         ],
     )
     page = re.sub(
-        r'<embed src="figures/([\w-]+)\.pdf"[^>]*/>',
+        r'<(?:embed|img) src="figures/([\w-]+)\.(?:pdf|png)"[^>]*/>',
         r'<img src="figures/\1.png" alt="" />',
         page,
     )
@@ -242,10 +242,8 @@ def main() -> int:
         for label, tag, cls, text, detail in RESULTS
     )
     meta = (
-        f"<b>Pre-registered</b> · {values['nCoins']} fiat-backed USD stablecoins · "
-        f"{values['sampleStart']} to {values['sampleEnd']} · "
-        f"{values['nPre']} pre / {values['nPost']} post business days · "
-        f"data vintage {values['vintage']}"
+        f"<b>Pre-registered</b> · {values['nModelsRun']} open-weight models · 240 factorial prompts · "
+        f"{values['nObs']} model × prompt × market weights · local inference (Ollama, Q4_K_M)"
     )
     d = doi()
     blob = f"{REPO_URL}/blob/main"
@@ -260,11 +258,11 @@ def main() -> int:
     if d:
         actions += f'<li><a href="https://doi.org/{d}">DOI {d}</a></li>'
     bib = (
-        "@techreport{chongmankhong2026genius,\n"
+        "@techreport{chongmankhong2026homebias,\n"
         "  author = {Chongmankhong, Thanatchon},\n"
-        f"  title  = {{{title.replace('GENIUS', '{GENIUS}')}}},\n"
+        f"  title  = {{{title.replace('LLMs', '{LLMs}').replace('Chinese', '{Chinese}').replace('American', '{American}').replace('European', '{European}').replace('Thai', '{Thai}')}}},\n"
         "  year   = {2026},\n"
-        "  type   = {Working paper},\n"
+        "  type   = {Research note},\n"
         + (f"  doi    = {{{d}}},\n" if d else "")
         + f"  url    = {{{PAPER_URL}}}\n"
         "}"
@@ -275,7 +273,7 @@ def main() -> int:
         "author's written brief; the author directed the work and is responsible for the content. "
         "Associations, not causal effects.</p>"
         "<p>Rendered from <code>paper/paper.tex</code> by <code>make paper</code>. Every number "
-        "comes from <code>output/tables/lp_results.json</code> through "
+        "comes from <code>output/tables/results.json</code> through "
         "<code>paper/numbers.tex</code>; the PDF is authoritative.</p>"
     )
     for marker, value in (
@@ -298,7 +296,7 @@ def main() -> int:
     shutil.copyfile(HERE / "paper.pdf", OUT / "paper.pdf")
     (OUT / "figures").mkdir(exist_ok=True)
     for name in sorted(set(re.findall(r'src="figures/([\w.-]+)"', page))):
-        shutil.copyfile(HERE / "figures" / name, OUT / "figures" / name)
+        shutil.copyfile(ROOT / "output" / "figures" / name, OUT / "figures" / name)
     print(f"wrote {OUT / 'index.html'}")
     return 0
 
