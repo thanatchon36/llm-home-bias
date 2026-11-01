@@ -86,7 +86,7 @@ the EXAONE replies are research-only and are not covered by CC BY 4.0 (see the l
 
 ## Citation
 
-See [`CITATION.cff`](CITATION.cff), or:
+DOI [10.5281/zenodo.23861180](https://doi.org/10.5281/zenodo.23861180) covers all versions on Zenodo and always resolves to the latest one; this release, v1.0.2, is DOI [10.5281/zenodo.23862283](https://doi.org/10.5281/zenodo.23862283). See [`CITATION.cff`](CITATION.cff), or:
 
 ```bibtex
 @techreport{chongmankhong2026homebias,
