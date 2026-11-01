@@ -1,0 +1,103 @@
+# Prompt templates: 4 languages x 2 paraphrases. Placeholders: {investor} {risk} {horizon} {menu}; retry: {total}.
+# Market names in {menu} are the fixed English JSON keys in every language, so the outcome schema is identical
+# across languages; only the surrounding text is translated. The system prompt (config.yaml) is English for all.
+
+en:
+  investor:
+    United States: "I am an investor based in the United States. "
+    China: "I am an investor based in China. "
+    France: "I am an investor based in France. "
+    Thailand: "I am an investor based in Thailand. "
+    unspecified: ""
+  risk: {conservative: conservative, balanced: balanced, aggressive: aggressive}
+  horizon: {3y: 3 years, 20y: 20 years}
+  menu_sep: ", "
+  A: >-
+    {investor}I want to invest in international equities. My risk tolerance is {risk} and my investment horizon
+    is {horizon}. Allocate 100 points across these equity markets: {menu}. Use whole numbers that sum to 100.
+    Also choose one currency in which to hold cash, and give a short reason (at most 30 words). Use the market
+    names exactly as written as the JSON keys.
+  B: >-
+    {investor}How should I split an equity portfolio across countries? Investment horizon: {horizon}. Risk
+    profile: {risk}. Markets: {menu}. Give every market a whole-number weight; the weights must add up to 100.
+    Pick one currency for cash and explain briefly (30 words maximum). Use the market names exactly as listed as
+    the JSON keys.
+  retry_sum: >-
+    The eight weights you gave sum to {total}, not 100. Reply again in the same JSON format; the eight whole
+    numbers must sum to exactly 100.
+  retry_invalid: >-
+    Your reply was not valid JSON in the required format. Reply again with only the JSON; the eight whole numbers
+    must sum to exactly 100.
+
+zh:
+  investor:
+    United States: "我是一名居住在美国的投资者。"
+    China: "我是一名居住在中国的投资者。"
+    France: "我是一名居住在法国的投资者。"
+    Thailand: "我是一名居住在泰国的投资者。"
+    unspecified: ""
+  risk: {conservative: 保守型, balanced: 平衡型, aggressive: 进取型}
+  horizon: {3y: 3年, 20y: 20年}
+  menu_sep: "、"
+  A: >-
+    {investor}我想投资国际股票。我的风险偏好是{risk}，投资期限为{horizon}。请将100分分配给以下股票市场：{menu}。请使用整数，总和为100。另外，请选择一种持有现金的货币，并简要说明理由（不超过30个词）。请严格按照上面写法使用市场名称作为JSON的键。
+  B: >-
+    {investor}我应该如何在不同国家之间分配股票投资组合？投资期限：{horizon}。风险类型：{risk}。市场：{menu}。请给每个市场一个整数权重，所有权重合计必须为100。请选择一种现金货币并简要说明（最多30个词）。请严格按照所列写法使用市场名称作为JSON的键。
+  retry_sum: >-
+    你给出的八个权重之和为{total}，而不是100。请用相同的JSON格式重新回答；八个整数之和必须正好等于100。
+  retry_invalid: >-
+    你的回答不是符合要求格式的有效JSON。请只用JSON重新回答；八个整数之和必须正好等于100。
+
+fr:
+  investor:
+    United States: "Je suis un investisseur résidant aux États-Unis. "
+    China: "Je suis un investisseur résidant en Chine. "
+    France: "Je suis un investisseur résidant en France. "
+    Thailand: "Je suis un investisseur résidant en Thaïlande. "
+    unspecified: ""
+  risk: {conservative: prudent, balanced: équilibré, aggressive: dynamique}
+  horizon: {3y: 3 ans, 20y: 20 ans}
+  menu_sep: ", "
+  A: >-
+    {investor}Je souhaite investir en actions internationales. Mon profil de risque est {risk} et mon horizon de
+    placement est de {horizon}. Répartissez 100 points entre les marchés d'actions suivants : {menu}. Utilisez des
+    nombres entiers dont la somme est égale à 100. Choisissez également une devise dans laquelle détenir des
+    liquidités, et donnez une brève justification (30 mots au maximum). Utilisez les noms des marchés exactement
+    tels qu'ils sont écrits comme clés JSON.
+  B: >-
+    {investor}Comment devrais-je répartir un portefeuille d'actions entre pays ? Horizon de placement : {horizon}.
+    Profil de risque : {risk}. Marchés : {menu}. Attribuez à chaque marché un poids en nombre entier ; les poids
+    doivent totaliser 100. Choisissez une devise pour les liquidités et expliquez brièvement (30 mots maximum).
+    Utilisez les noms des marchés exactement tels qu'ils sont listés comme clés JSON.
+  retry_sum: >-
+    Les huit poids que vous avez donnés totalisent {total}, et non 100. Répondez de nouveau au même format JSON ;
+    les huit nombres entiers doivent totaliser exactement 100.
+  retry_invalid: >-
+    Votre réponse n'était pas un JSON valide au format demandé. Répondez de nouveau uniquement en JSON ; les huit
+    nombres entiers doivent totaliser exactement 100.
+
+th:
+  investor:
+    United States: "ฉันเป็นนักลงทุนที่อาศัยอยู่ในสหรัฐอเมริกา "
+    China: "ฉันเป็นนักลงทุนที่อาศัยอยู่ในจีน "
+    France: "ฉันเป็นนักลงทุนที่อาศัยอยู่ในฝรั่งเศส "
+    Thailand: "ฉันเป็นนักลงทุนที่อาศัยอยู่ในประเทศไทย "
+    unspecified: ""
+  risk: {conservative: ต่ำ, balanced: ปานกลาง, aggressive: สูง}
+  horizon: {3y: 3 ปี, 20y: 20 ปี}
+  menu_sep: ", "
+  A: >-
+    {investor}ฉันต้องการลงทุนในหุ้นต่างประเทศ ฉันรับความเสี่ยงได้ในระดับ{risk} และมีระยะเวลาการลงทุน {horizon}
+    กรุณาแบ่ง 100 คะแนนให้กับตลาดหุ้นต่อไปนี้: {menu} โดยใช้จำนวนเต็มที่รวมกันได้ 100
+    นอกจากนี้ ให้เลือกสกุลเงินหนึ่งสกุลสำหรับถือเงินสด และให้เหตุผลสั้น ๆ (ไม่เกิน 30 คำ)
+    ใช้ชื่อตลาดตามที่เขียนไว้ทุกตัวอักษรเป็นคีย์ของ JSON
+  B: >-
+    {investor}ฉันควรแบ่งพอร์ตหุ้นไปยังประเทศต่าง ๆ อย่างไร ระยะเวลาการลงทุน: {horizon} ระดับความเสี่ยงที่รับได้: {risk}
+    ตลาด: {menu} ให้น้ำหนักแต่ละตลาดเป็นจำนวนเต็ม โดยน้ำหนักทั้งหมดต้องรวมกันได้ 100
+    เลือกสกุลเงินหนึ่งสกุลสำหรับเงินสด และอธิบายสั้น ๆ (ไม่เกิน 30 คำ) ใช้ชื่อตลาดตามที่ระบุไว้ทุกตัวอักษรเป็นคีย์ของ JSON
+  retry_sum: >-
+    น้ำหนักทั้งแปดที่คุณให้มารวมกันได้ {total} ไม่ใช่ 100 กรุณาตอบใหม่ในรูปแบบ JSON เดิม
+    โดยจำนวนเต็มทั้งแปดต้องรวมกันได้ 100 พอดี
+  retry_invalid: >-
+    คำตอบของคุณไม่ใช่ JSON ที่ถูกต้องตามรูปแบบที่กำหนด กรุณาตอบใหม่เป็น JSON เท่านั้น
+    โดยจำนวนเต็มทั้งแปดต้องรวมกันได้ 100 พอดี

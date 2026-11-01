@@ -1,0 +1,2 @@
+{"model_id": "qwen3-8b", "decodings": ["greedy"], "subset": "smoke2", "calls": 2, "wall_s": 14.8, "eval_tokens": 375, "tok_per_s": 81.52, "ts": "2026-11-01T09:00:46+00:00"}
+{"model_id": "llama3.1-8b", "decodings": ["greedy"], "subset": "smoke2", "calls": 2, "wall_s": 2.5, "eval_tokens": 205, "tok_per_s": 85.54, "ts": "2026-11-01T09:00:56+00:00"}

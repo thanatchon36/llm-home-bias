@@ -1,0 +1,9 @@
+# Pinned to the versions that produced the committed results (2026-11-01).
+pandas==3.1.0
+numpy==2.5.4
+statsmodels==0.15.0
+matplotlib==3.11.2
+requests==2.34.2
+pyyaml==6.0.3
+pyarrow==26.0.0
+pytest==9.2.0

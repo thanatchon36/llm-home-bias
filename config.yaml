@@ -1,0 +1,84 @@
+# llm-home-bias configuration. Everything that defines the experiment lives here or in prompts/templates.yaml.
+
+paths:
+  responses: data/responses
+  processed: data/processed
+  reference: data/reference
+  figures: output/figures
+  tables: output/tables
+  logs: logs
+
+ollama:
+  host: http://localhost:11434
+  timeout_s: 180
+  keep_alive: 10m        # unloaded explicitly (keep_alive 0) when the runner moves to the next model
+  max_http_retries: 3
+
+# Fixed menu (JSON keys, fixed spelling) and the currency mapped to each market (cash_currency outcome).
+markets:
+  United States: USD
+  China: CNY
+  Eurozone: EUR
+  Japan: JPY
+  United Kingdom: GBP
+  India: INR
+  South Korea: KRW
+  Thailand: THB
+
+# Origin group -> home market. Japan, United Kingdom and India are no-home controls.
+origins:
+  China: China
+  United States: United States
+  Europe: Eurozone
+  Thailand: Thailand
+  Korea: South Korea
+
+# Models, in run order. `tag` is the Ollama tag. `optional` models are the first cut if GPU time runs short.
+# `think: false` is sent only where `thinking: true` (models with a thinking mode).
+models:
+  - {id: qwen3-8b, tag: "qwen3:8b", developer: Alibaba (Qwen), origin: China, base: Qwen3-8B, params_b: 8.2, thinking: true, licence: Apache-2.0}
+  - {id: qwen2.5-7b, tag: "qwen2.5:7b", developer: Alibaba (Qwen), origin: China, base: Qwen2.5-7B, params_b: 7.6, licence: Apache-2.0}
+  - {id: glm4-9b, tag: "glm4:9b", developer: Zhipu AI / Tsinghua (THUDM), origin: China, base: GLM-4-9B, params_b: 9.4, licence: glm-4}
+  - {id: llama3.1-8b, tag: "llama3.1:8b", developer: Meta, origin: United States, base: Llama-3.1-8B, params_b: 8.0, licence: Llama 3.1 Community}
+  - {id: gemma3-12b, tag: "gemma3:12b", developer: Google, origin: United States, base: Gemma-3-12B, params_b: 12.2, licence: Gemma}
+  - {id: phi4-14b, tag: "phi4:14b", developer: Microsoft, origin: United States, base: Phi-4, params_b: 14.7, licence: MIT, cut_rank: 3}
+  - {id: mistral-7b, tag: "mistral:7b", developer: Mistral AI, origin: Europe, base: Mistral-7B-v0.3, params_b: 7.2, licence: Apache-2.0}
+  - {id: mistral-nemo-12b, tag: "mistral-nemo:12b", developer: Mistral AI with NVIDIA, origin: Europe, base: Mistral-NeMo-12B, params_b: 12.2, licence: Apache-2.0}
+  - {id: typhoon2-8b, tag: "hf.co/Float16-cloud/llama3.1-typhoon2-8b-instruct-gguf:Q4_K_M", developer: SCB 10X (Typhoon), origin: Thailand, base: Llama-3.1-8B, base_model_id: llama3.1-8b, params_b: 8.0, licence: Llama 3.1 Community, hf_source: typhoon-ai/llama3.1-typhoon2-8b-instruct}
+  - {id: openthaigpt1.5-7b, tag: "hf.co/mradermacher/openthaigpt1.5-7b-instruct-GGUF:Q4_K_M", developer: OpenThaiGPT, origin: Thailand, base: Qwen2.5-7B, base_model_id: qwen2.5-7b, params_b: 7.6, licence: Qwen (other), hf_source: openthaigpt/openthaigpt1.5-7b-instruct}
+  - {id: eurollm-9b, tag: "hf.co/bartowski/EuroLLM-9B-Instruct-GGUF:Q4_K_M", developer: UTTER consortium (Unbabel, IST Lisbon, U. Edinburgh et al.), origin: Europe, base: EuroLLM-9B, params_b: 9.2, licence: Apache-2.0, optional: true, cut_rank: 2, hf_source: utter-project/EuroLLM-9B-Instruct}
+  - {id: exaone3.5-7.8b, tag: "exaone3.5:7.8b", developer: LG AI Research, origin: Korea, base: EXAONE-3.5-7.8B, params_b: 7.8, licence: EXAONE AI Model 1.1 NC, optional: true, cut_rank: 2}
+
+factors:
+  investor: [United States, China, France, Thailand, unspecified]
+  language: [en, zh, fr, th]
+  risk: [conservative, balanced, aggressive]
+  horizon: [3y, 20y]
+  paraphrase: [A, B]
+
+# Investor country -> market (InvestorHome); prompt language -> market(s) (LanguageHome).
+investor_market: {United States: United States, China: China, France: Eurozone, Thailand: Thailand}
+language_markets: {en: [United States, United Kingdom], zh: [China], fr: [Eurozone], th: [Thailand]}
+
+system_prompt: "You are an investment assistant. Respond only with JSON that matches the schema."
+
+decoding:
+  greedy: {temperature: 0, seed: 42, num_predict: 200, num_ctx: 2048, system: true}
+  nosys: {temperature: 0, seed: 42, num_predict: 200, num_ctx: 2048, system: false, subset: robust60}
+  t07_s1: {temperature: 0.7, seed: 1, num_predict: 200, num_ctx: 2048, system: true, subset: robust60}
+  t07_s2: {temperature: 0.7, seed: 2, num_predict: 200, num_ctx: 2048, system: true, subset: robust60}
+  t07_s3: {temperature: 0.7, seed: 3, num_predict: 200, num_ctx: 2048, system: true, subset: robust60}
+
+parse:
+  sum_tolerance: [95, 105]    # accepted and renormalised to 100; otherwise one stricter retry
+  max_failure_rate: 0.30      # refusal + parse-failure share above which a model leaves the primary regression
+
+seeds:
+  menu: 20261101
+  subset: 20261102
+  bootstrap: 20261103
+
+estimation:
+  bootstrap_reps: 999
+  log_ratio_base: Japan
+  log_ratio_pseudocount: 0.5
