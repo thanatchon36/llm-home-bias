@@ -26,9 +26,9 @@ pilot:
 run:
 	$(PY) -m src.run.runner --decodings greedy
 
-# Robustness: no-system-prompt and temperature 0.7 x 3 seeds on the robust-60 subset (resumable).
+# Robustness: no-system-prompt and temperature 0.7 x 2 seeds on the robust-60 subset (resumable).
 robust:
-	$(PY) -m src.run.runner --decodings nosys,t07_s1,t07_s2,t07_s3
+	$(PY) -m src.run.runner --decodings nosys,t07_s1,t07_s2
 
 parse:
 	$(PY) -m src.pipeline parse

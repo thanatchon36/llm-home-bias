@@ -94,7 +94,7 @@ w_{m,p,c} = α_m + α_c + β·Home_{m,c} + γ·InvestorHome_{p,c} + λ·Language
 ## 7. Robustness (pre-registered; only these)
 
 Each reports pooled β (and its clustered SE and N) in `table3_robustness`:
-1. Temperature 0.7, three seeds, on the robust-60 subset (all samples pooled; clusters = prompt_id).
+1. Temperature 0.7, two seeds (A1), on the robust-60 subset (all samples pooled; clusters = prompt_id).
 2. Greedy on the robust-60 subset (the comparison sample for 1 and 3).
 3. No system prompt, greedy, robust-60 subset.
 4. Drop renormalised allocations (keep only replies summing to exactly 100).
@@ -117,4 +117,10 @@ Equal weight (12.5%); approximate MSCI ACWI country weights from a public factsh
 
 ## 10. Amendments
 
-(none yet)
+**A1 — 2026-11-01 16:25, after the pilot, before any full run (Checkpoint 1 decision).** The pilot (20 prompts × 12 models, `data/pilot/`, `docs/FINDINGS.md`) showed that unusable replies are arithmetic errors, not refusals (0 refusals; e.g. eight 10s summing to 80), and that greedy retries often repeat the reply verbatim. Under the §4 rule, 5 of 12 models (EuroLLM, Mistral-7B, Qwen2.5, Qwen3, OpenThaiGPT) would exceed the 30% exclusion threshold, removing both fine-tune pairs. The pilot's allocations were not compared across models or tested for any hypothesis before this decision.
+
+1. **Sum rule.** The 95–105 rule and the one stricter retry stay. When neither the first reply nor the retry sums to 95–105, the outcome is no longer a parse failure: the **earliest reply with a valid allocation and a positive total is renormalised to 100** (status `renorm_wide`). Parse failure now means: no reply with a valid allocation (invalid JSON, missing/unknown keys, negative values). Refusal is unchanged. The rationale is that the outcome is a relative weight and the analysis renormalises in any case; the share of replies that miss 100 is reported by model as a result.
+2. **New pre-registered robustness checks** (added to §7): (7a) the original rule: drop `renorm_wide` replies and apply the 30% exclusion rule with `renorm_wide` counted as failures; (§7.4, unchanged) only replies summing to exactly 100.
+3. **Budget.** Projected GPU time was 4.2 h (> 4 h). Following §9's cut order, the temperature-0.7 robustness uses **2 seeds (1, 2) instead of 3**.
+
+The prompt set and templates are unchanged (same SHA-256).
