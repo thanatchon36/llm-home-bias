@@ -1,6 +1,7 @@
 """paper/numbers.tex (one LaTeX macro per quoted result) and paper/tables/*.tex, all from output/tables/.
 
-The paper's prose never carries a hand-typed result: every number is a macro generated here.
+The paper's prose never carries a hand-typed result: every number is a macro generated here, and the three
+tables are written as booktabs tabulars with panel headings so that they are typeset at full text width.
 """
 
 from __future__ import annotations
@@ -8,15 +9,24 @@ from __future__ import annotations
 import json
 import logging
 import re
+from datetime import date
 from typing import Any
 
 import pandas as pd
 
 from src.utils import ROOT, model_by_id
-from src.viz.figures import reference_rows
+from src.viz.figures import ORIGIN_ORDER, reference_rows
 
 log = logging.getLogger(__name__)
 PAPER = ROOT / "paper"
+
+CHECK_LABELS = {
+    "Temperature 0.7, 2 seeds (robust-60)": "Temperature 0.7, two seeds (60-prompt subset)",
+    "Greedy, robust-60 subset": "Greedy decoding, same 60-prompt subset",
+    "No system prompt, greedy (robust-60)": "No system prompt, greedy (60-prompt subset)",
+    "Original 95-105 rule (A1)": "Original 95--105 rule (before amendment A1)",
+    "Log-ratio outcome log(w_c / w_Japan)": r"Log-ratio outcome $\log(w_c/w_{\mathrm{Japan}})$",
+}
 
 
 def num(x: float, d: int = 1, plus: bool = False) -> str:
@@ -31,12 +41,25 @@ def ptext(p: float) -> str:
     return "$p<0.001$" if p < 0.0005 else f"$p={p:.3f}$"
 
 
+def pnum(p: float) -> str:
+    return "$<$0.001" if p < 0.0005 else f"{p:.3f}"
+
+
 def key(s: str) -> str:
     """Macro-safe CamelCase from an id ('openthaigpt1.5-7b' -> 'Openthaigptonefivesevenb')."""
     words = {"0": "zero", "1": "one", "2": "two", "3": "three", "4": "four", "5": "five", "6": "six", "7": "seven",
              "8": "eight", "9": "nine"}
     s = re.sub(r"\d", lambda m: words[m.group(0)], s)
     return "".join(w.capitalize() for w in re.split(r"[^A-Za-z]+", s) if w)
+
+
+def spaced(s: str) -> str:
+    """'UnitedStates' -> 'United States'."""
+    return re.sub(r"(?<=[a-z])(?=[A-Z])", " ", s)
+
+
+def join_or(items: list[str]) -> str:
+    return items[0] if len(items) == 1 else ", ".join(items[:-1]) + " or " + items[-1]
 
 
 def put(m: dict[str, str], prefix: str, c: dict[str, float] | None, d: int = 2) -> None:
@@ -50,7 +73,8 @@ def put(m: dict[str, str], prefix: str, c: dict[str, float] | None, d: int = 2) 
 
 
 def numbers(cfg: dict[str, Any], res: dict[str, Any], rates: pd.DataFrame, tilt: pd.DataFrame,
-            cash: pd.DataFrame, alloc: pd.DataFrame) -> dict[str, str]:
+            cash: pd.DataFrame, alloc: pd.DataFrame, models: pd.DataFrame) -> dict[str, str]:
+    meta = model_by_id(cfg)
     m: dict[str, str] = {}
     p = res["primary"]
     put(m, "betaHome", p["home"])
@@ -100,6 +124,16 @@ def numbers(cfg: dict[str, Any], res: dict[str, Any], rates: pd.DataFrame, tilt:
     for lab, k in (("MSCI ACWI (mkt cap)", "acwi"), ("GDP (IMF WEO)", "gdp")):
         if lab in ref:
             m[f"{k}US"], m[f"{k}China"] = num(ref[lab]["United States"]), num(ref[lab]["China"])
+    refp = ROOT / cfg["paths"]["reference"] / "reference_weights.json"
+    if refp.exists():
+        raw = json.loads(refp.read_text())
+        m["acwiDate"] = date.fromisoformat(raw["msci_acwi"]["as_of"]).strftime("%-d %B %Y")
+        vintage = re.search(r"\((\w+ \d{4})\)", raw["imf_weo_gdp"]["vintage"])
+        m["gdpVintage"] = vintage.group(1) if vintage else raw["imf_weo_gdp"]["vintage"]
+        m["gdpYear"] = str(raw["imf_weo_gdp"]["year"])
+    q40 = [r.Model for r in models.itertuples(index=False) if str(r.Quant) == "Q4_0"]
+    m["nQfourZero"] = str(len(q40))
+    m["qfourZeroModels"] = " and ".join(q40) if len(q40) <= 2 else join_or(q40).replace(" or ", " and ")
     m["nOrigRuleExcluded"] = str(len(res["robustness"]["Original 95-105 rule (A1)"].get("excluded", [])))
     rb = {k: v for k, v in res["robustness"].items() if not k.startswith("_")}
     m["rbN"] = str(len(rb))
@@ -108,7 +142,13 @@ def numbers(cfg: dict[str, Any], res: dict[str, Any], rates: pd.DataFrame, tilt:
     lomo = res["robustness"]["_lomo"]
     m["lomoMin"] = num(min(v["est"] for v in lomo.values()), 2, True)
     m["lomoMax"] = num(max(v["est"] for v in lomo.values()), 2, True)
-    put(m, "betaPosthocDisp", res["robustness"].get("_posthoc_dispersion"))
+    insig = [meta[k].get("label", k) for k, v in lomo.items() if v["hi"] >= 0]
+    m["nLomoInsig"] = str(len(insig))
+    m["lomoInsigModels"] = join_or(insig) if insig else "none"
+    ph = res["robustness"].get("_posthoc_dispersion")
+    put(m, "betaPosthocDisp", ph)
+    every = [v for v in rb.values()] + list(lomo.values()) + ([ph] if ph else [])
+    m["rbHiMax"] = num(max(v["hi"] for v in every), 2, True)
     for short, prefix in (("rbTemp", "Temperature 0.7"), ("rbGreedySixty", "Greedy, robust-60"),
                           ("rbNosys", "No system prompt"), ("rbExact", "Only replies summing"),
                           ("rbOrigRule", "Original 95-105"), ("rbImpute", "Failures imputed"),
@@ -134,11 +174,88 @@ def tex_escape(s: str) -> str:
             .replace("δ", "$\\delta$").replace("×", "$\\times$").replace("—", "--"))
 
 
-def tex_table(df: pd.DataFrame, cols: list[str], align: str) -> str:
-    head = " & ".join(tex_escape(c) for c in cols) + " \\\\"
-    body = "\n".join(" & ".join(tex_escape(r[c]) for c in cols) + " \\\\" for _, r in df.iterrows())
-    return (f"% generated by src/viz/paper_tex.py\n\\begin{{tabular}}{{{align}}}\n\\toprule\n{head}\n\\midrule\n"
-            f"{body}\n\\bottomrule\n\\end{{tabular}}\n")
+def tabular(align: str, head: str, body: list[str]) -> str:
+    return (f"% generated by src/viz/paper_tex.py\n\\begin{{tabular}}{{{align}}}\n\\toprule\n{head} \\\\\n\\midrule\n"
+            + "\n".join(body) + "\n\\bottomrule\n\\end{tabular}\n")
+
+
+def panel(title: str, ncol: int, first: bool = False) -> list[str]:
+    return ([] if first else ["\\addlinespace"]) + [f"\\multicolumn{{{ncol}}}{{@{{}}l}}{{\\textit{{{title}}}}} \\\\"]
+
+
+def coef_cells(c: dict[str, float], d: int = 2) -> list[str]:
+    return [num(c["est"], d, plus=True), num(c["se"], d), pnum(c["p"])]
+
+
+def row(label: str, cells: list[str]) -> str:
+    return "\\quad " + label + " & " + " & ".join(cells) + " \\\\"
+
+
+def primary_table(cfg: dict[str, Any], res: dict[str, Any]) -> str:
+    lab = {m["id"]: m.get("label", m["id"]) for m in cfg["models"]}
+    p, bo, h, c = res["primary"], res["by_origin"], res["h2"], res["cash"]
+    wb = res["wild_bootstrap_template"]
+    body = panel("Pooled regression, Eq.~\\eqref{eq:main}; SE clustered by prompt", 6, first=True)
+    for k, name in (("home", "$\\beta$ Home (model origin)"), ("investor_home", "$\\gamma$ InvestorHome"),
+                    ("language_home", "$\\lambda$ LanguageHome")):
+        body.append(row(name, coef_cells(p[k]) + [f"{p['N']:,}", str(p["models"])]))
+    body.append(row(f"$\\beta$ Home, wild cluster bootstrap over {wb['clusters']} templates (95\\% CI)",
+                    [f"\\multicolumn{{3}}{{r}}{{[{num(wb['lo'], 2)}, {num(wb['hi'], 2)}]}}", f"{p['N']:,}",
+                     str(p["models"])]))
+    body += panel("Home effect by origin group ($\\beta \\times$ group, same specification)", 6)
+    groups = {spaced(k[5:]): v for k, v in bo.items() if k.startswith("home_") and v}
+    names = {"China": "Chinese models", "United States": "US models", "Europe": "European models",
+             "Thailand": "Thai models", "Korea": "Korean model"}
+    for g in sorted(groups, key=lambda g: ORIGIN_ORDER.index(g) if g in ORIGIN_ORDER else 99):
+        body.append(row(names.get(g, f"{g} models"), coef_cells(groups[g]) + [f"{bo['N']:,}", str(bo["models"])]))
+    body += panel("H2: English prompts with an unspecified investor", 6)
+    body.append(row("$\\beta$ Home", coef_cells(h["home"]) + [f"{h['N']:,}", str(h["models"])]))
+    body += panel("H3: Thai fine-tune minus its base model, weight on Thailand (prompt fixed effects)", 6)
+    for f in res["finetune"]:
+        body.append(row(f"$\\delta$ {lab[f['finetune']]} vs {lab[f['base']]}",
+                        coef_cells(f) + [f"{2 * f['n_prompts']:,}", "2"]))
+    body += panel("Cash currency: home currency chosen (linear probability model, pp)", 6)
+    body.append(row("$\\beta$ Home", coef_cells(c["home"]) + [f"{c['N']:,}", str(c["models"])]))
+    return tabular("@{}lrrrrr@{}", " & Estimate (pp) & SE & $p$ & $N$ & Models", body)
+
+
+def robustness_table(cfg: dict[str, Any], res: dict[str, Any]) -> str:
+    meta = model_by_id(cfg)
+
+    def cells(v: dict[str, Any], d: int = 2) -> list[str]:
+        return [num(v["est"], d, plus=True), num(v["se"], d), f"[{num(v['lo'], d)}, {num(v['hi'], d)}]",
+                pnum(v["p"]), f"{v['N']:,}", str(v["models"])]
+
+    body = panel("Pre-registered checks", 7, first=True)
+    body.append(row("Primary specification (greedy, 240 prompts)", cells(res["primary"]["home"] | {
+        "N": res["primary"]["N"], "models": res["primary"]["models"]})))
+    for k, v in res["robustness"].items():
+        if not k.startswith("_"):
+            body.append(row(CHECK_LABELS.get(k, tex_escape(k)), cells(v, 3 if k.startswith("Log-ratio") else 2)))
+    body += panel("Leave one model out", 7)
+    for k, v in res["robustness"]["_lomo"].items():
+        body.append(row(f"Without {meta[k].get('label', k)}", cells(v)))
+    ph = res["robustness"].get("_posthoc_dispersion")
+    if ph:
+        body += panel("Post hoc, not pre-registered", 7)
+        body.append(row("Model-specific dispersion around equal weight", cells(ph)))
+    return tabular("@{}lrrcrrr@{}", "Check & $\\beta$ (pp) & SE & 95\\% CI & $p$ & $N$ & Models", body)
+
+
+def models_table(cfg: dict[str, Any], models: pd.DataFrame) -> str:
+    meta = model_by_id(cfg)
+    order = {m["id"]: i for i, m in enumerate(cfg["models"])}
+    rows = sorted(models.itertuples(index=False),
+                  key=lambda r: (ORIGIN_ORDER.index(meta[r.id]["origin"]), order[r.id]))
+    body = []
+    for r in rows:
+        dev = re.sub(r"\s*\(.*\)$", "", str(r.Developer))
+        origin = "US" if r.Origin == "United States" else str(r.Origin)
+        body.append(" & ".join([tex_escape(r.Model), tex_escape(dev), origin, f"{float(r._8):.1f}",
+                                tex_escape(r.Quant), f"{float(r._10):.0f}", f"{float(r._12):.1f}",
+                                f"{float(r._13):.1f}"]) + " \\\\")
+    head = "Model & Developer & Origin & Params (B) & Quant. & tok/s & Refusal (\\%) & Parse fail (\\%)"
+    return tabular("@{}lllrlrrr@{}", head, body)
 
 
 def make_paper_tex(cfg: dict[str, Any]) -> None:
@@ -148,16 +265,10 @@ def make_paper_tex(cfg: dict[str, Any]) -> None:
     tilt = pd.read_csv(t / "tilt.csv")
     cash = pd.read_csv(t / "cash_share.csv")
     alloc = pd.read_csv(t / "mean_allocation.csv", index_col=0)
+    models = pd.read_csv(t / "table2_models.csv")
     (PAPER / "tables").mkdir(parents=True, exist_ok=True)
-    write_numbers(numbers(cfg, res, rates, tilt, cash, alloc))
-    t1 = pd.read_csv(t / "table1_primary.csv", dtype=str)
-    (PAPER / "tables" / "primary.tex").write_text(
-        tex_table(t1, ["Specification", "Coefficient", "Estimate (pp)", "SE", "p", "N", "Models"], "llrrrrr"))
-    t2 = pd.read_csv(t / "table2_models.csv", dtype=str)
-    (PAPER / "tables" / "models.tex").write_text(
-        tex_table(t2, ["Model", "Developer", "Origin", "Base", "Params (B)", "tok/s", "Refusal %", "Parse-fail %",
-                       "In regressions"], "lllllrrrr"))
-    t3 = pd.read_csv(t / "table3_robustness.csv", dtype=str)
-    (PAPER / "tables" / "robustness.tex").write_text(tex_table(t3, ["Check", "β (pp)", "SE", "95% CI", "N"], "lrrrr"))
-    meta = model_by_id(cfg)
-    log.info("paper numbers and tables written (%d models)", len(meta))
+    write_numbers(numbers(cfg, res, rates, tilt, cash, alloc, models))
+    (PAPER / "tables" / "primary.tex").write_text(primary_table(cfg, res))
+    (PAPER / "tables" / "robustness.tex").write_text(robustness_table(cfg, res))
+    (PAPER / "tables" / "models.tex").write_text(models_table(cfg, models))
+    log.info("paper numbers and tables written (%d models)", len(models))

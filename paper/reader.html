@@ -87,12 +87,20 @@ pre code { font-weight: 400; font-size: inherit; overflow-wrap: normal; }
   border-radius: 0 6px 6px 0; font-size: 0.93rem; color: var(--ink-2); }
 figure { margin: 1.6em 0; display: flex; flex-direction: column; gap: 10px; }
 figure img { background: var(--plate); padding: 12px; border-radius: 6px; border: 1px solid var(--rule); max-width: 100%; height: auto; }
-figcaption, caption { font-size: 0.88rem; color: var(--ink-2); line-height: 1.45; text-align: left; }
+figcaption, caption { font-family: var(--font-body); font-size: 0.88rem; color: var(--ink-2); line-height: 1.45; text-align: left; }
 .paper table { display: block; overflow-x: auto; border-collapse: collapse; width: 100%; margin: 1.4em 0;
   font: 400 0.78rem/1.45 var(--font-mono); font-variant-numeric: tabular-nums; }
 /* Code in table cells must not break per letter on phones; the table scrolls sideways instead. */
 .paper table code { overflow-wrap: normal; word-break: normal; white-space: nowrap; }
 th, td { padding: 6px 10px; border-bottom: 1px solid var(--rule); text-align: left; vertical-align: top; }
+/* Numeric cells stay on one line; only the label column wraps (the table scrolls sideways if needed). */
+.paper th:not(:first-child), .paper td:not(:first-child) { white-space: nowrap; }
+/* Caption labels as in the PDF: figures and tables numbered in document order. */
+.paper { counter-reset: fig tbl; }
+.paper figure { counter-increment: fig; }
+.paper figcaption::before { content: "Figure " counter(fig) ". "; font-weight: 700; color: var(--ink); }
+.paper table { counter-increment: tbl; }
+.paper caption::before { content: "Table " counter(tbl) ". "; font-weight: 700; color: var(--ink); }
 th { font-weight: 500; color: var(--ink-2); border-bottom-color: var(--ink-2); }
 #refs { width: 100%; max-width: none; font-size: 0.88rem; line-height: 1.5; display: flex; flex-direction: column; gap: 6px; }
 /* Author-year entries are plain text: full width with a hanging indent. The two-column grid is

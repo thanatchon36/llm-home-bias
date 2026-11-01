@@ -1,29 +1,53 @@
-\documentclass[conference]{IEEEtran}
-\IEEEoverridecommandlockouts
+% Single-column research note. Build with `make paper` (pinned Tectonic); the web version is built from the
+% same source by paper/web.py. Every result number is a macro from numbers.tex (generated, never hand-typed).
+\documentclass[11pt,a4paper]{article}
 \usepackage[T1]{fontenc}
-\usepackage{cite}
+\usepackage[a4paper,margin=2.4cm,top=2.6cm,bottom=2.8cm]{geometry}
+\usepackage{mathpazo}
+\usepackage[protrusion=true,expansion=false]{microtype}
 \usepackage{amsmath}
 \usepackage{graphicx}
 \usepackage{booktabs}
 \usepackage{array}
-\usepackage{adjustbox}
 \usepackage{xcolor}
+\usepackage{cite}
 \usepackage{url}
-\usepackage[hidelinks]{hyperref}
-\usepackage[protrusion=true,expansion=false]{microtype}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage[font=small,labelfont=bf,labelsep=period]{caption}
+\usepackage{placeins}
+\usepackage[colorlinks,linkcolor=navy,citecolor=navy,urlcolor=navy]{hyperref}
+
+\definecolor{navy}{HTML}{1F4E79}
 \def\UrlBreaks{\do\/\do-\do.\do\_\do=\do\&\do?}
 \Urlmuskip=0mu plus 1mu
-\graphicspath{{../output/}}
+\graphicspath{{./}}
 
+% Typography: generous line spacing, run-in paragraph headings, compact section titles.
+\linespread{1.06}
+\setlength{\parskip}{0pt}
+\titleformat*{\section}{\large\bfseries}
+\titlespacing*{\section}{0pt}{3ex plus 1ex minus .2ex}{1.4ex plus .2ex}
+\titleformat{\paragraph}[runin]{\bfseries}{}{0pt}{}[.]
+\titlespacing*{\paragraph}{0pt}{1.6ex plus .5ex minus .2ex}{0.6em}
+\renewcommand{\arraystretch}{1.12}
+\setlength{\tabcolsep}{5pt}
+
+% Floats: large figures and tables, placed near their first reference.
 \renewcommand{\topfraction}{0.95}
-\renewcommand{\dbltopfraction}{0.95}
 \renewcommand{\bottomfraction}{0.6}
 \renewcommand{\textfraction}{0.05}
-\renewcommand{\floatpagefraction}{0.8}
-\renewcommand{\dblfloatpagefraction}{0.8}
-\setcounter{topnumber}{4}
-\setcounter{dbltopnumber}{3}
-\setcounter{totalnumber}{6}
+\renewcommand{\floatpagefraction}{0.7}
+\setcounter{topnumber}{3}
+\setcounter{totalnumber}{4}
+
+% Running head.
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\small\itshape Do open-source LLMs have a home bias?}
+\rhead{\small\thepage}
+\renewcommand{\headrulewidth}{0pt}
+\fancypagestyle{plain}{\fancyhf{}\cfoot{\small\thepage}}
 
 % All result numbers come from output/tables/results.json via src/viz/paper_tex.py.
 \input{numbers.tex}
@@ -32,11 +56,13 @@
 
 \begin{document}
 
-\title{Do Open-Source LLMs Have a Home Bias? Investment Advice from Chinese, American, European and Thai Models}
-
-\author{\IEEEauthorblockN{Thanatchon Chongmankhong}}
+\title{\bfseries Do Open-Source LLMs Have a Home Bias?\\[0.3ex]
+  \large Investment Advice from Chinese, American, European and Thai Models}
+\author{Thanatchon Chongmankhong}
+\date{Research note \textperiodcentered{} November 2026}
 
 \maketitle
+\thispagestyle{plain}
 
 \input{sections/abstract}
 \input{sections/introduction}
@@ -45,9 +71,10 @@
 \input{sections/robustness}
 \input{sections/discussion}
 
-\appendices
+\appendix
 \input{sections/appendix}
 
+\FloatBarrier
 \bibliographystyle{IEEEtran}
 \bibliography{refs}
 

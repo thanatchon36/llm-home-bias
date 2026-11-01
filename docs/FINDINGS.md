@@ -81,3 +81,12 @@ The user asked the agent to review the drafts itself at Checkpoint 3 ("checkpoin
   - Citations: resolved. All 20 refs.bib entries were checked against the publisher, arXiv or an official page.
   - ACWI weights: resolved by disclosure. They are a proxy from the holdings of an ACWI-tracking ETF, not the index itself, and the README and paper now say so.
   - **Open, for the author:** the output-use terms of the Llama 3.1, Gemma, GLM-4 and EXAONE (non-commercial) licences, before releasing on Hugging Face (DATASET_CARD.md).
+
+## 2026-11-01 21:45 — Paper restyled: single column, full-width figures, proofread
+
+- The note is now a single-column A4 article (11 pt, Palatino text, 2.4 cm margins, 10 pages) instead of the IEEE two-column layout: at column width the figures and tables were too small to read.
+- Every figure has a paper variant (`paper/figures/*.pdf`, vector, Source Sans 3 embedded from `paper/fonts/`, no title or footer) placed at text width. The standalone PNG/SVG variants in `output/figures/` keep their title and source footer.
+- Tables are generated as booktabs panel tables by `src/viz/paper_tex.py`: primary estimates, robustness including leave-one-model-out, and the model list. New macros: `\acwiDate`, `\gdpVintage`, `\qfourZeroModels`, `\lomoInsigModels`, `\rbHiMax`.
+- All sections proofread; wording stays with "allocates more to" / "is associated with". No estimate changed; `tests/test_numbers.py` still passes.
+- The web version (`paper/web.py`) strips `@{}` column specs, `\addlinespace` and `\quad` so pandoc renders the three tables; numeric cells no longer wrap.
+- EuroLLM's developer in `config.yaml` corrected to the UTTER consortium.

@@ -1,42 +1,46 @@
 \section{Results}\label{sec:results}
 
-\paragraph*{Instrument} Every model returned a usable allocation for almost every prompt: refusals are at most \refusalMax\% and parse failures at most \failMax\% per model, so no model is excluded. Many replies miss 100 in arithmetic: the median model has \renormWideMedian\% of replies outside 95--105 after one retry, and one model \renormWideMax\% (Fig.~\ref{fig:rates}); these are renormalised under amendment~A1, and the original rule is a robustness check.
+\paragraph*{Instrument} Every model returned a usable allocation for almost every prompt: refusals are at most \refusalMax\% and parse failures at most \failMax\% per model, so no model is excluded. Many replies do not sum to 100: the median model has \renormWideMedian\% of replies outside 95--105 after one retry, and one model \renormWideMax\% (Fig.~\ref{fig:rates}, Appendix~\ref{app:models}). These are renormalised under amendment~A1, and the original rule is reported as a robustness check.
 
-\paragraph*{Home tilt (H1)} Table~\ref{tab:primary} reports Eq.~\eqref{eq:main}. A model's home market receives $\beta=\betaHome{}$\,pp (SE \betaHomeSE{}; wild template bootstrap 95\% CI \betaWildLo{} to \betaWildHi{}) relative to what other models give that market. The estimate is small against an equal weight of 12.5\,pp and has the opposite sign to H1, which is \emph{not supported}. Per model (Fig.~\ref{fig:tilt}), the home tilt ranges from \tiltMin{} to \tiltMax{}\,pp: \nTiltPos{} models allocate significantly more to their home market than other models do and \nTiltNeg{} allocate significantly less, with no consistent pattern within origin groups. By group, Chinese models allocate \betaChina{}\,pp more to China, European models \betaEurope{}\,pp to the Eurozone, US models \betaUnitedstates{}\,pp to the United States, Thai models \betaThailand{}\,pp to Thailand and the Korean model \betaKorea{}\,pp to South Korea. Among English prompts with no investor nationality (H2), $\beta=\betaHtwo{}$\,pp (SE \betaHtwoSE{}; only 12 prompts), so H2 is not supported either.
+\paragraph*{Home tilt (H1)} Table~\ref{tab:primary} reports Eq.~\eqref{eq:main}. A model's home market receives $\beta=\betaHome{}$\,pp (SE \betaHomeSE{}, 95\% CI \betaHomeLo{} to \betaHomeHi{}; wild cluster bootstrap over templates \betaWildLo{} to \betaWildHi{}) relative to what other models give that market. The estimate is small against an equal weight of 12.5\,pp and has the opposite sign to H1, which is \emph{not supported}. Per model (Fig.~\ref{fig:tilt}), the home tilt ranges from \tiltMin{} to \tiltMax{}\,pp: \nTiltPos{} models allocate significantly more to their home market than other models do and \nTiltNeg{} allocate significantly less, with no consistent pattern within origin groups. By group, Chinese models allocate \betaChina{}\,pp more to China, European models \betaEurope{}\,pp to the Eurozone, US models \betaUnitedstates{}\,pp to the United States, Thai models \betaThailand{}\,pp to Thailand and the Korean model \betaKorea{}\,pp to South Korea. Among English prompts with no investor nationality (H2), $\beta=\betaHtwo{}$\,pp (SE \betaHtwoSE{}; only 12 prompts per model), so H2 is not supported either.
 
-\begin{figure}[t]
+\begin{table}[htbp]
+\caption{Primary and secondary estimates. Weights in percentage points; SEs clustered by prompt except where noted. $N$ counts model $\times$ prompt $\times$ market observations.}
+\label{tab:primary}
+\centering\footnotesize
+\input{tables/primary}
+\end{table}
+
+\begin{figure}[htbp]
 \centering
-\includegraphics[width=\columnwidth]{figures/fig1_home_tilt.png}
-\caption{Home tilt by model: mean weight on the model's home market minus the mean weight that models of other origins give that market on the same prompt, with 95\% prompt-bootstrap CIs.}
+\includegraphics[width=\textwidth]{figures/fig1_home_tilt.pdf}
+\caption{Home tilt by model. Dots: mean over the 240 prompts of the model's weight on its home market minus the mean weight that models of other origins give that market on the same prompt; bars: 95\% CI from a cluster bootstrap over prompts (999 draws). Dashed line and band: the pooled $\beta$ from Eq.~\eqref{eq:main} with its 95\% CI (SE clustered by prompt). Colours mark the origin group; the home market is in parentheses.}
 \label{fig:tilt}
 \end{figure}
 
-\paragraph*{Origin, investor and language} The prompt moves allocations more than the model's origin does. When the investor states a country of residence, that market receives $\gamma=\gammaInv{}$\,pp more (SE \gammaInvSE{}); writing the prompt in a market's main language adds $\lambda=\lambdaLang{}$\,pp (SE \lambdaLangSE{}; Fig.~\ref{fig:decomp}). Levels are far from both market-capitalisation and GDP weights (Fig.~\ref{fig:heatmap}): every model gives the United States \usShareMin--\usShareMax\% (MSCI ACWI, proxied by an ACWI-tracking ETF's holdings on 29~October 2026 and renormalised over the eight markets: \acwiUS\%) and China \chinaShareMin--\chinaShareMax\% (ACWI: \acwiChina\%), so all models sit much closer to equal weight than to any capitalisation benchmark.
+\paragraph*{Origin, investor and language} The prompt moves allocations more than the model's origin does (Fig.~\ref{fig:decomp}). When the investor states a country of residence, that market receives $\gamma=\gammaInv{}$\,pp more (SE \gammaInvSE{}), \gammaRatio{} times the absolute size of the home effect; writing the prompt in a market's main language adds $\lambda=\lambdaLang{}$\,pp (SE \lambdaLangSE{}). Levels are far from both market-capitalisation and GDP weights (Fig.~\ref{fig:heatmap}): every model gives the United States \usShareMin--\usShareMax\% of the portfolio and China \chinaShareMin--\chinaShareMax\%, against \acwiUS\% and \acwiChina\% in MSCI ACWI and \gdpUS\% and \gdpChina\% by GDP, each renormalised over the eight markets. All models sit much closer to equal weight than to any capitalisation benchmark.
 
-\begin{figure*}[t]
+\begin{figure}[htbp]
 \centering
-\includegraphics[width=0.49\textwidth]{figures/fig2_allocation_heatmap.png}\hfill
-\includegraphics[width=0.49\textwidth]{figures/fig3_origin_vs_language_vs_investor.png}
-\caption{Left: mean allocation by model and market (home cells outlined) with equal, market-capitalisation and GDP reference rows. Right: the three channels $\beta$, $\gamma$, $\lambda$ with 95\% CIs, and the China weight by prompt language and investor residence.}
-\label{fig:heatmap}\label{fig:decomp}
-\end{figure*}
+\includegraphics[width=\textwidth]{figures/fig3_origin_vs_language_vs_investor.pdf}
+\caption{What moves the allocation. (a) The three channels in Eq.~\eqref{eq:main} with 95\% CIs (SE clustered by prompt). (b) Mean weight on a market when the investor states that they live there (blue) and otherwise (grey), over all models and prompts. (c) The same for the prompt language: English maps to the United States and the United Kingdom, Chinese to China, French to the Eurozone and Thai to Thailand. Labels give the difference in pp.}
+\label{fig:decomp}
+\end{figure}
 
-\begin{table}[t]
-\caption{Primary and secondary estimates (pp). SEs clustered by prompt.}
-\label{tab:primary}
+\begin{figure}[htbp]
 \centering
-\begin{adjustbox}{max width=\columnwidth}
-\input{tables/primary}
-\end{adjustbox}
-\end{table}
+\includegraphics[width=\textwidth]{figures/fig2_allocation_heatmap.pdf}
+\caption{Mean allocation by model and market (pp, over 240 prompts, weights renormalised to 100). Outlined cells: the model's home market. The three reference rows are context, not a benchmark of correctness: equal weight, MSCI ACWI country weights (proxied by an ACWI-tracking ETF's holdings on \acwiDate) and \gdpYear{} GDP (IMF WEO, \gdpVintage), each renormalised over the eight markets.}
+\label{fig:heatmap}
+\end{figure}
 
-\paragraph*{Fine-tuning (H3)} The two Thai fine-tunes move in opposite directions (Fig.~\ref{fig:ft}). OpenThaiGPT allocates \ftOpenthaigptoneFiveSevenb{}\,pp more to Thailand than its base Qwen2.5-7B (\ftOpenthaigptoneFiveSevenbMean\% vs \ftOpenthaigptoneFiveSevenbBaseMean\%), whereas Typhoon2 allocates \ftTyphoontwoEightb{}\,pp relative to Llama-3.1-8B (\ftTyphoontwoEightbMean\% vs \ftTyphoontwoEightbBaseMean\%). H3 is supported for one pair only, so fine-tuning on Thai data is not associated with a consistent shift towards Thailand.
+\paragraph*{Fine-tuning (H3)} The two Thai fine-tunes move in opposite directions (Fig.~\ref{fig:ft}). OpenThaiGPT allocates \ftOpenthaigptoneFiveSevenb{}\,pp more to Thailand than its base Qwen2.5-7B (\ftOpenthaigptoneFiveSevenbMean\% against \ftOpenthaigptoneFiveSevenbBaseMean\%), whereas Typhoon2 allocates \ftTyphoontwoEightb{}\,pp relative to its base Llama-3.1-8B (\ftTyphoontwoEightbMean\% against \ftTyphoontwoEightbBaseMean\%). H3 is supported for one pair only, so fine-tuning on Thai data is not associated with a consistent shift towards Thailand.
 
-\begin{figure}[t]
+\begin{figure}[htbp]
 \centering
-\includegraphics[width=\columnwidth]{figures/fig4_finetune_transmission.png}
-\caption{Thailand weight of each Thai fine-tune and its base model, with 95\% CIs for the difference (prompt fixed effects).}
+\includegraphics[width=0.8\textwidth]{figures/fig4_finetune_transmission.pdf}
+\caption{Thai fine-tuning and the weight on Thailand. Bars: mean weight on Thailand over the same 240 prompts, with $\pm1.96$ standard errors; dashed line: equal weight (12.5\,pp). $\delta$: fine-tune minus base model from a regression with prompt fixed effects, with its 95\% CI (SE clustered by prompt).}
 \label{fig:ft}
 \end{figure}
 
-\paragraph*{Cash currency} Every model chooses US dollars for cash in \usdCashMin--\usdCashMax\% of replies; the home-currency premium in the linear probability model is \cash{}\,pp (SE \cashSE{}). The high home-currency share of US models is the common dollar default, not a home effect.
+\paragraph*{Cash currency} Every model chooses US dollars for cash in \usdCashMin--\usdCashMax\% of replies. The home-currency coefficient in the linear probability model is \cash{}\,pp (SE \cashSE{}), so no model favours its own currency beyond what the currency effects explain; the high home-currency share of the US models is the common dollar default, not a home effect.

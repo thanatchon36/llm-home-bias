@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import logging
+import re
 from typing import Any
 
 import pandas as pd
@@ -36,7 +37,8 @@ def table1(res: dict[str, Any]) -> pd.DataFrame:
     for k, v in bo.items():
         if k.startswith("home_") and v:
             e, s, pv = cell(v)
-            rows.append({"Specification": "By origin group", "Coefficient": f"β Home × {k[5:]}", "Estimate (pp)": e,
+            group = re.sub(r"(?<=[a-z])(?=[A-Z])", " ", k[5:])  # UnitedStates -> United States
+            rows.append({"Specification": "By origin group", "Coefficient": f"β Home × {group}", "Estimate (pp)": e,
                          "SE": s, "p": pv, "N": bo["N"], "Clusters": bo["clusters"], "Models": bo["models"]})
     h = res["h2"]
     e, s, pv = cell(h["home"])
@@ -99,8 +101,9 @@ def table3(res: dict[str, Any]) -> pd.DataFrame:
 
 
 def _b(c: dict[str, Any], meta: dict[str, Any]) -> dict[str, Any]:
-    return {"β (pp)": round(c["est"], 2), "SE": round(c["se"], 2), "95% CI": f"[{c['lo']:.2f}, {c['hi']:.2f}]",
-            "p": round(c["p"], 4), "N": meta["N"], "Models": meta["models"]}
+    e, s, pv = cell(c)
+    return {"β (pp)": e, "SE": s, "95% CI": f"[{c['lo']:.2f}, {c['hi']:.2f}]", "p": pv, "N": meta["N"],
+            "Models": meta["models"]}
 
 
 def write(df: pd.DataFrame, name: str, cfg: dict[str, Any]) -> None:

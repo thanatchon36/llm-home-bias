@@ -87,12 +87,20 @@ pre code { font-weight: 400; font-size: inherit; overflow-wrap: normal; }
   border-radius: 0 6px 6px 0; font-size: 0.93rem; color: var(--ink-2); }
 figure { margin: 1.6em 0; display: flex; flex-direction: column; gap: 10px; }
 figure img { background: var(--plate); padding: 12px; border-radius: 6px; border: 1px solid var(--rule); max-width: 100%; height: auto; }
-figcaption, caption { font-size: 0.88rem; color: var(--ink-2); line-height: 1.45; text-align: left; }
+figcaption, caption { font-family: var(--font-body); font-size: 0.88rem; color: var(--ink-2); line-height: 1.45; text-align: left; }
 .paper table { display: block; overflow-x: auto; border-collapse: collapse; width: 100%; margin: 1.4em 0;
   font: 400 0.78rem/1.45 var(--font-mono); font-variant-numeric: tabular-nums; }
 /* Code in table cells must not break per letter on phones; the table scrolls sideways instead. */
 .paper table code { overflow-wrap: normal; word-break: normal; white-space: nowrap; }
 th, td { padding: 6px 10px; border-bottom: 1px solid var(--rule); text-align: left; vertical-align: top; }
+/* Numeric cells stay on one line; only the label column wraps (the table scrolls sideways if needed). */
+.paper th:not(:first-child), .paper td:not(:first-child) { white-space: nowrap; }
+/* Caption labels as in the PDF: figures and tables numbered in document order. */
+.paper { counter-reset: fig tbl; }
+.paper figure { counter-increment: fig; }
+.paper figcaption::before { content: "Figure " counter(fig) ". "; font-weight: 700; color: var(--ink); }
+.paper table { counter-increment: tbl; }
+.paper caption::before { content: "Table " counter(tbl) ". "; font-weight: 700; color: var(--ink); }
 th { font-weight: 500; color: var(--ink-2); border-bottom-color: var(--ink-2); }
 #refs { width: 100%; max-width: none; font-size: 0.88rem; line-height: 1.5; display: flex; flex-direction: column; gap: 6px; }
 /* Author-year entries are plain text: full width with a hanging indent. The two-column grid is
@@ -129,7 +137,7 @@ math[display="block"] { display: block; max-width: 100%; overflow-x: auto; overf
 </header>
 <section class="abstract" aria-label="Abstract">
   <h2>Abstract</h2>
-  <div class="abstract-body"><p>Do open-weight language models allocate more of an equity portfolio to the stock market of the country where they were built? We asked 12 models from China, the United States, Europe, Thailand and Korea, run locally, to split a portfolio across eight markets in 240 factorial prompts that vary the investor’s residence, the prompt language, risk tolerance and horizon. In the pre-registered regression a model’s home market receives <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.42 pp (95% CI <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.59 to <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.25) relative to what other models give that market: no home tilt, and if anything a small negative one. A post-hoc check that allows for models’ different dispersion around equal weight puts it at +0.12 pp. The investor’s stated residence is associated with a far larger shift (+1.88 pp). Thai fine-tuning moves the Thailand weight by <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>1.04 pp in one pair and +1.26 pp in the other. All replies and code are public.</p>
+  <div class="abstract-body"><p>Do open-weight language models allocate more of an equity portfolio to the stock market of the country where they were built? We ask 12 models from China, the United States, Europe, Thailand and Korea, run locally, to split a portfolio across eight markets in 240 factorial prompts that vary the investor’s residence, the prompt language, risk tolerance and horizon. In the pre-registered regression a model’s home market receives <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.42 pp (95% CI <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.59 to <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.25) relative to what other models give that market: no home tilt, and if anything a small negative one. A post-hoc check that allows for each model’s dispersion around equal weight puts the effect at +0.12 pp. The investor’s stated residence is associated with a far larger shift of +1.88 pp towards that market, and the prompt language with +0.46 pp. Thai fine-tuning moves the weight on Thailand by <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>1.04 pp in one pair of models and by +1.26 pp in the other. All prompts, raw replies and code are public.</p>
 </div>
 </section>
 <section class="results" aria-label="Results at a glance">
@@ -140,7 +148,7 @@ math[display="block"] { display: block; max-width: 100%; overflow-x: auto; overf
 <li class="r r-ref"><span class="r-id">H3</span><span class="r-tag">mixed</span><span class="r-text">Thai fine-tunes: OpenThaiGPT +1.26 pp, Typhoon2 −1.04 pp<small>Thailand weight vs the base model (Qwen2.5-7B, Llama-3.1-8B), prompt fixed effects</small></span></li>
 <li class="r r-ref"><span class="r-id">Investor</span><span class="r-tag">larger</span><span class="r-text">Investor&#x27;s stated residence: +1.88 pp for that market<small>prompt language +0.46 pp; 4.4× the pooled home effect</small></span></li>
 <li class="r r-ref"><span class="r-id">Cash</span><span class="r-tag">USD default</span><span class="r-text">Every model holds cash in USD in 80.4–96.7% of replies<small>home-currency premium −2.18 pp</small></span></li>
-<li class="r r-null"><span class="r-id">Robustness</span><span class="r-tag">no positive tilt</span><span class="r-text">Leave-one-model-out β from −0.82 to −0.01 pp<small>pre-registered checks in Table III</small></span></li></ul>
+<li class="r r-null"><span class="r-id">Robustness</span><span class="r-tag">no positive tilt</span><span class="r-text">Leave-one-model-out β from −0.82 to −0.01 pp<small>pre-registered checks in Table 2</small></span></li></ul>
 </section>
 <nav class="toc" aria-label="Contents"><h2>Contents</h2>
 <ul>
@@ -157,526 +165,574 @@ math[display="block"] { display: block; max-width: 100%; overflow-x: auto; overf
 </nav>
 <article class="paper">
 <h1 data-number="1" id="sec:intro"><span class="header-section-number">1</span> Why this matters</h1>
-<p>Language models are entering retail financial advice and research workflows, and central banks have begun to map how AI changes intermediation and asset management <span class="citation" data-cites="aldasoro2024 bis2024ai">[1], [2]</span>. If a model systematically allocated more to one country’s assets, that tilt would reach every user who asks it, much as investor home bias <span class="citation" data-cites="french1991 lewis1999 coval1999">[3], [4], [5]</span> shapes portfolios one investor at a time. Language models also carry geographic and cultural slants: their default answers resemble the values of English-speaking and Protestant European countries <span class="citation" data-cites="tao2024 durmus2023">[6], [7]</span>, and their ratings of places are systematically lower for regions with weaker socioeconomic conditions <span class="citation" data-cites="manvi2024">[8]</span>. In finance, a recent audit of 32 models finds advice consistent with investor home bias <span class="citation" data-cites="fieberg2025">[9]</span>, and three commercial chat assistants put over 90% of equity portfolios in the United States <span class="citation" data-cites="winder2025">[10]</span>; whether advice is trustworthy enough to be fiduciary is open <span class="citation" data-cites="lo2024">[11]</span>.</p>
-<p>Those audits vary the investor, not the model’s origin. This note asks the complementary question with open-weight models whose developers sit in different countries: <em>holding the prompt fixed, does a model allocate more to its own home market?</em> Because the prompt also states the investor’s residence and is written in four languages, the design separates three channels that are confounded in ordinary use: the model’s origin (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>β</mi><annotation encoding="application/x-tex">\beta</annotation></semantics></math>), the investor’s residence (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>γ</mi><annotation encoding="application/x-tex">\gamma</annotation></semantics></math>) and the prompt language (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>λ</mi><annotation encoding="application/x-tex">\lambda</annotation></semantics></math>). Two Thai models fine-tuned from American and Chinese base models that are also in the sample let us ask whether fine-tuning moves the allocation towards Thailand.</p>
+<p>Language models are entering retail financial advice and research workflows, and central banks have begun to map how AI changes intermediation and asset management <span class="citation" data-cites="aldasoro2024 bis2024ai">[1], [2]</span>. If a model systematically allocated more to one country’s assets, that tilt would reach every user who asks it, much as investor home bias <span class="citation" data-cites="french1991 lewis1999 coval1999">[3], [4], [5]</span> shapes portfolios one investor at a time. Language models also carry geographic and cultural slants: their default answers resemble the values of English-speaking and Protestant European countries <span class="citation" data-cites="tao2024 durmus2023">[6], [7]</span>, and their ratings of places are systematically lower for regions with weaker socioeconomic conditions <span class="citation" data-cites="manvi2024">[8]</span>. In finance, a recent audit of 32 models finds advice consistent with investor home bias <span class="citation" data-cites="fieberg2025">[9]</span>, three commercial chat assistants put over 90% of equity portfolios in the United States <span class="citation" data-cites="winder2025">[10]</span>, and whether such advice can meet a fiduciary standard is an open question <span class="citation" data-cites="lo2024">[11]</span>.</p>
+<p>Those audits vary the investor, not the model’s origin. This note asks the complementary question with open-weight models whose developers sit in different countries: <em>holding the prompt fixed, does a model allocate more to its own home market?</em> Because the prompt also states the investor’s residence and is written in four languages, the design separates three channels that are confounded in ordinary use: the model’s origin (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>β</mi><annotation encoding="application/x-tex">\beta</annotation></semantics></math>), the investor’s residence (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>γ</mi><annotation encoding="application/x-tex">\gamma</annotation></semantics></math>) and the prompt language (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>λ</mi><annotation encoding="application/x-tex">\lambda</annotation></semantics></math>). Two Thai models, fine-tuned from an American and a Chinese base model that are themselves in the sample, let us ask whether fine-tuning moves the allocation towards Thailand. Section <a href="#sec:method" data-reference-type="ref" data-reference="sec:method">2</a> describes the design, Section <a href="#sec:results" data-reference-type="ref" data-reference="sec:results">3</a> the results, Section <a href="#sec:robust" data-reference-type="ref" data-reference="sec:robust">4</a> the pre-registered robustness checks and Section <a href="#sec:discussion" data-reference-type="ref" data-reference="sec:discussion">5</a> what the evidence does not show.</p>
 <h1 data-number="2" id="sec:method"><span class="header-section-number">2</span> Design</h1>
 <h4 class="unnumbered" id="models">Models</h4>
-<p>Twelve open-weight instruction-tuned models, run locally through Ollama <span class="citation" data-cites="ollama">[12]</span> at 4-bit quantisation (Q4_K_M) on one consumer GPU (Table <a href="#tab:models" data-reference-type="ref" data-reference="tab:models">3</a>). Origin is the lead developer’s country: China (Qwen3-8B, Qwen2.5-7B, GLM-4-9B), the United States (Llama-3.1-8B, Gemma-3-12B, Phi-4), Europe (Mistral-7B, Mistral-NeMo-12B, EuroLLM-9B), Thailand (Typhoon2-8B <span class="citation" data-cites="typhoon2">[13]</span>, OpenThaiGPT-1.5-7B) and Korea (EXAONE-3.5-7.8B). The home market of a Chinese model is China, of a US model the United States, of a European model the Eurozone, of a Thai model Thailand and of the Korean model South Korea. The two Thai models are fine-tunes of Llama-3.1-8B <span class="citation" data-cites="llama3">[14]</span> and Qwen2.5-7B <span class="citation" data-cites="qwen25">[15]</span>, which are also in the sample; these pairs identify whether fine-tuning moves the allocation.</p>
+<p>Twelve open-weight instruction-tuned models, run locally through Ollama <span class="citation" data-cites="ollama">[12]</span> at 4-bit quantisation (Q4_K_M; the Ollama default builds of GLM-4-9B and Mistral-NeMo-12B are Q4_0) on one consumer GPU (Table <a href="#tab:models" data-reference-type="ref" data-reference="tab:models">3</a>). Origin is the lead developer’s country: China (Qwen3-8B, Qwen2.5-7B, GLM-4-9B), the United States (Llama-3.1-8B, Gemma-3-12B, Phi-4), Europe (Mistral-7B, Mistral-NeMo-12B, EuroLLM-9B), Thailand (Typhoon2-8B <span class="citation" data-cites="typhoon2">[13]</span>, OpenThaiGPT-1.5-7B) and Korea (EXAONE-3.5-7.8B). The home market of a Chinese model is China, of a US model the United States, of a European model the Eurozone, of a Thai model Thailand and of the Korean model South Korea. The two Thai models are fine-tunes of Llama-3.1-8B <span class="citation" data-cites="llama3">[14]</span> and Qwen2.5-7B <span class="citation" data-cites="qwen25">[15]</span>, which are also in the sample; these pairs identify whether fine-tuning moves the allocation.</p>
 <h4 class="unnumbered" id="prompts">Prompts</h4>
-<p>Each model answers the same 240 prompts, a full factorial of investor residence (United States, China, France, Thailand, unspecified) <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>×</mi><annotation encoding="application/x-tex">\times</annotation></semantics></math> prompt language (English, Chinese, French, Thai) <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>×</mi><annotation encoding="application/x-tex">\times</annotation></semantics></math> risk tolerance (3) <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>×</mi><annotation encoding="application/x-tex">\times</annotation></semantics></math> horizon (3 or 20 years) <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>×</mi><annotation encoding="application/x-tex">\times</annotation></semantics></math> two paraphrases. The investor asks how to split an international equity portfolio across a fixed menu of eight markets: the United States, China, the Eurozone, Japan, the United Kingdom, India, South Korea and Thailand. Japan, the UK and India are nobody’s home market. Menu order is randomised in Latin-square blocks so that every market appears in every position exactly 30 times. The reply is constrained to a JSON schema: eight integer weights, a cash currency and a reason of at most 30 words. Decoding is greedy (temperature 0, seed 42).</p>
+<p>Each model answers the same 240 prompts, the full factorial of investor residence (United States, China, France, Thailand, unspecified) <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>×</mi><annotation encoding="application/x-tex">\times</annotation></semantics></math> prompt language (English, Chinese, French, Thai) <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>×</mi><annotation encoding="application/x-tex">\times</annotation></semantics></math> risk tolerance (conservative, balanced, aggressive) <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>×</mi><annotation encoding="application/x-tex">\times</annotation></semantics></math> horizon (3 or 20 years) <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>×</mi><annotation encoding="application/x-tex">\times</annotation></semantics></math> two paraphrases. The investor asks how to split an international equity portfolio across a fixed menu of eight markets: the United States, China, the Eurozone, Japan, the United Kingdom, India, South Korea and Thailand. Japan, the United Kingdom and India are nobody’s home market. Menu order is randomised in Latin-square blocks so that every market appears in every position exactly 30 times. The reply is constrained to a JSON schema: eight integer weights, a cash currency and a reason of at most 30 words. Decoding is greedy (temperature 0, seed 42).</p>
 <h4 class="unnumbered" id="parsing">Parsing</h4>
-<p>Weights are rescaled to sum to 100. A reply that does not sum to 95–105 gets one stricter retry; if that also misses, the earliest valid allocation is renormalised (amendment A1, Appendix <a href="#app:deviations">A</a>). Refusals and invalid replies are dropped. A model with more than 30% refusals plus parse failures is excluded from regressions (0 of 12 models; Section <a href="#sec:results" data-reference-type="ref" data-reference="sec:results">3</a>).</p>
+<p>Weights are rescaled to sum to 100. A reply whose weights do not sum to 95–105 gets one stricter retry; if that also misses, the earliest valid allocation is renormalised (amendment A1, Appendix <a href="#app:deviations">A</a>). Refusals and invalid replies are dropped. A model with more than 30% refusals plus parse failures would be excluded from the regressions; 0 of the 12 models is (Section <a href="#sec:results" data-reference-type="ref" data-reference="sec:results">3</a>).</p>
 <h4 class="unnumbered" id="specification">Specification</h4>
-<p>On the model <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>×</mi><annotation encoding="application/x-tex">\times</annotation></semantics></math> prompt <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>×</mi><annotation encoding="application/x-tex">\times</annotation></semantics></math> market panel of weights <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>w</mi><mrow><mi>m</mi><mo>,</mo><mi>p</mi><mo>,</mo><mi>c</mi></mrow></msub><annotation encoding="application/x-tex">w_{m,p,c}</annotation></semantics></math> (pp) we estimate <math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>w</mi><mrow><mi>m</mi><mo>,</mo><mi>p</mi><mo>,</mo><mi>c</mi></mrow></msub><mo>=</mo><msub><mi>α</mi><mi>m</mi></msub><mo>+</mo><msub><mi>α</mi><mi>c</mi></msub><mo>+</mo><mi>β</mi><mspace width="0.167em"></mspace><msub><mrow><mi>𝐻</mi><mi>𝑜</mi><mi>𝑚</mi><mi>𝑒</mi></mrow><mrow><mi>m</mi><mo>,</mo><mi>c</mi></mrow></msub><mo>+</mo><mi>γ</mi><mspace width="0.167em"></mspace><msub><mrow><mi>𝐼</mi><mi>𝑛</mi><mi>𝑣</mi><mi>𝑒</mi><mi>𝑠</mi><mi>𝑡</mi><mi>𝑜</mi><mi>𝑟</mi><mi>𝐻</mi><mi>𝑜</mi><mi>𝑚</mi><mi>𝑒</mi></mrow><mrow><mi>p</mi><mo>,</mo><mi>c</mi></mrow></msub></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>+</mi><mi>λ</mi><mspace width="0.167em"></mspace><msub><mrow><mi>𝐿</mi><mi>𝑎</mi><mi>𝑛</mi><mi>𝑔</mi><mi>𝑢</mi><mi>𝑎</mi><mi>𝑔</mi><mi>𝑒</mi><mi>𝐻</mi><mi>𝑜</mi><mi>𝑚</mi><mi>𝑒</mi></mrow><mrow><mi>p</mi><mo>,</mo><mi>c</mi></mrow></msub><mo>+</mo><munder><mo>∑</mo><mi>k</mi></munder><msub><mi>θ</mi><mi>k</mi></msub><msub><mrow><mi>𝑃</mi><mi>𝑜</mi><mi>𝑠</mi></mrow><mrow><mi>p</mi><mo>,</mo><mi>c</mi><mo>,</mo><mi>k</mi></mrow></msub><mo>+</mo><msub><mi>ε</mi><mrow><mi>m</mi><mo>,</mo><mi>p</mi><mo>,</mo><mi>c</mi></mrow></msub><mo>,</mo></mtd></mtr></mtable><annotation encoding="application/x-tex">\begin{multline}
+<p>On the model <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>×</mi><annotation encoding="application/x-tex">\times</annotation></semantics></math> prompt <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>×</mi><annotation encoding="application/x-tex">\times</annotation></semantics></math> market panel of weights <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>w</mi><mrow><mi>m</mi><mo>,</mo><mi>p</mi><mo>,</mo><mi>c</mi></mrow></msub><annotation encoding="application/x-tex">w_{m,p,c}</annotation></semantics></math> (pp) we estimate <math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>w</mi><mrow><mi>m</mi><mo>,</mo><mi>p</mi><mo>,</mo><mi>c</mi></mrow></msub><mo>=</mo><msub><mi>α</mi><mi>m</mi></msub><mo>+</mo><msub><mi>α</mi><mi>c</mi></msub><mo>+</mo><mi>β</mi><mspace width="0.167em"></mspace><msub><mrow><mi>𝐻</mi><mi>𝑜</mi><mi>𝑚</mi><mi>𝑒</mi></mrow><mrow><mi>m</mi><mo>,</mo><mi>c</mi></mrow></msub><mo>+</mo><mi>γ</mi><mspace width="0.167em"></mspace><msub><mrow><mi>𝐼</mi><mi>𝑛</mi><mi>𝑣</mi><mi>𝑒</mi><mi>𝑠</mi><mi>𝑡</mi><mi>𝑜</mi><mi>𝑟</mi><mi>𝐻</mi><mi>𝑜</mi><mi>𝑚</mi><mi>𝑒</mi></mrow><mrow><mi>p</mi><mo>,</mo><mi>c</mi></mrow></msub><mo>+</mo><mi>λ</mi><mspace width="0.167em"></mspace><msub><mrow><mi>𝐿</mi><mi>𝑎</mi><mi>𝑛</mi><mi>𝑔</mi><mi>𝑢</mi><mi>𝑎</mi><mi>𝑔</mi><mi>𝑒</mi><mi>𝐻</mi><mi>𝑜</mi><mi>𝑚</mi><mi>𝑒</mi></mrow><mrow><mi>p</mi><mo>,</mo><mi>c</mi></mrow></msub><mo>+</mo><msub><mo>∑</mo><mi>k</mi></msub><msub><mi>θ</mi><mi>k</mi></msub><mspace width="0.167em"></mspace><msub><mrow><mi>𝑃</mi><mi>𝑜</mi><mi>𝑠</mi></mrow><mrow><mi>p</mi><mo>,</mo><mi>c</mi><mo>,</mo><mi>k</mi></mrow></msub><mo>+</mo><msub><mi>ε</mi><mrow><mi>m</mi><mo>,</mo><mi>p</mi><mo>,</mo><mi>c</mi></mrow></msub><mo>,</mo></mrow><annotation encoding="application/x-tex">\begin{equation}
 \tag{1}
-w_{m,p,c} = \alpha_m + \alpha_c + \beta\,\mathit{Home}_{m,c} + \gamma\,\mathit{InvestorHome}_{p,c} \\ + \lambda\,\mathit{LanguageHome}_{p,c} + \textstyle\sum_k \theta_k \mathit{Pos}_{p,c,k} + \varepsilon_{m,p,c},
-\end{multline}</annotation></semantics></math> where <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐻</mi><mi>𝑜</mi><mi>𝑚</mi><mi>𝑒</mi></mrow><annotation encoding="application/x-tex">\mathit{Home}</annotation></semantics></math> marks the model’s home market, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐼</mi><mi>𝑛</mi><mi>𝑣</mi><mi>𝑒</mi><mi>𝑠</mi><mi>𝑡</mi><mi>𝑜</mi><mi>𝑟</mi><mi>𝐻</mi><mi>𝑜</mi><mi>𝑚</mi><mi>𝑒</mi></mrow><annotation encoding="application/x-tex">\mathit{InvestorHome}</annotation></semantics></math> the investor’s country of residence (France maps to the Eurozone), <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐿</mi><mi>𝑎</mi><mi>𝑛</mi><mi>𝑔</mi><mi>𝑢</mi><mi>𝑎</mi><mi>𝑔</mi><mi>𝑒</mi><mi>𝐻</mi><mi>𝑜</mi><mi>𝑚</mi><mi>𝑒</mi></mrow><annotation encoding="application/x-tex">\mathit{LanguageHome}</annotation></semantics></math> the market whose main language is the prompt’s (English maps to the US and the UK), and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝑃</mi><mi>𝑜</mi><mi>𝑠</mi></mrow><annotation encoding="application/x-tex">\mathit{Pos}</annotation></semantics></math> the menu position. Market fixed effects absorb each market’s average appeal across all models, so <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>β</mi><annotation encoding="application/x-tex">\beta</annotation></semantics></math> is the extra weight a model gives its own home market relative to how other models treat that market. Standard errors are clustered by prompt (240 clusters). We also report a wild cluster bootstrap over the 8 language <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>×</mi><annotation encoding="application/x-tex">\times</annotation></semantics></math> paraphrase templates <span class="citation" data-cites="cameron2008 webb2023">[16], [17]</span>.</p>
+w_{m,p,c} = \alpha_m + \alpha_c + \beta\,\mathit{Home}_{m,c} + \gamma\,\mathit{InvestorHome}_{p,c} + \lambda\,\mathit{LanguageHome}_{p,c} + \sum\nolimits_k \theta_k\,\mathit{Pos}_{p,c,k} + \varepsilon_{m,p,c},
+\end{equation}</annotation></semantics></math> where <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐻</mi><mi>𝑜</mi><mi>𝑚</mi><mi>𝑒</mi></mrow><annotation encoding="application/x-tex">\mathit{Home}</annotation></semantics></math> marks the model’s home market, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐼</mi><mi>𝑛</mi><mi>𝑣</mi><mi>𝑒</mi><mi>𝑠</mi><mi>𝑡</mi><mi>𝑜</mi><mi>𝑟</mi><mi>𝐻</mi><mi>𝑜</mi><mi>𝑚</mi><mi>𝑒</mi></mrow><annotation encoding="application/x-tex">\mathit{InvestorHome}</annotation></semantics></math> the investor’s country of residence (France maps to the Eurozone), <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐿</mi><mi>𝑎</mi><mi>𝑛</mi><mi>𝑔</mi><mi>𝑢</mi><mi>𝑎</mi><mi>𝑔</mi><mi>𝑒</mi><mi>𝐻</mi><mi>𝑜</mi><mi>𝑚</mi><mi>𝑒</mi></mrow><annotation encoding="application/x-tex">\mathit{LanguageHome}</annotation></semantics></math> the market whose main language the prompt is written in (English maps to the United States and the United Kingdom), and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝑃</mi><mi>𝑜</mi><mi>𝑠</mi></mrow><annotation encoding="application/x-tex">\mathit{Pos}</annotation></semantics></math> the menu position. Market fixed effects absorb each market’s average appeal across all models, so <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>β</mi><annotation encoding="application/x-tex">\beta</annotation></semantics></math> is the extra weight a model gives its own home market relative to how other models treat that market. Standard errors are clustered by prompt (240 clusters). Because the eight language <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>×</mi><annotation encoding="application/x-tex">\times</annotation></semantics></math> paraphrase templates are the independent units of wording, we also report a wild cluster bootstrap over templates <span class="citation" data-cites="cameron2008 webb2023">[16], [17]</span>.</p>
 <h4 class="unnumbered" id="hypotheses">Hypotheses</h4>
-<p>H1: <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>β</mi><mo>&gt;</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\beta&gt;0</annotation></semantics></math>. H2: <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>β</mi><mo>&gt;</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\beta&gt;0</annotation></semantics></math> among English prompts with an unspecified investor, where language and investor cues are absent. H3: each Thai fine-tune allocates more to Thailand than its base model, estimated with prompt fixed effects. A hypothesis is supported if the 95% CI excludes zero in the predicted direction. The cash-currency choice is analysed with the same right-hand side as a linear probability model.</p>
+<p>H1: <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>β</mi><mo>&gt;</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\beta&gt;0</annotation></semantics></math>. H2: <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>β</mi><mo>&gt;</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\beta&gt;0</annotation></semantics></math> among English prompts with an unspecified investor, where language and investor cues are absent. H3: each Thai fine-tune allocates more to Thailand than its base model, estimated with prompt fixed effects. A hypothesis is supported if the 95% CI excludes zero in the predicted direction. The choice of cash currency is analysed with the same right-hand side in a linear probability model for choosing the home currency.</p>
 <h4 class="unnumbered" id="pre-registration">Pre-registration</h4>
 <p>The pre-analysis plan (<code>docs/PAP.md</code>) and the prompt set, with its SHA-256 hash, were committed before the full run. Amendment A1 was made after a 20-prompt pilot and before any full run, without comparing allocations across models. The robustness checks in Section <a href="#sec:robust" data-reference-type="ref" data-reference="sec:robust">4</a> are the pre-registered list.</p>
 <h1 data-number="3" id="sec:results"><span class="header-section-number">3</span> Results</h1>
 <h4 class="unnumbered" id="instrument">Instrument</h4>
-<p>Every model returned a usable allocation for almost every prompt: refusals are at most 0.4% and parse failures at most 0.8% per model, so no model is excluded. Many replies miss 100 in arithmetic: the median model has 15.6% of replies outside 95–105 after one retry, and one model 82.5% (Fig. <a href="#fig:rates" data-reference-type="ref" data-reference="fig:rates">4</a>); these are renormalised under amendment A1, and the original rule is a robustness check.</p>
+<p>Every model returned a usable allocation for almost every prompt: refusals are at most 0.4% and parse failures at most 0.8% per model, so no model is excluded. Many replies do not sum to 100: the median model has 15.6% of replies outside 95–105 after one retry, and one model 82.5% (Fig. <a href="#fig:rates" data-reference-type="ref" data-reference="fig:rates">5</a>, Appendix <a href="#app:models">B</a>). These are renormalised under amendment A1, and the original rule is reported as a robustness check.</p>
 <h4 class="unnumbered" id="home-tilt-h1">Home tilt (H1)</h4>
-<p>Table <a href="#tab:primary" data-reference-type="ref" data-reference="tab:primary">1</a> reports Eq. (1). A model’s home market receives <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>β</mi><mo>=</mo><mi>−</mi><mn>0.42</mn><mrow></mrow></mrow><annotation encoding="application/x-tex">\beta=\ensuremath{-}0.42{}</annotation></semantics></math> pp (SE 0.09; wild template bootstrap 95% CI <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.75 to <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.09) relative to what other models give that market. The estimate is small against an equal weight of 12.5 pp and has the opposite sign to H1, which is <em>not supported</em>. Per model (Fig. <a href="#fig:tilt" data-reference-type="ref" data-reference="fig:tilt">1</a>), the home tilt ranges from <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>3.5 to +1.9 pp: 5 models allocate significantly more to their home market than other models do and 6 allocate significantly less, with no consistent pattern within origin groups. By group, Chinese models allocate +0.60 pp more to China, European models <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>2.07 pp to the Eurozone, US models <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.17 pp to the United States, Thai models +0.07 pp to Thailand and the Korean model <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.40 pp to South Korea. Among English prompts with no investor nationality (H2), <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>β</mi><mo>=</mo><mi>−</mi><mn>1.02</mn><mrow></mrow></mrow><annotation encoding="application/x-tex">\beta=\ensuremath{-}1.02{}</annotation></semantics></math> pp (SE 0.29; only 12 prompts), so H2 is not supported either.</p>
-<figure id="fig:tilt" data-latex-placement="t">
-<img src="figures/fig1_home_tilt.png" alt="" />
-<figcaption>Home tilt by model: mean weight on the model’s home market minus the mean weight that models of other origins give that market on the same prompt, with 95% prompt-bootstrap CIs.</figcaption>
-</figure>
-<h4 class="unnumbered" id="origin-investor-and-language">Origin, investor and language</h4>
-<p>The prompt moves allocations more than the model’s origin does. When the investor states a country of residence, that market receives <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>γ</mi><mo>=</mo><mi>+</mi><mn>1.88</mn><mrow></mrow></mrow><annotation encoding="application/x-tex">\gamma=+1.88{}</annotation></semantics></math> pp more (SE 0.21); writing the prompt in a market’s main language adds <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>λ</mi><mo>=</mo><mi>+</mi><mn>0.46</mn><mrow></mrow></mrow><annotation encoding="application/x-tex">\lambda=+0.46{}</annotation></semantics></math> pp (SE 0.13; Fig. <a href="#fig:decomp" data-reference-type="ref" data-reference="fig:decomp">2</a>). Levels are far from both market-capitalisation and GDP weights (Fig. <a href="#fig:heatmap" data-reference-type="ref" data-reference="fig:heatmap">[fig:heatmap]</a>): every model gives the United States 7.9–22.7% (MSCI ACWI, proxied by an ACWI-tracking ETF’s holdings on 29 October 2026 and renormalised over the eight markets: 75.5%) and China 13.7–22.5% (ACWI: 2.5%), so all models sit much closer to equal weight than to any capitalisation benchmark.</p>
-<figure id="fig:decomp" data-latex-placement="t">
-<p><img src="figures/fig2_allocation_heatmap.png" alt="" /> <img src="figures/fig3_origin_vs_language_vs_investor.png" alt="" /></p>
-<figcaption>Left: mean allocation by model and market (home cells outlined) with equal, market-capitalisation and GDP reference rows. Right: the three channels <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>β</mi><annotation encoding="application/x-tex">\beta</annotation></semantics></math>, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>γ</mi><annotation encoding="application/x-tex">\gamma</annotation></semantics></math>, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>λ</mi><annotation encoding="application/x-tex">\lambda</annotation></semantics></math> with 95% CIs, and the China weight by prompt language and investor residence.</figcaption>
-</figure>
+<p>Table <a href="#tab:primary" data-reference-type="ref" data-reference="tab:primary">1</a> reports Eq. (1). A model’s home market receives <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>β</mi><mo>=</mo><mi>−</mi><mn>0.42</mn><mrow></mrow></mrow><annotation encoding="application/x-tex">\beta=\ensuremath{-}0.42{}</annotation></semantics></math> pp (SE 0.09, 95% CI <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.59 to <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.25; wild cluster bootstrap over templates <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.75 to <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.09) relative to what other models give that market. The estimate is small against an equal weight of 12.5 pp and has the opposite sign to H1, which is <em>not supported</em>. Per model (Fig. <a href="#fig:tilt" data-reference-type="ref" data-reference="fig:tilt">1</a>), the home tilt ranges from <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>3.5 to +1.9 pp: 5 models allocate significantly more to their home market than other models do and 6 allocate significantly less, with no consistent pattern within origin groups. By group, Chinese models allocate +0.60 pp more to China, European models <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>2.07 pp to the Eurozone, US models <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.17 pp to the United States, Thai models +0.07 pp to Thailand and the Korean model <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.40 pp to South Korea. Among English prompts with no investor nationality (H2), <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>β</mi><mo>=</mo><mi>−</mi><mn>1.02</mn><mrow></mrow></mrow><annotation encoding="application/x-tex">\beta=\ensuremath{-}1.02{}</annotation></semantics></math> pp (SE 0.29; only 12 prompts per model), so H2 is not supported either.</p>
 <div id="tab:primary">
 <table>
-<caption>Primary and secondary estimates (pp). SEs clustered by prompt.</caption>
+<caption>Primary and secondary estimates. Weights in percentage points; SEs clustered by prompt except where noted. <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>N</mi><annotation encoding="application/x-tex">N</annotation></semantics></math> counts model <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>×</mi><annotation encoding="application/x-tex">\times</annotation></semantics></math> prompt <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>×</mi><annotation encoding="application/x-tex">\times</annotation></semantics></math> market observations.</caption>
 <thead>
 <tr>
-<th style="text-align: left;">Specification</th>
-<th style="text-align: left;">Coefficient</th>
+<th style="text-align: left;"></th>
 <th style="text-align: right;">Estimate (pp)</th>
 <th style="text-align: right;">SE</th>
-<th style="text-align: right;">p</th>
-<th style="text-align: right;">N</th>
+<th style="text-align: right;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>p</mi><annotation encoding="application/x-tex">p</annotation></semantics></math></th>
+<th style="text-align: right;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>N</mi><annotation encoding="application/x-tex">N</annotation></semantics></math></th>
 <th style="text-align: right;">Models</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: left;">Pooled (primary)</td>
+<td colspan="6" style="text-align: left;"><em>Pooled regression, Eq. (1); SE clustered by prompt</em></td>
+</tr>
+<tr>
 <td style="text-align: left;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>β</mi><annotation encoding="application/x-tex">\beta</annotation></semantics></math> Home (model origin)</td>
-<td style="text-align: right;">-0.42</td>
+<td style="text-align: right;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.42</td>
 <td style="text-align: right;">0.09</td>
-<td style="text-align: right;">&lt;0.001</td>
-<td style="text-align: right;">23008</td>
+<td style="text-align: right;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mo>&lt;</mo><annotation encoding="application/x-tex">&lt;</annotation></semantics></math>0.001</td>
+<td style="text-align: right;">23,008</td>
 <td style="text-align: right;">12</td>
 </tr>
 <tr>
-<td style="text-align: left;">Pooled (primary)</td>
 <td style="text-align: left;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>γ</mi><annotation encoding="application/x-tex">\gamma</annotation></semantics></math> InvestorHome</td>
 <td style="text-align: right;">+1.88</td>
 <td style="text-align: right;">0.21</td>
-<td style="text-align: right;">&lt;0.001</td>
-<td style="text-align: right;">23008</td>
+<td style="text-align: right;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mo>&lt;</mo><annotation encoding="application/x-tex">&lt;</annotation></semantics></math>0.001</td>
+<td style="text-align: right;">23,008</td>
 <td style="text-align: right;">12</td>
 </tr>
 <tr>
-<td style="text-align: left;">Pooled (primary)</td>
 <td style="text-align: left;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>λ</mi><annotation encoding="application/x-tex">\lambda</annotation></semantics></math> LanguageHome</td>
 <td style="text-align: right;">+0.46</td>
 <td style="text-align: right;">0.13</td>
-<td style="text-align: right;">&lt;0.001</td>
-<td style="text-align: right;">23008</td>
+<td style="text-align: right;">0.001</td>
+<td style="text-align: right;">23,008</td>
 <td style="text-align: right;">12</td>
 </tr>
 <tr>
-<td style="text-align: left;">Pooled, wild cluster bootstrap by template</td>
-<td style="text-align: left;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>β</mi><annotation encoding="application/x-tex">\beta</annotation></semantics></math> Home</td>
-<td style="text-align: right;">-0.42</td>
-<td style="text-align: right;">[-0.75, -0.09]</td>
-<td style="text-align: right;">95% CI</td>
-<td style="text-align: right;">23008</td>
+<td style="text-align: left;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>β</mi><annotation encoding="application/x-tex">\beta</annotation></semantics></math> Home, wild cluster bootstrap over 8 templates (95% CI)</td>
+<td colspan="3" style="text-align: right;">[<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.75, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.09]</td>
+<td style="text-align: right;">23,008</td>
 <td style="text-align: right;">12</td>
 </tr>
 <tr>
-<td style="text-align: left;">By origin group</td>
-<td style="text-align: left;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>β</mi><annotation encoding="application/x-tex">\beta</annotation></semantics></math> Home <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>×</mi><annotation encoding="application/x-tex">\times</annotation></semantics></math> China</td>
+<td colspan="6" style="text-align: left;"><em>Home effect by origin group (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>β</mi><mo>×</mo></mrow><annotation encoding="application/x-tex">\beta \times</annotation></semantics></math> group, same specification)</em></td>
+</tr>
+<tr>
+<td style="text-align: left;">Chinese models</td>
 <td style="text-align: right;">+0.60</td>
 <td style="text-align: right;">0.15</td>
-<td style="text-align: right;">&lt;0.001</td>
-<td style="text-align: right;">23008</td>
+<td style="text-align: right;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mo>&lt;</mo><annotation encoding="application/x-tex">&lt;</annotation></semantics></math>0.001</td>
+<td style="text-align: right;">23,008</td>
 <td style="text-align: right;">12</td>
 </tr>
 <tr>
-<td style="text-align: left;">By origin group</td>
-<td style="text-align: left;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>β</mi><annotation encoding="application/x-tex">\beta</annotation></semantics></math> Home <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>×</mi><annotation encoding="application/x-tex">\times</annotation></semantics></math> Europe</td>
-<td style="text-align: right;">-2.07</td>
+<td style="text-align: left;">US models</td>
+<td style="text-align: right;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.17</td>
+<td style="text-align: right;">0.26</td>
+<td style="text-align: right;">0.513</td>
+<td style="text-align: right;">23,008</td>
+<td style="text-align: right;">12</td>
+</tr>
+<tr>
+<td style="text-align: left;">European models</td>
+<td style="text-align: right;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>2.07</td>
 <td style="text-align: right;">0.13</td>
-<td style="text-align: right;">&lt;0.001</td>
-<td style="text-align: right;">23008</td>
+<td style="text-align: right;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mo>&lt;</mo><annotation encoding="application/x-tex">&lt;</annotation></semantics></math>0.001</td>
+<td style="text-align: right;">23,008</td>
 <td style="text-align: right;">12</td>
 </tr>
 <tr>
-<td style="text-align: left;">By origin group</td>
-<td style="text-align: left;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>β</mi><annotation encoding="application/x-tex">\beta</annotation></semantics></math> Home <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>×</mi><annotation encoding="application/x-tex">\times</annotation></semantics></math> Korea</td>
-<td style="text-align: right;">-0.40</td>
-<td style="text-align: right;">0.16</td>
-<td style="text-align: right;">0.014</td>
-<td style="text-align: right;">23008</td>
-<td style="text-align: right;">12</td>
-</tr>
-<tr>
-<td style="text-align: left;">By origin group</td>
-<td style="text-align: left;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>β</mi><annotation encoding="application/x-tex">\beta</annotation></semantics></math> Home <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>×</mi><annotation encoding="application/x-tex">\times</annotation></semantics></math> Thailand</td>
+<td style="text-align: left;">Thai models</td>
 <td style="text-align: right;">+0.07</td>
 <td style="text-align: right;">0.12</td>
 <td style="text-align: right;">0.573</td>
-<td style="text-align: right;">23008</td>
+<td style="text-align: right;">23,008</td>
 <td style="text-align: right;">12</td>
 </tr>
 <tr>
-<td style="text-align: left;">By origin group</td>
-<td style="text-align: left;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>β</mi><annotation encoding="application/x-tex">\beta</annotation></semantics></math> Home <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>×</mi><annotation encoding="application/x-tex">\times</annotation></semantics></math> UnitedStates</td>
-<td style="text-align: right;">-0.17</td>
-<td style="text-align: right;">0.26</td>
-<td style="text-align: right;">0.513</td>
-<td style="text-align: right;">23008</td>
+<td style="text-align: left;">Korean model</td>
+<td style="text-align: right;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.40</td>
+<td style="text-align: right;">0.16</td>
+<td style="text-align: right;">0.014</td>
+<td style="text-align: right;">23,008</td>
 <td style="text-align: right;">12</td>
 </tr>
 <tr>
-<td style="text-align: left;">H2: English <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>×</mi><annotation encoding="application/x-tex">\times</annotation></semantics></math> unspecified investor</td>
+<td colspan="6" style="text-align: left;"><em>H2: English prompts with an unspecified investor</em></td>
+</tr>
+<tr>
 <td style="text-align: left;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>β</mi><annotation encoding="application/x-tex">\beta</annotation></semantics></math> Home</td>
-<td style="text-align: right;">-1.02</td>
+<td style="text-align: right;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>1.02</td>
 <td style="text-align: right;">0.29</td>
-<td style="text-align: right;">&lt;0.001</td>
-<td style="text-align: right;">1152</td>
+<td style="text-align: right;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mo>&lt;</mo><annotation encoding="application/x-tex">&lt;</annotation></semantics></math>0.001</td>
+<td style="text-align: right;">1,152</td>
 <td style="text-align: right;">12</td>
 </tr>
 <tr>
-<td style="text-align: left;">H3: typhoon2-8b vs llama3.1-8b (Thailand weight)</td>
-<td style="text-align: left;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>δ</mi><annotation encoding="application/x-tex">\delta</annotation></semantics></math> fine-tune</td>
-<td style="text-align: right;">-1.04</td>
+<td colspan="6" style="text-align: left;"><em>H3: Thai fine-tune minus its base model, weight on Thailand (prompt fixed effects)</em></td>
+</tr>
+<tr>
+<td style="text-align: left;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>δ</mi><annotation encoding="application/x-tex">\delta</annotation></semantics></math> Typhoon2-8B vs Llama-3.1-8B</td>
+<td style="text-align: right;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>1.04</td>
 <td style="text-align: right;">0.26</td>
-<td style="text-align: right;">&lt;0.001</td>
+<td style="text-align: right;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mo>&lt;</mo><annotation encoding="application/x-tex">&lt;</annotation></semantics></math>0.001</td>
 <td style="text-align: right;">480</td>
 <td style="text-align: right;">2</td>
 </tr>
 <tr>
-<td style="text-align: left;">H3: openthaigpt1.5-7b vs qwen2.5-7b (Thailand weight)</td>
-<td style="text-align: left;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>δ</mi><annotation encoding="application/x-tex">\delta</annotation></semantics></math> fine-tune</td>
+<td style="text-align: left;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>δ</mi><annotation encoding="application/x-tex">\delta</annotation></semantics></math> OpenThaiGPT-1.5-7B vs Qwen2.5-7B</td>
 <td style="text-align: right;">+1.26</td>
 <td style="text-align: right;">0.27</td>
-<td style="text-align: right;">&lt;0.001</td>
+<td style="text-align: right;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mo>&lt;</mo><annotation encoding="application/x-tex">&lt;</annotation></semantics></math>0.001</td>
 <td style="text-align: right;">480</td>
 <td style="text-align: right;">2</td>
 </tr>
 <tr>
-<td style="text-align: left;">Cash currency (LPM, pp of probability)</td>
+<td colspan="6" style="text-align: left;"><em>Cash currency: home currency chosen (linear probability model, pp)</em></td>
+</tr>
+<tr>
 <td style="text-align: left;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>β</mi><annotation encoding="application/x-tex">\beta</annotation></semantics></math> Home</td>
-<td style="text-align: right;">-2.18</td>
+<td style="text-align: right;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>2.18</td>
 <td style="text-align: right;">0.48</td>
-<td style="text-align: right;">&lt;0.001</td>
-<td style="text-align: right;">23008</td>
+<td style="text-align: right;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mo>&lt;</mo><annotation encoding="application/x-tex">&lt;</annotation></semantics></math>0.001</td>
+<td style="text-align: right;">23,008</td>
 <td style="text-align: right;">12</td>
 </tr>
 </tbody>
 </table>
 </div>
+<figure id="fig:tilt" data-latex-placement="htbp">
+<img src="figures/fig1_home_tilt.png" alt="" />
+<figcaption>Home tilt by model. Dots: mean over the 240 prompts of the model’s weight on its home market minus the mean weight that models of other origins give that market on the same prompt; bars: 95% CI from a cluster bootstrap over prompts (999 draws). Dashed line and band: the pooled <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>β</mi><annotation encoding="application/x-tex">\beta</annotation></semantics></math> from Eq. (1) with its 95% CI (SE clustered by prompt). Colours mark the origin group; the home market is in parentheses.</figcaption>
+</figure>
+<h4 class="unnumbered" id="origin-investor-and-language">Origin, investor and language</h4>
+<p>The prompt moves allocations more than the model’s origin does (Fig. <a href="#fig:decomp" data-reference-type="ref" data-reference="fig:decomp">2</a>). When the investor states a country of residence, that market receives <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>γ</mi><mo>=</mo><mi>+</mi><mn>1.88</mn><mrow></mrow></mrow><annotation encoding="application/x-tex">\gamma=+1.88{}</annotation></semantics></math> pp more (SE 0.21), 4.4 times the absolute size of the home effect; writing the prompt in a market’s main language adds <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>λ</mi><mo>=</mo><mi>+</mi><mn>0.46</mn><mrow></mrow></mrow><annotation encoding="application/x-tex">\lambda=+0.46{}</annotation></semantics></math> pp (SE 0.13). Levels are far from both market-capitalisation and GDP weights (Fig. <a href="#fig:heatmap" data-reference-type="ref" data-reference="fig:heatmap">3</a>): every model gives the United States 7.9–22.7% of the portfolio and China 13.7–22.5%, against 75.5% and 2.5% in MSCI ACWI and 37.0% and 23.5% by GDP, each renormalised over the eight markets. All models sit much closer to equal weight than to any capitalisation benchmark.</p>
+<figure id="fig:decomp" data-latex-placement="htbp">
+<img src="figures/fig3_origin_vs_language_vs_investor.png" alt="" />
+<figcaption>What moves the allocation. (a) The three channels in Eq. (1) with 95% CIs (SE clustered by prompt). (b) Mean weight on a market when the investor states that they live there (blue) and otherwise (grey), over all models and prompts. (c) The same for the prompt language: English maps to the United States and the United Kingdom, Chinese to China, French to the Eurozone and Thai to Thailand. Labels give the difference in pp.</figcaption>
+</figure>
+<figure id="fig:heatmap" data-latex-placement="htbp">
+<img src="figures/fig2_allocation_heatmap.png" alt="" />
+<figcaption>Mean allocation by model and market (pp, over 240 prompts, weights renormalised to 100). Outlined cells: the model’s home market. The three reference rows are context, not a benchmark of correctness: equal weight, MSCI ACWI country weights (proxied by an ACWI-tracking ETF’s holdings on 29 October 2026) and 2025 GDP (IMF WEO, October 2026), each renormalised over the eight markets.</figcaption>
+</figure>
 <h4 class="unnumbered" id="fine-tuning-h3">Fine-tuning (H3)</h4>
-<p>The two Thai fine-tunes move in opposite directions (Fig. <a href="#fig:ft" data-reference-type="ref" data-reference="fig:ft">3</a>). OpenThaiGPT allocates +1.26 pp more to Thailand than its base Qwen2.5-7B (9.2% vs 8.0%), whereas Typhoon2 allocates <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>1.04 pp relative to Llama-3.1-8B (5.3% vs 6.4%). H3 is supported for one pair only, so fine-tuning on Thai data is not associated with a consistent shift towards Thailand.</p>
-<figure id="fig:ft" data-latex-placement="t">
+<p>The two Thai fine-tunes move in opposite directions (Fig. <a href="#fig:ft" data-reference-type="ref" data-reference="fig:ft">4</a>). OpenThaiGPT allocates +1.26 pp more to Thailand than its base Qwen2.5-7B (9.2% against 8.0%), whereas Typhoon2 allocates <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>1.04 pp relative to its base Llama-3.1-8B (5.3% against 6.4%). H3 is supported for one pair only, so fine-tuning on Thai data is not associated with a consistent shift towards Thailand.</p>
+<figure id="fig:ft" data-latex-placement="htbp">
 <img src="figures/fig4_finetune_transmission.png" alt="" />
-<figcaption>Thailand weight of each Thai fine-tune and its base model, with 95% CIs for the difference (prompt fixed effects).</figcaption>
+<figcaption>Thai fine-tuning and the weight on Thailand. Bars: mean weight on Thailand over the same 240 prompts, with <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>±</mi><mn>1.96</mn></mrow><annotation encoding="application/x-tex">\pm1.96</annotation></semantics></math> standard errors; dashed line: equal weight (12.5 pp). <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>δ</mi><annotation encoding="application/x-tex">\delta</annotation></semantics></math>: fine-tune minus base model from a regression with prompt fixed effects, with its 95% CI (SE clustered by prompt).</figcaption>
 </figure>
 <h4 class="unnumbered" id="cash-currency">Cash currency</h4>
-<p>Every model chooses US dollars for cash in 80.4–96.7% of replies; the home-currency premium in the linear probability model is <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>2.18 pp (SE 0.48). The high home-currency share of US models is the common dollar default, not a home effect.</p>
+<p>Every model chooses US dollars for cash in 80.4–96.7% of replies. The home-currency coefficient in the linear probability model is <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>2.18 pp (SE 0.48), so no model favours its own currency beyond what the currency effects explain; the high home-currency share of the US models is the common dollar default, not a home effect.</p>
 <h1 data-number="4" id="sec:robust"><span class="header-section-number">4</span> Robustness</h1>
-<p>Table <a href="#tab:robust" data-reference-type="ref" data-reference="tab:robust">2</a> reports <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>β</mi><annotation encoding="application/x-tex">\beta</annotation></semantics></math> under each pre-registered check. The negative sign survives keeping only replies that sum to exactly 100 (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.67 pp), the original 95–105 rule (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.33 pp, 4 models excluded), English prompts only (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.70 pp), unspecified investors only (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.64 pp) and a log-ratio outcome (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.026). Leaving out one model at a time gives <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.82 to <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.01 pp; the estimate is not significant without Typhoon2, Phi-4 or Mistral-NeMo, so the negative sign rests on a few models. On the 60-prompt robustness subset, greedy decoding gives <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.37 pp; temperature-0.7 sampling with two seeds gives <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.17 pp (95% CI <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.48 to 0.13), and dropping the system prompt gives <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.65 pp (95% CI <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.98 to <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.33). The post-hoc dispersion-adjusted specification gives +0.12 pp (95% CI <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.08 to 0.32). Every check excludes a positive home tilt of more than about one percentage point.</p>
+<p>Table <a href="#tab:robust" data-reference-type="ref" data-reference="tab:robust">2</a> reports <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>β</mi><annotation encoding="application/x-tex">\beta</annotation></semantics></math> under each pre-registered check. The negative sign survives keeping only replies that sum to exactly 100 (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.67 pp), the original 95–105 rule (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.33 pp, with 4 models excluded), English prompts only (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.70 pp), unspecified investors only (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.64 pp) and a log-ratio outcome (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.026 log points). Leaving out one model at a time gives <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.82 to <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.01 pp; the estimate loses significance without Mistral-NeMo-12B, Phi-4-14B or Typhoon2-8B, so the negative sign rests on a few models. On the 60-prompt robustness subset, greedy decoding gives <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.37 pp, temperature-0.7 sampling with two seeds <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.17 pp (95% CI <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.48 to 0.13) and dropping the system prompt <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.65 pp (95% CI <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.98 to <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.33). The post-hoc specification that allows each model its own dispersion around equal weight gives +0.12 pp (95% CI <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.08 to 0.32). Across every specification, including the leave-one-out fits and the post-hoc check, the highest upper bound of any 95% CI is +0.32 pp: a positive home tilt of one percentage point or more is excluded everywhere.</p>
 <div id="tab:robust">
 <table>
-<caption><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>β</mi><annotation encoding="application/x-tex">\beta</annotation></semantics></math> (pp) under the pre-registered robustness checks; the last row is post hoc.</caption>
+<caption><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>β</mi><annotation encoding="application/x-tex">\beta</annotation></semantics></math> under the pre-registered robustness checks and the leave-one-model-out fits; the last row is post hoc. Percentage points except the log-ratio row (log points); SEs clustered by prompt.</caption>
 <thead>
 <tr>
 <th style="text-align: left;">Check</th>
 <th style="text-align: right;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>β</mi><annotation encoding="application/x-tex">\beta</annotation></semantics></math> (pp)</th>
 <th style="text-align: right;">SE</th>
-<th style="text-align: right;">95% CI</th>
-<th style="text-align: right;">N</th>
+<th style="text-align: center;">95% CI</th>
+<th style="text-align: right;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>p</mi><annotation encoding="application/x-tex">p</annotation></semantics></math></th>
+<th style="text-align: right;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>N</mi><annotation encoding="application/x-tex">N</annotation></semantics></math></th>
+<th style="text-align: right;">Models</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: left;">Primary (greedy, 240 prompts)</td>
-<td style="text-align: right;">-0.42</td>
+<td colspan="7" style="text-align: left;"><em>Pre-registered checks</em></td>
+</tr>
+<tr>
+<td style="text-align: left;">Primary specification (greedy, 240 prompts)</td>
+<td style="text-align: right;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.42</td>
 <td style="text-align: right;">0.09</td>
-<td style="text-align: right;">[-0.59, -0.25]</td>
-<td style="text-align: right;">23008</td>
+<td style="text-align: center;">[<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.59, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.25]</td>
+<td style="text-align: right;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mo>&lt;</mo><annotation encoding="application/x-tex">&lt;</annotation></semantics></math>0.001</td>
+<td style="text-align: right;">23,008</td>
+<td style="text-align: right;">12</td>
 </tr>
 <tr>
-<td style="text-align: left;">Temperature 0.7, 2 seeds (robust-60)</td>
-<td style="text-align: right;">-0.17</td>
+<td style="text-align: left;">Temperature 0.7, two seeds (60-prompt subset)</td>
+<td style="text-align: right;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.17</td>
 <td style="text-align: right;">0.16</td>
-<td style="text-align: right;">[-0.48, 0.13]</td>
-<td style="text-align: right;">11472</td>
+<td style="text-align: center;">[<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.48, 0.13]</td>
+<td style="text-align: right;">0.262</td>
+<td style="text-align: right;">11,472</td>
+<td style="text-align: right;">12</td>
 </tr>
 <tr>
-<td style="text-align: left;">Greedy, robust-60 subset</td>
-<td style="text-align: right;">-0.37</td>
+<td style="text-align: left;">Greedy decoding, same 60-prompt subset</td>
+<td style="text-align: right;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.37</td>
 <td style="text-align: right;">0.17</td>
-<td style="text-align: right;">[-0.71, -0.03]</td>
-<td style="text-align: right;">5752</td>
+<td style="text-align: center;">[<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.71, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.03]</td>
+<td style="text-align: right;">0.032</td>
+<td style="text-align: right;">5,752</td>
+<td style="text-align: right;">12</td>
 </tr>
 <tr>
-<td style="text-align: left;">No system prompt, greedy (robust-60)</td>
-<td style="text-align: right;">-0.65</td>
+<td style="text-align: left;">No system prompt, greedy (60-prompt subset)</td>
+<td style="text-align: right;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.65</td>
 <td style="text-align: right;">0.16</td>
-<td style="text-align: right;">[-0.98, -0.33]</td>
-<td style="text-align: right;">5712</td>
+<td style="text-align: center;">[<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.98, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.33]</td>
+<td style="text-align: right;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mo>&lt;</mo><annotation encoding="application/x-tex">&lt;</annotation></semantics></math>0.001</td>
+<td style="text-align: right;">5,712</td>
+<td style="text-align: right;">12</td>
 </tr>
 <tr>
 <td style="text-align: left;">Only replies summing to exactly 100</td>
-<td style="text-align: right;">-0.67</td>
+<td style="text-align: right;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.67</td>
 <td style="text-align: right;">0.14</td>
-<td style="text-align: right;">[-0.95, -0.40]</td>
-<td style="text-align: right;">12784</td>
+<td style="text-align: center;">[<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.95, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.40]</td>
+<td style="text-align: right;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mo>&lt;</mo><annotation encoding="application/x-tex">&lt;</annotation></semantics></math>0.001</td>
+<td style="text-align: right;">12,784</td>
+<td style="text-align: right;">12</td>
 </tr>
 <tr>
-<td style="text-align: left;">Original 95-105 rule (A1)</td>
-<td style="text-align: right;">-0.33</td>
+<td style="text-align: left;">Original 95–105 rule (before amendment A1)</td>
+<td style="text-align: right;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.33</td>
 <td style="text-align: right;">0.12</td>
-<td style="text-align: right;">[-0.58, -0.09]</td>
-<td style="text-align: right;">13496</td>
+<td style="text-align: center;">[<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.58, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.09]</td>
+<td style="text-align: right;">0.007</td>
+<td style="text-align: right;">13,496</td>
+<td style="text-align: right;">8</td>
 </tr>
 <tr>
 <td style="text-align: left;">Failures imputed as equal weights</td>
-<td style="text-align: right;">-0.42</td>
+<td style="text-align: right;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.42</td>
 <td style="text-align: right;">0.09</td>
-<td style="text-align: right;">[-0.59, -0.25]</td>
-<td style="text-align: right;">23040</td>
+<td style="text-align: center;">[<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.59, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.25]</td>
+<td style="text-align: right;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mo>&lt;</mo><annotation encoding="application/x-tex">&lt;</annotation></semantics></math>0.001</td>
+<td style="text-align: right;">23,040</td>
+<td style="text-align: right;">12</td>
 </tr>
 <tr>
 <td style="text-align: left;">English prompts only</td>
-<td style="text-align: right;">-0.7</td>
+<td style="text-align: right;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.70</td>
 <td style="text-align: right;">0.14</td>
-<td style="text-align: right;">[-0.98, -0.42]</td>
-<td style="text-align: right;">5760</td>
+<td style="text-align: center;">[<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.98, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.42]</td>
+<td style="text-align: right;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mo>&lt;</mo><annotation encoding="application/x-tex">&lt;</annotation></semantics></math>0.001</td>
+<td style="text-align: right;">5,760</td>
+<td style="text-align: right;">12</td>
 </tr>
 <tr>
 <td style="text-align: left;">Unspecified investor only</td>
-<td style="text-align: right;">-0.64</td>
+<td style="text-align: right;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.64</td>
 <td style="text-align: right;">0.17</td>
-<td style="text-align: right;">[-0.98, -0.30]</td>
-<td style="text-align: right;">4608</td>
+<td style="text-align: center;">[<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.98, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.30]</td>
+<td style="text-align: right;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mo>&lt;</mo><annotation encoding="application/x-tex">&lt;</annotation></semantics></math>0.001</td>
+<td style="text-align: right;">4,608</td>
+<td style="text-align: right;">12</td>
 </tr>
 <tr>
-<td style="text-align: left;">Log-ratio outcome log(w_c / w_Japan)</td>
-<td style="text-align: right;">-0.03</td>
-<td style="text-align: right;">0.01</td>
-<td style="text-align: right;">[-0.04, -0.01]</td>
-<td style="text-align: right;">20132</td>
+<td style="text-align: left;">Log-ratio outcome <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mi mathvariant="normal">log</mi><mo>&#8289;</mo></mrow><mo stretchy="false" form="prefix">(</mo><msub><mi>w</mi><mi>c</mi></msub><mi>/</mi><msub><mi>w</mi><mrow><mi mathvariant="normal">J</mi><mi mathvariant="normal">a</mi><mi mathvariant="normal">p</mi><mi mathvariant="normal">a</mi><mi mathvariant="normal">n</mi></mrow></msub><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\log(w_c/w_{\mathrm{Japan}})</annotation></semantics></math></td>
+<td style="text-align: right;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.026</td>
+<td style="text-align: right;">0.007</td>
+<td style="text-align: center;">[<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.040, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.012]</td>
+<td style="text-align: right;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mo>&lt;</mo><annotation encoding="application/x-tex">&lt;</annotation></semantics></math>0.001</td>
+<td style="text-align: right;">20,132</td>
+<td style="text-align: right;">12</td>
 </tr>
 <tr>
-<td style="text-align: left;">Leave out eurollm-9b</td>
-<td style="text-align: right;">-0.25</td>
-<td style="text-align: right;">0.1</td>
-<td style="text-align: right;">[-0.44, -0.06]</td>
-<td style="text-align: right;">21096</td>
+<td colspan="7" style="text-align: left;"><em>Leave one model out</em></td>
 </tr>
 <tr>
-<td style="text-align: left;">Leave out exaone3.5-7.8b</td>
-<td style="text-align: right;">-0.39</td>
+<td style="text-align: left;">Without EuroLLM-9B</td>
+<td style="text-align: right;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.25</td>
+<td style="text-align: right;">0.10</td>
+<td style="text-align: center;">[<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.44, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.06]</td>
+<td style="text-align: right;">0.009</td>
+<td style="text-align: right;">21,096</td>
+<td style="text-align: right;">11</td>
+</tr>
+<tr>
+<td style="text-align: left;">Without EXAONE-3.5-7.8B</td>
+<td style="text-align: right;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.39</td>
 <td style="text-align: right;">0.09</td>
-<td style="text-align: right;">[-0.58, -0.21]</td>
-<td style="text-align: right;">21096</td>
+<td style="text-align: center;">[<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.58, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.21]</td>
+<td style="text-align: right;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mo>&lt;</mo><annotation encoding="application/x-tex">&lt;</annotation></semantics></math>0.001</td>
+<td style="text-align: right;">21,096</td>
+<td style="text-align: right;">11</td>
 </tr>
 <tr>
-<td style="text-align: left;">Leave out gemma3-12b</td>
-<td style="text-align: right;">-0.81</td>
+<td style="text-align: left;">Without Gemma-3-12B</td>
+<td style="text-align: right;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.81</td>
 <td style="text-align: right;">0.07</td>
-<td style="text-align: right;">[-0.95, -0.66]</td>
-<td style="text-align: right;">21088</td>
+<td style="text-align: center;">[<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.95, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.66]</td>
+<td style="text-align: right;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mo>&lt;</mo><annotation encoding="application/x-tex">&lt;</annotation></semantics></math>0.001</td>
+<td style="text-align: right;">21,088</td>
+<td style="text-align: right;">11</td>
 </tr>
 <tr>
-<td style="text-align: left;">Leave out glm4-9b</td>
-<td style="text-align: right;">-0.61</td>
+<td style="text-align: left;">Without GLM-4-9B</td>
+<td style="text-align: right;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.61</td>
 <td style="text-align: right;">0.09</td>
-<td style="text-align: right;">[-0.79, -0.44]</td>
-<td style="text-align: right;">21088</td>
+<td style="text-align: center;">[<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.79, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.44]</td>
+<td style="text-align: right;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mo>&lt;</mo><annotation encoding="application/x-tex">&lt;</annotation></semantics></math>0.001</td>
+<td style="text-align: right;">21,088</td>
+<td style="text-align: right;">11</td>
 </tr>
 <tr>
-<td style="text-align: left;">Leave out llama3.1-8b</td>
-<td style="text-align: right;">-0.52</td>
+<td style="text-align: left;">Without Llama-3.1-8B</td>
+<td style="text-align: right;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.52</td>
 <td style="text-align: right;">0.09</td>
-<td style="text-align: right;">[-0.70, -0.35]</td>
-<td style="text-align: right;">21088</td>
+<td style="text-align: center;">[<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.70, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.35]</td>
+<td style="text-align: right;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mo>&lt;</mo><annotation encoding="application/x-tex">&lt;</annotation></semantics></math>0.001</td>
+<td style="text-align: right;">21,088</td>
+<td style="text-align: right;">11</td>
 </tr>
 <tr>
-<td style="text-align: left;">Leave out mistral-7b</td>
-<td style="text-align: right;">-0.46</td>
+<td style="text-align: left;">Without Mistral-7B</td>
+<td style="text-align: right;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.46</td>
 <td style="text-align: right;">0.09</td>
-<td style="text-align: right;">[-0.64, -0.28]</td>
-<td style="text-align: right;">21088</td>
+<td style="text-align: center;">[<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.64, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.28]</td>
+<td style="text-align: right;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mo>&lt;</mo><annotation encoding="application/x-tex">&lt;</annotation></semantics></math>0.001</td>
+<td style="text-align: right;">21,088</td>
+<td style="text-align: right;">11</td>
 </tr>
 <tr>
-<td style="text-align: left;">Leave out mistral-nemo-12b</td>
-<td style="text-align: right;">-0.16</td>
+<td style="text-align: left;">Without Mistral-NeMo-12B</td>
+<td style="text-align: right;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.16</td>
 <td style="text-align: right;">0.09</td>
-<td style="text-align: right;">[-0.34, 0.02]</td>
-<td style="text-align: right;">21088</td>
+<td style="text-align: center;">[<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.34, 0.02]</td>
+<td style="text-align: right;">0.081</td>
+<td style="text-align: right;">21,088</td>
+<td style="text-align: right;">11</td>
 </tr>
 <tr>
-<td style="text-align: left;">Leave out openthaigpt1.5-7b</td>
-<td style="text-align: right;">-0.82</td>
+<td style="text-align: left;">Without OpenThaiGPT-1.5-7B</td>
+<td style="text-align: right;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.82</td>
 <td style="text-align: right;">0.09</td>
-<td style="text-align: right;">[-1.00, -0.64]</td>
-<td style="text-align: right;">21088</td>
+<td style="text-align: center;">[<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>1.00, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.64]</td>
+<td style="text-align: right;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mo>&lt;</mo><annotation encoding="application/x-tex">&lt;</annotation></semantics></math>0.001</td>
+<td style="text-align: right;">21,088</td>
+<td style="text-align: right;">11</td>
 </tr>
 <tr>
-<td style="text-align: left;">Leave out phi4-14b</td>
-<td style="text-align: right;">-0.11</td>
+<td style="text-align: left;">Without Phi-4-14B</td>
+<td style="text-align: right;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.11</td>
 <td style="text-align: right;">0.09</td>
-<td style="text-align: right;">[-0.29, 0.07]</td>
-<td style="text-align: right;">21104</td>
+<td style="text-align: center;">[<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.29, 0.07]</td>
+<td style="text-align: right;">0.216</td>
+<td style="text-align: right;">21,104</td>
+<td style="text-align: right;">11</td>
 </tr>
 <tr>
-<td style="text-align: left;">Leave out qwen2.5-7b</td>
-<td style="text-align: right;">-0.41</td>
+<td style="text-align: left;">Without Qwen2.5-7B</td>
+<td style="text-align: right;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.41</td>
 <td style="text-align: right;">0.09</td>
-<td style="text-align: right;">[-0.59, -0.23]</td>
-<td style="text-align: right;">21088</td>
+<td style="text-align: center;">[<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.59, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.23]</td>
+<td style="text-align: right;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mo>&lt;</mo><annotation encoding="application/x-tex">&lt;</annotation></semantics></math>0.001</td>
+<td style="text-align: right;">21,088</td>
+<td style="text-align: right;">11</td>
 </tr>
 <tr>
-<td style="text-align: left;">Leave out qwen3-8b</td>
-<td style="text-align: right;">-0.52</td>
+<td style="text-align: left;">Without Qwen3-8B</td>
+<td style="text-align: right;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.52</td>
 <td style="text-align: right;">0.09</td>
-<td style="text-align: right;">[-0.70, -0.34]</td>
-<td style="text-align: right;">21088</td>
+<td style="text-align: center;">[<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.70, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.34]</td>
+<td style="text-align: right;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mo>&lt;</mo><annotation encoding="application/x-tex">&lt;</annotation></semantics></math>0.001</td>
+<td style="text-align: right;">21,088</td>
+<td style="text-align: right;">11</td>
 </tr>
 <tr>
-<td style="text-align: left;">Leave out typhoon2-8b</td>
-<td style="text-align: right;">-0.01</td>
-<td style="text-align: right;">0.1</td>
-<td style="text-align: right;">[-0.20, 0.17]</td>
-<td style="text-align: right;">21088</td>
+<td style="text-align: left;">Without Typhoon2-8B</td>
+<td style="text-align: right;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.01</td>
+<td style="text-align: right;">0.10</td>
+<td style="text-align: center;">[<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.20, 0.17]</td>
+<td style="text-align: right;">0.885</td>
+<td style="text-align: right;">21,088</td>
+<td style="text-align: right;">11</td>
 </tr>
 <tr>
-<td style="text-align: left;">POST HOC (not pre-registered): model-specific dispersion (model <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>×</mi><annotation encoding="application/x-tex">\times</annotation></semantics></math> market popularity)</td>
-<td style="text-align: right;">0.12</td>
-<td style="text-align: right;">0.1</td>
-<td style="text-align: right;">[-0.08, 0.32]</td>
-<td style="text-align: right;">23008</td>
+<td colspan="7" style="text-align: left;"><em>Post hoc, not pre-registered</em></td>
+</tr>
+<tr>
+<td style="text-align: left;">Model-specific dispersion around equal weight</td>
+<td style="text-align: right;">+0.12</td>
+<td style="text-align: right;">0.10</td>
+<td style="text-align: center;">[<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.08, 0.32]</td>
+<td style="text-align: right;">0.243</td>
+<td style="text-align: right;">23,008</td>
+<td style="text-align: right;">12</td>
 </tr>
 </tbody>
 </table>
 </div>
 <h1 data-number="5" id="sec:discussion"><span class="header-section-number">5</span> What this does not show</h1>
-<p>The result concerns twelve small open-weight models (7–15 B parameters) at 4-bit quantisation; frontier API models, larger checkpoints and full-precision weights may behave differently. The eight-market menu, the templates and their translations are one instrument among many; another menu, a request for a single-country recommendation, or native-speaker templates could change the picture. Decoding is greedy, so each estimate describes a model’s modal reply, not the distribution a user would sample. Origin is the lead developer’s country, which is coarse: Mistral-NeMo was co-developed with NVIDIA, and fine-tunes inherit most of their base model. The outputs say nothing about any developer’s intent or training data, and nothing about whether the advice is good: an allocation can be free of home tilt and still be far from any sensible benchmark, as these are.</p>
+<p>The result concerns twelve small open-weight models (7–15 B parameters) at 4-bit quantisation; frontier API models, larger checkpoints and full-precision weights may behave differently. The eight-market menu, the templates and their translations are one instrument among many: another menu, a request for a single-country recommendation, or native-speaker templates could change the picture. Decoding is greedy, so each estimate describes a model’s modal reply, not the distribution a user would sample. Origin is the lead developer’s country, which is coarse: Mistral-NeMo was co-developed with NVIDIA, and fine-tunes inherit most of their base model. The outputs say nothing about any developer’s intent or training data, and nothing about whether the advice is good: an allocation can be free of home tilt and still be far from any sensible benchmark, as these are.</p>
 <h1 data-number="6" id="sec:conclusion"><span class="header-section-number">6</span> Conclusion</h1>
-<p>Open-weight LLMs from five origins do not allocate more to their home equity market when the prompt is held fixed: the pre-registered home effect is <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.42 pp, and a post-hoc check for dispersion puts it near zero. What moves the allocation is what the user says. The investor’s stated residence is associated with +1.88 pp more for that market, 4.4 times the absolute size of the pooled home effect, and every model holds cash in dollars. For users and supervisors, the practical tilt to watch in these models is towards the user’s own framing and towards equal weighting, not towards the developer’s country.</p>
+<p>Open-weight LLMs from five origins do not allocate more to their home equity market when the prompt is held fixed: the pre-registered home effect is <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>−</mi><annotation encoding="application/x-tex">-</annotation></semantics></math>0.42 pp, and a post-hoc check for dispersion puts it near zero. What moves the allocation is what the user says. The investor’s stated residence is associated with +1.88 pp more for that market, 4.4 times the absolute size of the pooled home effect, and every model holds cash mostly in US dollars (80.4–96.7% of replies). For users and supervisors, the practical tilt to watch in these models is towards the user’s own framing and towards equal weighting, not towards the developer’s country.</p>
 <h1 class="unnumbered" id="app:deviations">Appendix A: Deviations from the pre-analysis plan</h1>
-<p><em>A1 (before the full run).</em> The pilot showed that unusable replies were arithmetic errors, not refusals; under the original 95–105 rule five of twelve models would have been excluded, removing both fine-tune pairs. Replies still outside 95–105 after one retry are therefore renormalised; the original rule is reported as a robustness check (it excludes 4 models). The temperature-0.7 check uses two seeds instead of three to stay within the GPU budget. <em>Post hoc.</em> The dispersion-adjusted specification in Table <a href="#tab:robust" data-reference-type="ref" data-reference="tab:robust">2</a> was added after the primary results were seen and is labelled as such.</p>
+<p><em>A1 (before the full run).</em> The pilot showed that unusable replies were arithmetic errors, not refusals; under the original 95–105 rule five of the twelve models would have been excluded, removing both fine-tune pairs. Replies still outside 95–105 after one retry are therefore renormalised, and the original rule is reported as a robustness check (it excludes 4 models). The temperature-0.7 check uses two seeds instead of three to stay within the GPU budget. <em>Post hoc.</em> The dispersion-adjusted specification in Table <a href="#tab:robust" data-reference-type="ref" data-reference="tab:robust">2</a> was added after the primary results were seen and is labelled as such.</p>
 <h1 class="unnumbered" id="app:models">Appendix B: Models and failure rates</h1>
+<p>Table <a href="#tab:models" data-reference-type="ref" data-reference="tab:models">3</a> lists the models with their throughput on one RTX 4070 Ti and their reply status in the primary run; Fig. <a href="#fig:rates" data-reference-type="ref" data-reference="fig:rates">5</a> breaks the status down by model and prompt language.</p>
 <div id="tab:models">
 <table>
-<caption>Models, throughput on one RTX 4070 Ti, and reply status in the primary run.</caption>
+<caption>Models, throughput on one RTX 4070 Ti (generated tokens per second) and reply status in the primary run (240 greedy prompts per model).</caption>
 <thead>
 <tr>
 <th style="text-align: left;">Model</th>
 <th style="text-align: left;">Developer</th>
 <th style="text-align: left;">Origin</th>
-<th style="text-align: left;">Base</th>
-<th style="text-align: left;">Params (B)</th>
+<th style="text-align: right;">Params (B)</th>
+<th style="text-align: left;">Quant.</th>
 <th style="text-align: right;">tok/s</th>
-<th style="text-align: right;">Refusal %</th>
-<th style="text-align: right;">Parse-fail %</th>
-<th style="text-align: right;">In regressions</th>
+<th style="text-align: right;">Refusal (%)</th>
+<th style="text-align: right;">Parse fail (%)</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: left;">EuroLLM-9B</td>
-<td style="text-align: left;">UTTER consortium (Unbabel</td>
-<td style="text-align: left;">Europe</td>
-<td style="text-align: left;">EuroLLM-9B</td>
-<td style="text-align: left;">9.2</td>
-<td style="text-align: right;">76.6</td>
-<td style="text-align: right;">0.4</td>
-<td style="text-align: right;">0.0</td>
-<td style="text-align: right;">yes</td>
-</tr>
-<tr>
-<td style="text-align: left;">EXAONE-3.5-7.8B</td>
-<td style="text-align: left;">LG AI Research</td>
-<td style="text-align: left;">Korea</td>
-<td style="text-align: left;">EXAONE-3.5-7.8B</td>
-<td style="text-align: left;">7.8</td>
-<td style="text-align: right;">88.8</td>
-<td style="text-align: right;">0.0</td>
-<td style="text-align: right;">0.4</td>
-<td style="text-align: right;">yes</td>
-</tr>
-<tr>
-<td style="text-align: left;">Gemma-3-12B</td>
-<td style="text-align: left;">Google</td>
-<td style="text-align: left;">United States</td>
-<td style="text-align: left;">Gemma-3-12B</td>
-<td style="text-align: left;">12.2</td>
-<td style="text-align: right;">52.5</td>
-<td style="text-align: right;">0.0</td>
-<td style="text-align: right;">0.0</td>
-<td style="text-align: right;">yes</td>
-</tr>
-<tr>
-<td style="text-align: left;">GLM-4-9B</td>
-<td style="text-align: left;">Zhipu AI / Tsinghua (THUDM)</td>
+<td style="text-align: left;">Qwen3-8B</td>
+<td style="text-align: left;">Alibaba</td>
 <td style="text-align: left;">China</td>
+<td style="text-align: right;">8.2</td>
+<td style="text-align: left;">Q4_K_M</td>
+<td style="text-align: right;">81</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr>
+<td style="text-align: left;">Qwen2.5-7B</td>
+<td style="text-align: left;">Alibaba</td>
+<td style="text-align: left;">China</td>
+<td style="text-align: right;">7.6</td>
+<td style="text-align: left;">Q4_K_M</td>
+<td style="text-align: right;">91</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr>
 <td style="text-align: left;">GLM-4-9B</td>
-<td style="text-align: left;">9.4</td>
-<td style="text-align: right;">79.6</td>
+<td style="text-align: left;">Zhipu AI / Tsinghua</td>
+<td style="text-align: left;">China</td>
+<td style="text-align: right;">9.4</td>
+<td style="text-align: left;">Q4_0</td>
+<td style="text-align: right;">80</td>
 <td style="text-align: right;">0.0</td>
 <td style="text-align: right;">0.0</td>
-<td style="text-align: right;">yes</td>
 </tr>
 <tr>
 <td style="text-align: left;">Llama-3.1-8B</td>
 <td style="text-align: left;">Meta</td>
-<td style="text-align: left;">United States</td>
-<td style="text-align: left;">Llama-3.1-8B</td>
-<td style="text-align: left;">8.0</td>
-<td style="text-align: right;">86.4</td>
+<td style="text-align: left;">US</td>
+<td style="text-align: right;">8.0</td>
+<td style="text-align: left;">Q4_K_M</td>
+<td style="text-align: right;">86</td>
 <td style="text-align: right;">0.0</td>
 <td style="text-align: right;">0.0</td>
-<td style="text-align: right;">yes</td>
+</tr>
+<tr>
+<td style="text-align: left;">Gemma-3-12B</td>
+<td style="text-align: left;">Google</td>
+<td style="text-align: left;">US</td>
+<td style="text-align: right;">12.2</td>
+<td style="text-align: left;">Q4_K_M</td>
+<td style="text-align: right;">52</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr>
+<td style="text-align: left;">Phi-4-14B</td>
+<td style="text-align: left;">Microsoft</td>
+<td style="text-align: left;">US</td>
+<td style="text-align: right;">14.7</td>
+<td style="text-align: left;">Q4_K_M</td>
+<td style="text-align: right;">49</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">0.8</td>
 </tr>
 <tr>
 <td style="text-align: left;">Mistral-7B</td>
 <td style="text-align: left;">Mistral AI</td>
 <td style="text-align: left;">Europe</td>
-<td style="text-align: left;">Mistral-7B-v0.3</td>
-<td style="text-align: left;">7.2</td>
-<td style="text-align: right;">93.8</td>
+<td style="text-align: right;">7.2</td>
+<td style="text-align: left;">Q4_K_M</td>
+<td style="text-align: right;">94</td>
 <td style="text-align: right;">0.0</td>
 <td style="text-align: right;">0.0</td>
-<td style="text-align: right;">yes</td>
 </tr>
 <tr>
 <td style="text-align: left;">Mistral-NeMo-12B</td>
 <td style="text-align: left;">Mistral AI with NVIDIA</td>
 <td style="text-align: left;">Europe</td>
-<td style="text-align: left;">Mistral-NeMo-12B</td>
-<td style="text-align: left;">12.2</td>
-<td style="text-align: right;">62.7</td>
+<td style="text-align: right;">12.2</td>
+<td style="text-align: left;">Q4_0</td>
+<td style="text-align: right;">63</td>
 <td style="text-align: right;">0.0</td>
 <td style="text-align: right;">0.0</td>
-<td style="text-align: right;">yes</td>
+</tr>
+<tr>
+<td style="text-align: left;">EuroLLM-9B</td>
+<td style="text-align: left;">UTTER consortium</td>
+<td style="text-align: left;">Europe</td>
+<td style="text-align: right;">9.2</td>
+<td style="text-align: left;">Q4_K_M</td>
+<td style="text-align: right;">77</td>
+<td style="text-align: right;">0.4</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr>
+<td style="text-align: left;">Typhoon2-8B</td>
+<td style="text-align: left;">SCB 10X</td>
+<td style="text-align: left;">Thailand</td>
+<td style="text-align: right;">8.0</td>
+<td style="text-align: left;">Q4_K_M</td>
+<td style="text-align: right;">86</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">0.0</td>
 </tr>
 <tr>
 <td style="text-align: left;">OpenThaiGPT-1.5-7B</td>
 <td style="text-align: left;">OpenThaiGPT</td>
 <td style="text-align: left;">Thailand</td>
-<td style="text-align: left;">Qwen2.5-7B</td>
-<td style="text-align: left;">7.6</td>
-<td style="text-align: right;">91.0</td>
+<td style="text-align: right;">7.6</td>
+<td style="text-align: left;">Q4_K_M</td>
+<td style="text-align: right;">91</td>
 <td style="text-align: right;">0.0</td>
 <td style="text-align: right;">0.0</td>
-<td style="text-align: right;">yes</td>
 </tr>
 <tr>
-<td style="text-align: left;">Phi-4-14B</td>
-<td style="text-align: left;">Microsoft</td>
-<td style="text-align: left;">United States</td>
-<td style="text-align: left;">Phi-4</td>
-<td style="text-align: left;">14.7</td>
-<td style="text-align: right;">48.7</td>
+<td style="text-align: left;">EXAONE-3.5-7.8B</td>
+<td style="text-align: left;">LG AI Research</td>
+<td style="text-align: left;">Korea</td>
+<td style="text-align: right;">7.8</td>
+<td style="text-align: left;">Q4_K_M</td>
+<td style="text-align: right;">89</td>
 <td style="text-align: right;">0.0</td>
-<td style="text-align: right;">0.8</td>
-<td style="text-align: right;">yes</td>
-</tr>
-<tr>
-<td style="text-align: left;">Qwen2.5-7B</td>
-<td style="text-align: left;">Alibaba (Qwen)</td>
-<td style="text-align: left;">China</td>
-<td style="text-align: left;">Qwen2.5-7B</td>
-<td style="text-align: left;">7.6</td>
-<td style="text-align: right;">90.6</td>
-<td style="text-align: right;">0.0</td>
-<td style="text-align: right;">0.0</td>
-<td style="text-align: right;">yes</td>
-</tr>
-<tr>
-<td style="text-align: left;">Qwen3-8B</td>
-<td style="text-align: left;">Alibaba (Qwen)</td>
-<td style="text-align: left;">China</td>
-<td style="text-align: left;">Qwen3-8B</td>
-<td style="text-align: left;">8.2</td>
-<td style="text-align: right;">80.9</td>
-<td style="text-align: right;">0.0</td>
-<td style="text-align: right;">0.0</td>
-<td style="text-align: right;">yes</td>
-</tr>
-<tr>
-<td style="text-align: left;">Typhoon2-8B</td>
-<td style="text-align: left;">SCB 10X (Typhoon)</td>
-<td style="text-align: left;">Thailand</td>
-<td style="text-align: left;">Llama-3.1-8B</td>
-<td style="text-align: left;">8.0</td>
-<td style="text-align: right;">85.8</td>
-<td style="text-align: right;">0.0</td>
-<td style="text-align: right;">0.0</td>
-<td style="text-align: right;">yes</td>
+<td style="text-align: right;">0.4</td>
 </tr>
 </tbody>
 </table>
 </div>
-<figure id="fig:rates" data-latex-placement="t">
+<figure id="fig:rates" data-latex-placement="htbp">
 <img src="figures/fig5_refusal_parse_rates.png" alt="" />
-<figcaption>Reply status by model (left) and share of replies not summing to exactly 100 by prompt language (right).</figcaption>
+<figcaption>Reply status in the primary run. (a) Share of the 240 greedy replies per model by status: a reply gets one stricter retry if it is invalid or sums outside 95–105, and sums still outside 95–105 after the retry are renormalised (amendment A1). The dotted line is the 30% exclusion rule for refusals plus parse failures. (b) Share of replies not summing to exactly 100, by prompt language.</figcaption>
 </figure>
 <h1 class="unnumbered" id="app:repro">Appendix C: Reproduction and use of generative AI</h1>
-<p>Code, prompts, all raw replies and the parsed panel are at <a href="https://github.com/thanatchon36/llm-home-bias" class="uri">https://github.com/thanatchon36/llm-home-bias</a>. <code>make all</code> rebuilds every number, table and figure from the cached replies in under a minute without a GPU; <code>make run</code> and <code>make robust</code> regenerate the replies with Ollama. The study was carried out with Claude (Anthropic), operated through the Claude Code agent, from the author’s written brief, which fixed the question, hypotheses, design and decision rules. The agent wrote the pre-analysis plan and code, ran the models, estimated, and drafted this note; the author directed the work, reviewed the outputs and takes sole responsibility for the content. Every number in the text is generated from versioned result files.</p>
+<p>Code, prompts, all raw replies and the parsed panel are at <a href="https://github.com/thanatchon36/llm-home-bias" class="uri">https://github.com/thanatchon36/llm-home-bias</a>. <code>make all</code> rebuilds every number, table and figure from the cached replies in under a minute without a GPU, and <code>make paper</code> typesets this note; <code>make run</code> and <code>make robust</code> regenerate the replies with Ollama. The study was carried out with Claude (Anthropic), operated through the Claude Code agent, from the author’s written brief, which fixed the question, hypotheses, design and decision rules. The agent wrote the pre-analysis plan and the code, ran the models, estimated the results and drafted this note; the author directed the work, reviewed the outputs and takes sole responsibility for the content. Every number in the text is generated from versioned result files.</p>
 <div id="refs" class="references csl-bib-body" data-entry-spacing="0" role="list">
 <div id="ref-aldasoro2024" class="csl-entry" role="listitem">
 <div class="csl-left-margin">[1] </div><div class="csl-right-inline">I. Aldasoro, L. Gambacorta, A. Korinek, V. Shreeti, and M. Stein, <span>“Intelligent financial system: How <span>AI</span> is transforming finance,”</span> Bank for International Settlements, BIS Working Papers 1194, Jun. 2024. Available: <a href="https://www.bis.org/publ/work1194.htm">https://www.bis.org/publ/work1194.htm</a></div>

@@ -42,7 +42,7 @@ market. What the investor says about themselves is associated with a shift 4.4 t
 
 Method, results, robustness and limitations are in the paper:
 **[web version](https://thanatchon36.github.io/llm-home-bias/)** or
-**[PDF](https://github.com/thanatchon36/llm-home-bias/raw/main/paper/paper.pdf)** (5 pages).
+**[PDF](https://github.com/thanatchon36/llm-home-bias/raw/main/paper/paper.pdf)** (10 pages).
 
 ## Reproduce
 

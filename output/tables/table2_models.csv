@@ -1,5 +1,5 @@
 id,Model,Ollama tag,Developer,Origin,Base,Licence,Quant,Params (B),Digest,tok/s,s/reply,Refusal %,Parse-fail %,Renormalised 95–105 %,Renormalised wide %,In regressions
-eurollm-9b,EuroLLM-9B,hf.co/bartowski/EuroLLM-9B-Instruct-GGUF:Q4_K_M,UTTER consortium (Unbabel,Europe,EuroLLM-9B,Apache-2.0,Q4_K_M,9.2,e867a753c031,76.6,3.27,0.4,0.0,13.3,82.5,yes
+eurollm-9b,EuroLLM-9B,hf.co/bartowski/EuroLLM-9B-Instruct-GGUF:Q4_K_M,"UTTER consortium (Unbabel, IST Lisbon, U. Edinburgh et al.)",Europe,EuroLLM-9B,Apache-2.0,Q4_K_M,9.2,e867a753c031,76.6,3.27,0.4,0.0,13.3,82.5,yes
 exaone3.5-7.8b,EXAONE-3.5-7.8B,exaone3.5:7.8b,LG AI Research,Korea,EXAONE-3.5-7.8B,EXAONE AI Model 1.1 NC,Q4_K_M,7.8,c7c4e3d1ca22,88.8,2.09,0.0,0.4,47.1,10.0,yes
 gemma3-12b,Gemma-3-12B,gemma3:12b,Google,United States,Gemma-3-12B,Gemma,Q4_K_M,12.2,b92b218582c5,52.5,2.66,0.0,0.0,1.2,8.8,yes
 glm4-9b,GLM-4-9B,glm4:9b,Zhipu AI / Tsinghua (THUDM),China,GLM-4-9B,glm-4,Q4_0,9.4,5b699761eca5,79.6,1.77,0.0,0.0,17.5,14.2,yes

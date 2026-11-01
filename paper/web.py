@@ -65,7 +65,7 @@ RESULTS = [
         "no positive tilt",
         "r-null",
         r"Leave-one-model-out β from \lomoMin to \lomoMax pp",
-        "pre-registered checks in Table III",
+        "pre-registered checks in Table 2",
     ),
 ]
 
@@ -115,7 +115,7 @@ def inline(tex: str) -> str:
 
 def flatten(tex: str) -> str:
     """Inline \\input files and undo constructs pandoc drops or mangles: `table*` floats, adjustbox,
-    \\parbox notes, and IEEEtran's lettered appendices (pandoc would number them 10, 11, ...)."""
+    \\parbox notes, and the lettered appendices after \\appendix (pandoc would number them 7, 8, ...)."""
     tex = inline(tex)
     tex = tex.replace("\\begin{table*}", "\\begin{table}").replace(
         "\\end{table*}", "\\end{table}"
@@ -123,6 +123,11 @@ def flatten(tex: str) -> str:
     tex = re.sub(
         r"\\begin\{adjustbox\}\{[^}]*\}|\\end\{adjustbox\}|\\vspace\{[^}]*\}", "", tex
     )
+    # booktabs panel tables: pandoc cannot parse @{} in column specs, \addlinespace or \quad indents.
+    tex = re.sub(r"\\begin\{tabular\}\{@\{\}([^}]*?)@\{\}\}", r"\\begin{tabular}{\1}", tex)
+    tex = re.sub(r"\\multicolumn\{(\d+)\}\{@\{\}([lcr])\}", r"\\multicolumn{\1}{\2}", tex)
+    tex = re.sub(r"\\addlinespace\n|\\quad ", "", tex)
+    tex = re.sub(r"\\setlength\{\\tabcolsep\}\{[^}]*\}", "", tex)
     tex = unwrap(tex, r"\\parbox\{[^}]*\}\{")
     tex = re.sub(
         r"\\cmidrule(\([a-z]*\))?\{[^}]*\}", "", tex
@@ -133,7 +138,7 @@ def flatten(tex: str) -> str:
         tex = tex.replace(f"\\eqref{{{label}}}", f"({i})").replace(
             f"\\ref{{{label}}}", str(i)
         )
-    head, sep, appendix = tex.partition("\\appendices")
+    head, sep, appendix = tex.partition("\\appendix")
     if sep:
         letters = {}
         for i, m in enumerate(
@@ -187,8 +192,9 @@ def doi() -> str | None:
 
 def main() -> int:
     main_tex = (HERE / "paper.tex").read_text(encoding="utf-8")
-    title = re.search(r"\\title\{(.*?)\}\n", main_tex, re.DOTALL).group(1).strip()
-    author = re.search(r"\\IEEEauthorblockN\{(.*?)\}", main_tex).group(1).strip()
+    title = re.search(r"\\title\{(.*?)\}\n", main_tex, re.DOTALL).group(1)
+    title = " ".join(re.sub(r"\\\\\[[^\]]*\]|\\bfseries|\\large", " ", title).split())  # drop PDF-only styling
+    author = re.search(r"\\author\{(.*?)\}", main_tex).group(1).strip()
     preamble = flatten(main_tex.split("\\begin{document}")[0])
     abstract = (HERE / "sections" / "abstract.tex").read_text(encoding="utf-8")
     abstract = re.search(
@@ -200,7 +206,9 @@ def main() -> int:
         preamble + "\\begin{document}\n" + abstract.group(1) + "\n\\end{document}\n", []
     )
     body = flatten(
-        main_tex.replace("\\input{sections/abstract}", "").replace("\\maketitle", "")
+        main_tex.replace("\\input{sections/abstract}", "")
+        .replace("\\maketitle", "")
+        .replace("\\thispagestyle{plain}", "")
     )
     page = pandoc(
         body,
@@ -290,7 +298,7 @@ def main() -> int:
     shutil.copyfile(HERE / "paper.pdf", OUT / "paper.pdf")
     (OUT / "figures").mkdir(exist_ok=True)
     for name in sorted(set(re.findall(r'src="figures/([\w.-]+)"', page))):
-        shutil.copyfile(ROOT / "output" / "figures" / name, OUT / "figures" / name)
+        shutil.copyfile(HERE / "figures" / name, OUT / "figures" / name)
     print(f"wrote {OUT / 'index.html'}")
     return 0
 
