@@ -29,49 +29,43 @@ RESULTS = [
         "H1",
         "not supported",
         "r-null",
-        r"3-month yield per USD 10 bn inflow: \bPre bp before, \bPost bp after",
-        r"h = 10; difference \bDiff bp (\bDiffP), opposite in sign to H1",
+        r"A model's home market gets \betaHome pp relative to other models",
+        r"95% CI \betaHomeLo to \betaHomeHi; post hoc, allowing for dispersion: \betaPosthocDisp pp",
     ),
     (
         "H2",
         "not supported",
         "r-null",
-        "Short-end concentration predates the Act",
-        (
-            r"pre: 4-week \tFourWPre bp down to 2-year \tTwoYPre bp; no tenor's change "
-            r"significant (all p ≥ \termDiffMinP)"
-        ),
+        r"English prompts, no investor nationality: \betaHtwo pp",
+        "12 prompts per model; SE clustered by prompt",
     ),
     (
         "H3",
-        "not supported",
-        "r-null",
-        "Outflow asymmetry absent after enactment",
-        (
-            r"pre outflow \aOutPre bp per USD 3.5 bn (\aOutPreP); \outPreHike of \outPre "
-            "outflow days fall in the 2022\u201323 hiking cycle"
-        ),
+        "mixed",
+        "r-ref",
+        r"Thai fine-tunes: OpenThaiGPT \ftOpenthaigptoneFiveSevenb pp, Typhoon2 \ftTyphoontwoEightb pp",
+        "Thailand weight vs the base model (Qwen2.5-7B, Llama-3.1-8B), prompt fixed effects",
     ),
     (
-        "Placebo",
-        "unstable",
+        "Investor",
+        "larger",
         "r-ref",
-        r"A July 2024 placebo break is larger: \rbPlDiff bp (\rbPlDiffP)",
-        "no break in the association can be attributed to the Act",
+        r"Investor's stated residence: \gammaInv pp for that market",
+        r"prompt language \lambdaLang pp; \gammaRatio× the pooled home effect",
+    ),
+    (
+        "Cash",
+        "USD default",
+        "r-ref",
+        r"Every model holds cash in USD in \usdCashMin–\usdCashMax% of replies",
+        r"home-currency premium \cash pp",
     ),
     (
         "Robustness",
-        "null holds",
+        "no positive tilt",
         "r-null",
-        r"\rbN pre-registered checks: change never significant",
-        r"smallest \rbMinP; positive in \rbNPos of \rbN",
-    ),
-    (
-        "Power",
-        "low",
-        "r-ref",
-        r"Minimum detectable change ≈ \mde bp per USD 10 bn",
-        r"\nPostTen post-enactment observations at h = 10; reserve rules bind only from 2027",
+        r"Leave-one-model-out β from \lomoMin to \lomoMax pp",
+        "pre-registered checks in Table III",
     ),
 ]
 

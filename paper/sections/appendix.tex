@@ -1,0 +1,25 @@
+\section{Deviations from the pre-analysis plan}\label{app:deviations}
+
+\emph{A1 (before the full run).} The pilot showed that unusable replies were arithmetic errors, not refusals; under the original 95--105 rule five of twelve models would have been excluded, removing both fine-tune pairs. Replies still outside 95--105 after one retry are therefore renormalised; the original rule is reported as a robustness check (it excludes \nOrigRuleExcluded{} models). The temperature-0.7 check uses two seeds instead of three to stay within the GPU budget. \emph{Post hoc.} The dispersion-adjusted specification in Table~\ref{tab:robust} was added after the primary results were seen and is labelled as such.
+
+\section{Models and failure rates}\label{app:models}
+
+\begin{table*}[t]
+\caption{Models, throughput on one RTX 4070 Ti, and reply status in the primary run.}
+\label{tab:models}
+\centering
+\begin{adjustbox}{max width=\textwidth}
+\input{tables/models}
+\end{adjustbox}
+\end{table*}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{figures/fig5_refusal_parse_rates.png}
+\caption{Reply status by model (left) and share of replies not summing to exactly 100 by prompt language (right).}
+\label{fig:rates}
+\end{figure}
+
+\section{Reproduction and use of generative AI}\label{app:repro}
+
+Code, prompts, all raw replies and the parsed panel are at \repo{}. \texttt{make all} rebuilds every number, table and figure from the cached replies in under a minute without a GPU; \texttt{make run} and \texttt{make robust} regenerate the replies with Ollama. The study was carried out with Claude (Anthropic), operated through the Claude Code agent, from the author's written brief, which fixed the question, hypotheses, design and decision rules. The agent wrote the pre-analysis plan and code, ran the models, estimated, and drafted this note; the author directed the work, reviewed the outputs and takes sole responsibility for the content. Every number in the text is generated from versioned result files.

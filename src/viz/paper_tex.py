@@ -13,6 +13,7 @@ from typing import Any
 import pandas as pd
 
 from src.utils import ROOT, model_by_id
+from src.viz.figures import reference_rows
 
 log = logging.getLogger(__name__)
 PAPER = ROOT / "paper"
@@ -38,7 +39,7 @@ def key(s: str) -> str:
     return "".join(w.capitalize() for w in re.split(r"[^A-Za-z]+", s) if w)
 
 
-def put(m: dict[str, str], prefix: str, c: dict[str, float] | None, d: int = 1) -> None:
+def put(m: dict[str, str], prefix: str, c: dict[str, float] | None, d: int = 2) -> None:
     if not c:
         return
     m[prefix] = num(c["est"], d, plus=True)
@@ -52,14 +53,15 @@ def numbers(cfg: dict[str, Any], res: dict[str, Any], rates: pd.DataFrame, tilt:
             cash: pd.DataFrame, alloc: pd.DataFrame) -> dict[str, str]:
     m: dict[str, str] = {}
     p = res["primary"]
-    put(m, "beta", p["home"])
-    put(m, "gamma", p["investor_home"])
-    put(m, "lambda", p["language_home"])
+    put(m, "betaHome", p["home"])
+    put(m, "gammaInv", p["investor_home"])
+    put(m, "lambdaLang", p["language_home"])
+    m["gammaRatio"] = num(abs(p["investor_home"]["est"] / p["home"]["est"]), 1)
     m["nObs"], m["nClusters"], m["nModels"] = f"{p['N']:,}", str(p["clusters"]), str(p["models"])
     m["nModelsRun"] = str(len(res["models_run"]))
     m["nExcluded"] = str(len(res["models_excluded"]))
     wb = res["wild_bootstrap_template"]
-    m["betaWildLo"], m["betaWildHi"] = num(wb["lo"]), num(wb["hi"])
+    m["betaWildLo"], m["betaWildHi"] = num(wb["lo"], 2), num(wb["hi"], 2)
     for k, v in res["by_origin"].items():
         if k.startswith("home_") and v:
             put(m, f"beta{key(k[5:])}", v)
@@ -91,14 +93,30 @@ def numbers(cfg: dict[str, Any], res: dict[str, Any], rates: pd.DataFrame, tilt:
     m["usShareMin"] = num(alloc["United States"].min())
     m["usShareMax"] = num(alloc["United States"].max())
     m["usdCashMean"] = num(cash["share_usd"].mean())
+    m["usdCashMin"], m["usdCashMax"] = num(cash["share_usd"].min()), num(cash["share_usd"].max())
+    m["chinaShareMin"], m["chinaShareMax"] = num(alloc["China"].min()), num(alloc["China"].max())
+    m["thaiShareMin"], m["thaiShareMax"] = num(alloc["Thailand"].min()), num(alloc["Thailand"].max())
+    ref = reference_rows(cfg)
+    for lab, k in (("MSCI ACWI (mkt cap)", "acwi"), ("GDP (IMF WEO)", "gdp")):
+        if lab in ref:
+            m[f"{k}US"], m[f"{k}China"] = num(ref[lab]["United States"]), num(ref[lab]["China"])
+    m["nOrigRuleExcluded"] = str(len(res["robustness"]["Original 95-105 rule (A1)"].get("excluded", [])))
     rb = {k: v for k, v in res["robustness"].items() if not k.startswith("_")}
     m["rbN"] = str(len(rb))
     m["rbNPos"] = str(sum(v["est"] > 0 for v in rb.values()))
     m["rbNSig"] = str(sum(v["lo"] > 0 or v["hi"] < 0 for v in rb.values()))
     lomo = res["robustness"]["_lomo"]
-    m["lomoMin"] = num(min(v["est"] for v in lomo.values()), 1, True)
-    m["lomoMax"] = num(max(v["est"] for v in lomo.values()), 1, True)
+    m["lomoMin"] = num(min(v["est"] for v in lomo.values()), 2, True)
+    m["lomoMax"] = num(max(v["est"] for v in lomo.values()), 2, True)
     put(m, "betaPosthocDisp", res["robustness"].get("_posthoc_dispersion"))
+    for short, prefix in (("rbTemp", "Temperature 0.7"), ("rbGreedySixty", "Greedy, robust-60"),
+                          ("rbNosys", "No system prompt"), ("rbExact", "Only replies summing"),
+                          ("rbOrigRule", "Original 95-105"), ("rbImpute", "Failures imputed"),
+                          ("rbEnglish", "English prompts only"), ("rbUnspec", "Unspecified investor"),
+                          ("rbLogRatio", "Log-ratio")):
+        hit = [v for k, v in rb.items() if k.startswith(prefix)]
+        if hit:
+            put(m, short, hit[0], 3 if short == "rbLogRatio" else 2)
     for name, v in rb.items():
         put(m, "rb" + key(name)[:24], v)
     return m

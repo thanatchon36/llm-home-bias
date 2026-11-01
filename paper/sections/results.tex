@@ -1,0 +1,42 @@
+\section{Results}\label{sec:results}
+
+\paragraph*{Instrument} Every model returned a usable allocation for almost every prompt: refusals are at most \refusalMax\% and parse failures at most \failMax\% per model, so no model is excluded. Many replies miss 100 in arithmetic: the median model has \renormWideMedian\% of replies outside 95--105 after one retry, and one model \renormWideMax\% (Fig.~\ref{fig:rates}); these are renormalised under amendment~A1, and the original rule is a robustness check.
+
+\paragraph*{Home tilt (H1)} Table~\ref{tab:primary} reports Eq.~\eqref{eq:main}. A model's home market receives $\beta=\betaHome{}$\,pp (SE \betaHomeSE{}; wild template bootstrap 95\% CI \betaWildLo{} to \betaWildHi{}) relative to what other models give that market. The estimate is small against an equal weight of 12.5\,pp and has the opposite sign to H1, which is \emph{not supported}. Per model (Fig.~\ref{fig:tilt}), the home tilt ranges from \tiltMin{} to \tiltMax{}\,pp: \nTiltPos{} models allocate significantly more to their home market than other models do and \nTiltNeg{} allocate significantly less, with no consistent pattern within origin groups. By group, Chinese models allocate \betaChina{}\,pp more to China, European models \betaEurope{}\,pp to the Eurozone, US models \betaUnitedstates{}\,pp to the United States, Thai models \betaThailand{}\,pp to Thailand and the Korean model \betaKorea{}\,pp to South Korea. Among English prompts with no investor nationality (H2), $\beta=\betaHtwo{}$\,pp (SE \betaHtwoSE{}; only 12 prompts), so H2 is not supported either.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{figures/fig1_home_tilt.png}
+\caption{Home tilt by model: mean weight on the model's home market minus the mean weight that models of other origins give that market on the same prompt, with 95\% prompt-bootstrap CIs.}
+\label{fig:tilt}
+\end{figure}
+
+\paragraph*{Origin, investor and language} The prompt moves allocations more than the model's origin does. When the investor states a country of residence, that market receives $\gamma=\gammaInv{}$\,pp more (SE \gammaInvSE{}); writing the prompt in a market's main language adds $\lambda=\lambdaLang{}$\,pp (SE \lambdaLangSE{}; Fig.~\ref{fig:decomp}). Levels are far from both market-capitalisation and GDP weights (Fig.~\ref{fig:heatmap}): every model gives the United States \usShareMin--\usShareMax\% (MSCI ACWI renormalised over the eight markets: \acwiUS\%) and China \chinaShareMin--\chinaShareMax\% (ACWI: \acwiChina\%), so all models sit much closer to equal weight than to any capitalisation benchmark.
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=0.49\textwidth]{figures/fig2_allocation_heatmap.png}\hfill
+\includegraphics[width=0.49\textwidth]{figures/fig3_origin_vs_language_vs_investor.png}
+\caption{Left: mean allocation by model and market (home cells outlined) with equal, market-capitalisation and GDP reference rows. Right: the three channels $\beta$, $\gamma$, $\lambda$ with 95\% CIs, and the China weight by prompt language and investor residence.}
+\label{fig:heatmap}\label{fig:decomp}
+\end{figure*}
+
+\begin{table}[t]
+\caption{Primary and secondary estimates (pp). SEs clustered by prompt.}
+\label{tab:primary}
+\centering
+\begin{adjustbox}{max width=\columnwidth}
+\input{tables/primary}
+\end{adjustbox}
+\end{table}
+
+\paragraph*{Fine-tuning (H3)} The two Thai fine-tunes move in opposite directions (Fig.~\ref{fig:ft}). OpenThaiGPT allocates \ftOpenthaigptoneFiveSevenb{}\,pp more to Thailand than its base Qwen2.5-7B (\ftOpenthaigptoneFiveSevenbMean\% vs \ftOpenthaigptoneFiveSevenbBaseMean\%), whereas Typhoon2 allocates \ftTyphoontwoEightb{}\,pp relative to Llama-3.1-8B (\ftTyphoontwoEightbMean\% vs \ftTyphoontwoEightbBaseMean\%). H3 is supported for one pair only, so fine-tuning on Thai data is not associated with a consistent shift towards Thailand.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{figures/fig4_finetune_transmission.png}
+\caption{Thailand weight of each Thai fine-tune and its base model, with 95\% CIs for the difference (prompt fixed effects).}
+\label{fig:ft}
+\end{figure}
+
+\paragraph*{Cash currency} Every model chooses US dollars for cash in \usdCashMin--\usdCashMax\% of replies; the home-currency premium in the linear probability model is \cash{}\,pp (SE \cashSE{}). The apparent home preference of US models in currency choice is the common dollar default.
