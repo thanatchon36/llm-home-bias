@@ -71,3 +71,13 @@ The user asked the agent to review the drafts itself at Checkpoint 3 ("checkpoin
   - no system prompt −0.65 pp [−0.98, −0.33].
 - The primary estimates are unchanged: they use the greedy run only.
 - The point estimate is negative in every pre-registered check. No check shows a positive home tilt.
+
+## 2026-11-01 19:50 — Phase 5 QA
+
+- `make clean && make all` rebuilds everything from the cached replies in 9.5 s. Everything is deterministic: tables, paper numbers, and the SVGs (fixed hash salt, no date).
+- CI simulated on a fresh clone. Lint passes, 31 tests pass, the number check passes, and `git diff` of the prompt set, numbers, tables and table CSVs is clean. With Ollama unreachable, table 2 takes digests from the committed CSV, and the output is identical.
+- Every number in the README, LinkedIn post and Thai summary is checked against `output/tables/` by `tests/test_numbers.py`, which runs at the end of `make all`. The paper takes all its numbers from `paper/numbers.tex`.
+- [VERIFY] items:
+  - Citations: resolved. All 20 refs.bib entries were checked against the publisher, arXiv or an official page.
+  - ACWI weights: resolved by disclosure. They are a proxy from the holdings of an ACWI-tracking ETF, not the index itself, and the README and paper now say so.
+  - **Open, for the author:** the output-use terms of the Llama 3.1, Gemma, GLM-4 and EXAONE (non-commercial) licences, before releasing on Hugging Face (DATASET_CARD.md).

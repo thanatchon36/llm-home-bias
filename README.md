@@ -99,7 +99,7 @@ H2 is not supported either. Among English prompts with no investor nationality, 
 
 **The prompt matters more than the model's origin.** When the investor states a country of residence, that market receives **+1.88 pp** more. Writing the prompt in a market's main language adds +0.46 pp ([fig. 3](output/figures/fig3_origin_vs_language_vs_investor.png)).
 
-Allocation levels are far from both market-cap and GDP weights ([fig. 2](output/figures/fig2_allocation_heatmap.png)). Every model gives the United States 7.9–22.7%, against 75.5% in MSCI ACWI renormalised over the eight markets. Every model gives China 13.7–22.5%, against 2.5% in ACWI. All models sit much closer to equal weight than to any capitalisation benchmark.
+Allocation levels are far from both market-cap and GDP weights ([fig. 2](output/figures/fig2_allocation_heatmap.png)). Every model gives the United States 7.9–22.7%, against 75.5% in MSCI ACWI renormalised over the eight markets (country weights of an ACWI-tracking ETF's holdings on 29 October 2026, a proxy for the index). Every model gives China 13.7–22.5%, against 2.5% in ACWI. All models sit much closer to equal weight than to any capitalisation benchmark.
 
 **Fine-tuning (H3 mixed).** The two Thai fine-tunes move in opposite directions ([fig. 4](output/figures/fig4_finetune_transmission.png)):
 
