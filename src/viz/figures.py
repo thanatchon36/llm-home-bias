@@ -118,17 +118,13 @@ def doi() -> str | None:
     return m.group(1) if m else None
 
 
-def fig_tilt(cfg: dict[str, Any], res: dict[str, Any], tilt: pd.DataFrame, out: Path, name: str = "fig1_home_tilt",
-             linkedin: bool = False, paper: bool = False) -> None:
+def fig_tilt(cfg: dict[str, Any], res: dict[str, Any], tilt: pd.DataFrame, out: Path, paper: bool = False) -> None:
     meta = model_by_id(cfg)
     ids = ordered_models(cfg, list(tilt["model_id"]))
     t = tilt.set_index("model_id").loc[ids]
     b = res["primary"]["home"]
     n = len(ids)
-    if linkedin:
-        fig, ax = plt.subplots(figsize=(4, 4), dpi=300)
-        fig.subplots_adjust(left=0.33, right=0.96, top=0.745, bottom=0.255)
-    elif paper:
+    if paper:
         fig, ax = plt.subplots(figsize=(TEXT_WIDTH, 0.28 * n + 1.3))
         fig.subplots_adjust(left=0.3, right=0.98, top=0.97, bottom=0.12)
     else:
@@ -141,51 +137,97 @@ def fig_tilt(cfg: dict[str, Any], res: dict[str, Any], tilt: pd.DataFrame, out: 
     for yi, mid in zip(y, ids, strict=True):
         c = ORIGIN_COLOURS[meta[mid]["origin"]]
         r = t.loc[mid]
-        ax.plot([r.lo, r.hi], [yi, yi], color=c, lw=2.2 if linkedin else 1.8, solid_capstyle="round", zorder=3)
-        ax.plot(r.tilt, yi, "o", color=c, ms=6.5 if linkedin else 6, mec="white", mew=0.8, zorder=4)
+        ax.plot([r.lo, r.hi], [yi, yi], color=c, lw=1.8, solid_capstyle="round", zorder=3)
+        ax.plot(r.tilt, yi, "o", color=c, ms=6, mec="white", mew=0.8, zorder=4)
     for i in group_breaks(cfg, ids):
         ax.axhline(n - i - 0.5, color=GRID, lw=0.6, zorder=0)
-    names = ([label(cfg, m) for m in ids] if linkedin else
-             [f"{label(cfg, m)}  ({short(t.loc[m, 'home'])})" for m in ids])
-    ax.set_yticks(y, names, fontsize=7.5 if linkedin else 8.5)
+    ax.set_yticks(y, [f"{label(cfg, m)}  ({short(t.loc[m, 'home'])})" for m in ids], fontsize=8.5)
     for tick, mid in zip(ax.get_yticklabels(), ids, strict=True):
         tick.set_color(ORIGIN_COLOURS[meta[mid]["origin"]])
     ax.set_ylim(-0.7, n - 0.3 + (0.9 if paper else 0))
     ax.grid(axis="x", color=GRID, lw=0.6)
     ax.set_axisbelow(True)
-    ax.set_xlabel("Home-market weight vs other models (pp)" if linkedin else
-                  "Home tilt: own-home weight minus other-origin models' weight on that market (pp)",
-                  fontsize=7 if linkedin else 8.5)
-    head = (f"Pooled home effect β = {pm(b['est'], d=2)} pp "
-            f"(95% CI {pm(b['lo'], False, 2)} to {pm(b['hi'], False, 2)}; equal weight = 12.5 pp)")
-    if linkedin:
-        g = res["primary"]["investor_home"]["est"]
-        fig.suptitle(textwrap.fill(cfg.get("_linkedin_title", head), 46), fontsize=9.5, fontweight="bold",
-                     x=0.03, ha="left", y=0.975, linespacing=1.15)
-        fig.text(0.03, 0.835, head, fontsize=6.8, color=MUTED, ha="left")
-        fig.text(0.03, 0.80, f"The investor's stated residence moves that market {pm(g, d=2)} pp, "
-                 f"{abs(g / b['est']):.1f}× the home effect.", fontsize=6.8, color=MUTED, ha="left")
-        groups = [o for o in ORIGIN_ORDER if any(meta[m]["origin"] == o for m in ids)]
-        ax.legend(handles=[Line2D([], [], marker="o", ls="", color=ORIGIN_COLOURS[o], ms=4.5, label=short(o))
-                           for o in groups], loc="upper left", fontsize=6, handletextpad=0.3, labelspacing=0.25,
-                  borderaxespad=0.4, facecolor="white", edgecolor="none", framealpha=1)
-        d = doi()
-        footer(fig, "dots = mean over 240 prompts; bars = 95% prompt-bootstrap CI.",
-               source=f"{n} open-weight LLMs, local 4-bit, greedy. Read the note: thanatchon36.github.io/llm-home-bias"
-                      + (f"\nDOI {d} · code, prompts and replies: github.com/thanatchon36/llm-home-bias" if d else ""),
-               y=0.015)
-    elif paper:
+    ax.set_xlabel("Home tilt: own-home weight minus other-origin models' weight on that market (pp)", fontsize=8.5)
+    if paper:
         ax.text(b["est"], n + 0.35, f"pooled β = {pm(b['est'], d=2)} pp, 95% CI {pm(b['lo'], False, 2)} to "
                 f"{pm(b['hi'], False, 2)}", ha="center", va="center", fontsize=7.5, color=INK,
                 bbox={"fc": "white", "ec": "none", "pad": 1.5})
     else:
         ax.set_title("Home-market tilt of open-weight LLMs", loc="left", pad=24)
-        ax.text(0, 1.02, head, transform=ax.transAxes, fontsize=8.5, color=MUTED)
+        ax.text(0, 1.02, f"Pooled home effect β = {pm(b['est'], d=2)} pp (95% CI {pm(b['lo'], False, 2)} to "
+                f"{pm(b['hi'], False, 2)}; equal weight = 12.5 pp)", transform=ax.transAxes, fontsize=8.5,
+                color=MUTED)
         footer(fig, "Dots: mean over prompts of the model's weight on its home market minus the mean weight that "
                     "models from other origin groups give that market on the same prompt. Bars: 95% CI, cluster "
                     "bootstrap over prompts (999 draws). Band: 95% CI of the pooled β from the pre-registered "
                     "regression (SE clustered by prompt).")
-    save(fig, out, name, paper)
+    save(fig, out, "fig1_home_tilt", paper)
+
+
+def fig_linkedin(cfg: dict[str, Any], res: dict[str, Any], tilt: pd.DataFrame, out: Path) -> None:
+    """Square social card (1200 × 1200 px): headline, two-sentence summary, the home-tilt dot plot, source footer.
+    Text is set in ink, never in a group colour; the dot beside each name and the legend carry the origin."""
+    meta = model_by_id(cfg)
+    ids = ordered_models(cfg, list(tilt["model_id"]))
+    t = tilt.set_index("model_id").loc[ids]
+    b, g = res["primary"]["home"], res["primary"]["investor_home"]["est"]
+    n = len(ids)
+    x0 = 0.05  # left margin of every text block, in figure fractions
+    fig = plt.figure(figsize=(4, 4), dpi=300, facecolor="white")
+    fig.text(x0, 0.965, f"RESEARCH NOTE  ·  {n} OPEN-WEIGHT MODELS  ·  240 PROMPTS EACH  ·  PRE-REGISTERED",
+             fontsize=5.6, color=MUTED, va="center")
+    fig.text(x0, 0.935, textwrap.fill(takeaway(b), 46), fontsize=10.5, fontweight="bold", color=INK, va="top",
+             linespacing=1.08)
+    fig.text(x0, 0.812, textwrap.fill(
+        f"A model's home market gets {pm(b['est'], d=2)} pp relative to what other models give it "
+        f"(95% CI {pm(b['lo'], False, 2)} to {pm(b['hi'], False, 2)}); equal weight would be 12.5 pp. "
+        f"Telling the model where the investor lives moves that market {pm(g, d=2)} pp, "
+        f"{abs(g / b['est']):.1f}× the home effect.", 78), fontsize=6.5, color=MUTED, va="top", linespacing=1.25)
+    groups = [o for o in ORIGIN_ORDER if any(meta[m]["origin"] == o for m in ids)]
+    fig.legend(handles=[Line2D([], [], marker="o", ls="", color=ORIGIN_COLOURS[o], ms=5, label=short(o))
+                        for o in groups], loc="upper left", bbox_to_anchor=(x0 - 0.008, 0.700), ncol=len(groups),
+               frameon=False, fontsize=6.5, handlelength=0.8, handletextpad=0.25, columnspacing=1.1, borderpad=0,
+               borderaxespad=0, labelcolor=INK)
+
+    ax = fig.add_axes([0.30, 0.215, 0.665, 0.445])
+    y = np.arange(n)[::-1]
+    ax.axvspan(b["lo"], b["hi"], color=BAND, lw=0, zorder=0)
+    ax.axvline(b["est"], color=INK, lw=0.8, ls=(0, (4, 2)), zorder=1)
+    ax.axvline(0, color=INK, lw=0.7, zorder=1)
+    for yi, mid in zip(y, ids, strict=True):
+        c, r = ORIGIN_COLOURS[meta[mid]["origin"]], t.loc[mid]
+        ax.plot([r.lo, r.hi], [yi, yi], color=c, lw=2.0, solid_capstyle="round", zorder=3)
+        ax.plot(r.tilt, yi, "o", color=c, ms=6.5, mec="white", mew=1.0, zorder=4)
+    for i in group_breaks(cfg, ids):
+        ax.axhline(n - i - 0.5, color=GRID, lw=0.5, zorder=0)
+    for mid, side in ((t["tilt"].idxmax(), 1), (t["tilt"].idxmin(), -1)):  # label the two extremes only
+        r = t.loc[mid]
+        ax.text((r.hi if side > 0 else r.lo) + 0.14 * side, y[ids.index(mid)], pm(r.tilt), fontsize=6.2,
+                color=MUTED, ha="left" if side > 0 else "right", va="center")
+    ax.text(b["est"], n + 0.05, f"pooled {pm(b['est'], d=2)} pp", ha="center", va="bottom", fontsize=6.2, color=INK,
+            bbox={"fc": "white", "ec": "none", "pad": 1.2}, zorder=5)
+    ax.set_yticks(y, [label(cfg, m) for m in ids], fontsize=7.3, color=INK)
+    ax.set_ylim(-0.7, n + 0.55)
+    ax.set_xlim(-4.9, 3.1)
+    ax.set_xticks([-4, -2, 0, 2], ["−4", "−2", "0", "+2"], fontsize=6.8, color=INK)
+    ax.tick_params(axis="both", length=0)
+    for side in ("left", "top", "right"):
+        ax.spines[side].set_visible(False)
+    ax.spines["bottom"].set_color(GRID)
+    ax.grid(axis="x", color=GRID, lw=0.5)
+    ax.set_axisbelow(True)
+    ax.set_xlabel("Home-market weight relative to other models (pp)", fontsize=6.8, color=MUTED, labelpad=4)
+
+    fig.add_artist(Line2D([x0, 1 - x0], [0.112, 0.112], color=GRID, lw=0.6))
+    d = doi()
+    lines = [("Dots: mean over 240 prompts. Bars: 95% prompt-bootstrap CI. Band: 95% CI of the pooled effect.", MUTED),
+             (f"{n} open-weight models run locally at 4-bit with greedy decoding." + (f"  DOI {d}" if d else ""),
+              MUTED),
+             ("Read the note: thanatchon36.github.io/llm-home-bias", INK),
+             ("Code, prompts and every reply: github.com/thanatchon36/llm-home-bias", INK)]
+    for i, (text, colour) in enumerate(lines):
+        fig.text(x0, 0.091 - 0.025 * i, text, fontsize=6.0, color=colour, va="center")
+    save(fig, out, "fig_linkedin")
 
 
 def fig_heatmap(cfg: dict[str, Any], panel: pd.DataFrame, ref: dict[str, dict[str, float]], out: Path,
@@ -419,6 +461,4 @@ def make_all(cfg: dict[str, Any]) -> None:
         fig_decomp(cfg, res, base, dest, paper=paper)
         fig_finetune(cfg, res, base, dest, paper=paper)
         fig_rates(cfg, rates, rates_lang, dest, paper=paper)
-    li = dict(cfg)
-    li["_linkedin_title"] = takeaway(res["primary"]["home"])
-    fig_tilt(li, res, tilt, out, name="fig_linkedin", linkedin=True)
+    fig_linkedin(cfg, res, tilt, out)
