@@ -24,7 +24,7 @@ The test was pre-registered, the models ran locally on one GPU, and every number
 📄 Read the note (10 pages, PDF or web): https://thanatchon36.github.io/llm-home-bias/
 💾 Code, prompts and every reply: https://github.com/thanatchon36/llm-home-bias
 📊 Dataset on Hugging Face: https://huggingface.co/datasets/thanatchon36/llm-home-bias
-🔗 DOI: 10.5281/zenodo.23861180
+🔗 DOI: 10.5281/zenodo.23862283 (v1.0.2) · all versions: 10.5281/zenodo.23861180
 
 If you use LLMs in investment research, or supervise people who do, I would like to hear what you would test next: other markets, larger models, or different prompts?
 
@@ -51,7 +51,7 @@ LLM แบบ open-source มี home bias ไหม?
 📄 อ่านบทความ (10 หน้า PDF หรืออ่านบนเว็บ): https://thanatchon36.github.io/llm-home-bias/
 💾 โค้ด prompt และคำตอบทั้งหมด: https://github.com/thanatchon36/llm-home-bias
 📊 Dataset บน Hugging Face: https://huggingface.co/datasets/thanatchon36/llm-home-bias
-🔗 DOI: 10.5281/zenodo.23861180
+🔗 DOI: 10.5281/zenodo.23862283 (v1.0.2) · ทุกเวอร์ชัน: 10.5281/zenodo.23861180
 
 ถ้าคุณใช้ LLM ช่วยวิเคราะห์การลงทุน หรือดูแลคนที่ใช้ อยากฟังว่าควรทดสอบอะไรต่อ: ตลาดอื่น โมเดลที่ใหญ่ขึ้น หรือ prompt แบบอื่น?
 
