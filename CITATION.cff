@@ -13,6 +13,7 @@ authors:
   - family-names: Chongmankhong
     given-names: Thanatchon
 version: 1.0.0
+doi: 10.5281/zenodo.23861180
 date-released: 2026-11-01
 license: Apache-2.0
 repository-code: "https://github.com/thanatchon36/llm-home-bias"
@@ -25,4 +26,5 @@ preferred-citation:
       given-names: Thanatchon
   year: 2026
   notes: "Research note."
+  doi: 10.5281/zenodo.23861180
   url: "https://github.com/thanatchon36/llm-home-bias/raw/main/paper/paper.pdf"

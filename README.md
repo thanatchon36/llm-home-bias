@@ -7,6 +7,7 @@
 [![PDF](https://img.shields.io/badge/paper-PDF-b2182b)](https://github.com/thanatchon36/llm-home-bias/raw/main/paper/paper.pdf)
 [![Data](https://img.shields.io/badge/data-Hugging%20Face-ffcc4d)](https://huggingface.co/datasets/thanatchon36/llm-home-bias)
 [![Pre-registered](https://img.shields.io/badge/pre--registered-PAP-4d4d4d)](docs/PAP.md)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23861180.svg)](https://doi.org/10.5281/zenodo.23861180)
 [![License](https://img.shields.io/badge/license-Apache--2.0-green)](LICENSE)
 
 🌐 **[Read the paper online](https://thanatchon36.github.io/llm-home-bias/)** ·
@@ -93,7 +94,8 @@ See [`CITATION.cff`](CITATION.cff), or:
   title       = {Do Open-Source {LLMs} Have a Home Bias? Investment Advice from Chinese, American, European and Thai Models},
   year        = {2026},
   type        = {Research note},
-  url         = {https://github.com/thanatchon36/llm-home-bias}
+  doi         = {10.5281/zenodo.23861180},
+  url         = {https://doi.org/10.5281/zenodo.23861180}
 }
 ```
 

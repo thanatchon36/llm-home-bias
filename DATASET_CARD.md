@@ -97,4 +97,4 @@ The data are meant for research on the geographic tilt and behaviour of language
 
 ## Citation
 
-See `CITATION.cff`.
+DOI: [10.5281/zenodo.23861180](https://doi.org/10.5281/zenodo.23861180) (all versions). See `CITATION.cff`.
