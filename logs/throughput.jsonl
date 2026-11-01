@@ -1,2 +1,14 @@
 {"model_id": "qwen3-8b", "decodings": ["greedy"], "subset": "smoke2", "calls": 2, "wall_s": 14.8, "eval_tokens": 375, "tok_per_s": 81.52, "ts": "2026-11-01T09:00:46+00:00"}
 {"model_id": "llama3.1-8b", "decodings": ["greedy"], "subset": "smoke2", "calls": 2, "wall_s": 2.5, "eval_tokens": 205, "tok_per_s": 85.54, "ts": "2026-11-01T09:00:56+00:00"}
+{"model_id": "qwen3-8b", "decodings": ["greedy"], "subset": "pilot20", "calls": 20, "wall_s": 73.0, "eval_tokens": 3723, "tok_per_s": 81.72, "ts": "2026-11-01T09:04:36+00:00"}
+{"model_id": "qwen2.5-7b", "decodings": ["greedy"], "subset": "pilot20", "calls": 20, "wall_s": 54.3, "eval_tokens": 3597, "tok_per_s": 90.76, "ts": "2026-11-01T09:05:59+00:00"}
+{"model_id": "glm4-9b", "decodings": ["greedy"], "subset": "pilot20", "calls": 20, "wall_s": 51.4, "eval_tokens": 2691, "tok_per_s": 78.17, "ts": "2026-11-01T09:07:08+00:00"}
+{"model_id": "llama3.1-8b", "decodings": ["greedy"], "subset": "pilot20", "calls": 20, "wall_s": 40.8, "eval_tokens": 2254, "tok_per_s": 86.0, "ts": "2026-11-01T09:07:56+00:00"}
+{"model_id": "mistral-7b", "decodings": ["greedy"], "subset": "pilot20", "calls": 20, "wall_s": 57.5, "eval_tokens": 5191, "tok_per_s": 96.44, "ts": "2026-11-01T09:08:58+00:00"}
+{"model_id": "typhoon2-8b", "decodings": ["greedy"], "subset": "pilot20", "calls": 20, "wall_s": 43.0, "eval_tokens": 3453, "tok_per_s": 84.63, "ts": "2026-11-01T09:09:46+00:00"}
+{"model_id": "openthaigpt1.5-7b", "decodings": ["greedy"], "subset": "pilot20", "calls": 20, "wall_s": 37.8, "eval_tokens": 3276, "tok_per_s": 90.27, "ts": "2026-11-01T09:10:30+00:00"}
+{"model_id": "gemma3-12b", "decodings": ["greedy"], "subset": "pilot20", "calls": 20, "wall_s": 59.8, "eval_tokens": 2374, "tok_per_s": 50.26, "ts": "2026-11-01T09:12:03+00:00"}
+{"model_id": "mistral-nemo-12b", "decodings": ["greedy"], "subset": "pilot20", "calls": 20, "wall_s": 43.4, "eval_tokens": 2585, "tok_per_s": 62.48, "ts": "2026-11-01T09:13:37+00:00"}
+{"model_id": "phi4-14b", "decodings": ["greedy"], "subset": "pilot20", "calls": 20, "wall_s": 63.3, "eval_tokens": 2561, "tok_per_s": 49.0, "ts": "2026-11-01T09:15:09+00:00"}
+{"model_id": "exaone3.5-7.8b", "decodings": ["greedy"], "subset": "pilot20", "calls": 20, "wall_s": 46.1, "eval_tokens": 3842, "tok_per_s": 88.22, "ts": "2026-11-01T09:15:58+00:00"}
+{"model_id": "eurollm-9b", "decodings": ["greedy"], "subset": "pilot20", "calls": 20, "wall_s": 68.5, "eval_tokens": 4971, "tok_per_s": 75.85, "ts": "2026-11-01T09:17:27+00:00"}

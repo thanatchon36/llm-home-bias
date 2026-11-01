@@ -1,0 +1,70 @@
+{
+  "msci_acwi": {
+    "as_of": "2026-10-29",
+    "source_url": "https://www.ssga.com/library-content/products/fund-data/etfs/emea/holdings-daily-emea-en-spyy-gy.xlsx",
+    "source_note": "Country weights = sum of 'Percent of Fund' by 'Trade Country Name' over all 2,250 equity holdings of the State Street SPDR MSCI All Country World UCITS ETF (Acc), ISIN IE00B44Z5B48, ticker SPYY GY, which tracks the MSCI ACWI Index; holdings as of 29-Oct-2026. These are fund weights, a proxy for index weights, not MSCI's own published index weights. The country field follows MSCI country classification (e.g. Tencent/Alibaba H-shares and the PDD ADR = China; Airbus = France; Linde = United States; Nu Holdings = Brazil). Holding weights sum to 100.0%; zero-weight cash/FX lines and an S&P 500 e-mini futures line are excluded. Eurozone = sum of the 10 DM euro-area markets listed in Eurozone_components. Greece (euro member, MSCI EM) is reported separately and in Eurozone_incl_Greece. Other euro members (Luxembourg, Slovakia, the Baltics, etc.) are not separate MSCI ACWI markets. The MSCI index factsheet gives only the top 5 countries; its values are kept in msci_index_factsheet_top5 for a cross-check. iShares ACWI (US) and SSAC (UCITS) holdings downloads returned HTML instead of CSV from this environment, so they were not used.",
+    "weights_pct_of_index": {
+      "United States": 64.93,
+      "China": 2.181,
+      "Eurozone": 7.087,
+      "Japan": 5.047,
+      "United Kingdom": 3.107,
+      "India": 1.289,
+      "South Korea": 2.264,
+      "Thailand": 0.124,
+      "Eurozone_components": {
+        "France": 1.951,
+        "Germany": 1.848,
+        "Netherlands": 1.176,
+        "Italy": 0.653,
+        "Spain": 0.794,
+        "Finland": 0.236,
+        "Belgium": 0.218,
+        "Ireland": 0.09,
+        "Portugal": 0.043,
+        "Austria": 0.079
+      },
+      "Eurozone_incl_Greece": 7.153,
+      "Greece": 0.065
+    },
+    "msci_index_factsheet_top5": {
+      "as_of": "2026-09-30",
+      "source_url": "https://www.msci.com/documents/10199/a71b65b5-d0ea-4b5c-a709-24b1213bc3c5",
+      "weights_pct": {
+        "United States": 64.21,
+        "Japan": 5.2,
+        "Taiwan": 3.46,
+        "United Kingdom": 3.0,
+        "Canada": 2.9,
+        "Other": 21.22
+      }
+    }
+  },
+  "imf_weo_gdp": {
+    "vintage": "World Economic Outlook (October 2026); DataMapper indicator last-modified 2026-10-08 14:43:33",
+    "year": 2025,
+    "year_status": "2025 values in the October 2026 WEO. Most countries report these as estimates, but the DataMapper API does not flag per-country estimate vs. actual status, so this was not verified.",
+    "source_url": "https://www.imf.org/external/datamapper/api/v1/NGDPD/USA/CHN/JPN/GBR/IND/KOR/THA/EURO",
+    "source_note": "Indicator NGDPD = GDP, current prices, billions of U.S. dollars. The API returned all 229 economies/groups despite the country filter; the raw response is saved in imf_ngdpd_raw.json. Euro area = group code EURO (label 'Euro area' in /api/v1/groups). EUQ is the 'Europe' region, not the euro area. Cross-check: the sum of the 20 pre-2026 members plus Bulgaria (joined 2026-01-01) for 2025 is 18041.6, close to EURO = 18034.3. The 20 members without Bulgaria sum to 17910.6.",
+    "gdp_usd_bn": {
+      "United States": 30861.3,
+      "China": 19626.191,
+      "Eurozone": 18034.305,
+      "Japan": 4453.094,
+      "United Kingdom": 4012.224,
+      "India": 3908.964,
+      "South Korea": 1881.748,
+      "Thailand": 577.01
+    },
+    "imf_codes": {
+      "United States": "USA",
+      "China": "CHN",
+      "Eurozone": "EURO",
+      "Japan": "JPN",
+      "United Kingdom": "GBR",
+      "India": "IND",
+      "South Korea": "KOR",
+      "Thailand": "THA"
+    }
+  }
+}

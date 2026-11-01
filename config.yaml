@@ -36,18 +36,18 @@ origins:
 # Models, in run order. `tag` is the Ollama tag. `optional` models are the first cut if GPU time runs short.
 # `think: false` is sent only where `thinking: true` (models with a thinking mode).
 models:
-  - {id: qwen3-8b, tag: "qwen3:8b", developer: Alibaba (Qwen), origin: China, base: Qwen3-8B, params_b: 8.2, thinking: true, licence: Apache-2.0}
-  - {id: qwen2.5-7b, tag: "qwen2.5:7b", developer: Alibaba (Qwen), origin: China, base: Qwen2.5-7B, params_b: 7.6, licence: Apache-2.0}
-  - {id: glm4-9b, tag: "glm4:9b", developer: Zhipu AI / Tsinghua (THUDM), origin: China, base: GLM-4-9B, params_b: 9.4, licence: glm-4}
-  - {id: llama3.1-8b, tag: "llama3.1:8b", developer: Meta, origin: United States, base: Llama-3.1-8B, params_b: 8.0, licence: Llama 3.1 Community}
-  - {id: gemma3-12b, tag: "gemma3:12b", developer: Google, origin: United States, base: Gemma-3-12B, params_b: 12.2, licence: Gemma}
-  - {id: phi4-14b, tag: "phi4:14b", developer: Microsoft, origin: United States, base: Phi-4, params_b: 14.7, licence: MIT, cut_rank: 3}
-  - {id: mistral-7b, tag: "mistral:7b", developer: Mistral AI, origin: Europe, base: Mistral-7B-v0.3, params_b: 7.2, licence: Apache-2.0}
-  - {id: mistral-nemo-12b, tag: "mistral-nemo:12b", developer: Mistral AI with NVIDIA, origin: Europe, base: Mistral-NeMo-12B, params_b: 12.2, licence: Apache-2.0}
-  - {id: typhoon2-8b, tag: "hf.co/Float16-cloud/llama3.1-typhoon2-8b-instruct-gguf:Q4_K_M", developer: SCB 10X (Typhoon), origin: Thailand, base: Llama-3.1-8B, base_model_id: llama3.1-8b, params_b: 8.0, licence: Llama 3.1 Community, hf_source: typhoon-ai/llama3.1-typhoon2-8b-instruct}
-  - {id: openthaigpt1.5-7b, tag: "hf.co/mradermacher/openthaigpt1.5-7b-instruct-GGUF:Q4_K_M", developer: OpenThaiGPT, origin: Thailand, base: Qwen2.5-7B, base_model_id: qwen2.5-7b, params_b: 7.6, licence: Qwen (other), hf_source: openthaigpt/openthaigpt1.5-7b-instruct}
-  - {id: eurollm-9b, tag: "hf.co/bartowski/EuroLLM-9B-Instruct-GGUF:Q4_K_M", developer: UTTER consortium (Unbabel, IST Lisbon, U. Edinburgh et al.), origin: Europe, base: EuroLLM-9B, params_b: 9.2, licence: Apache-2.0, optional: true, cut_rank: 2, hf_source: utter-project/EuroLLM-9B-Instruct}
-  - {id: exaone3.5-7.8b, tag: "exaone3.5:7.8b", developer: LG AI Research, origin: Korea, base: EXAONE-3.5-7.8B, params_b: 7.8, licence: EXAONE AI Model 1.1 NC, optional: true, cut_rank: 2}
+  - {id: qwen3-8b, label: Qwen3-8B, tag: "qwen3:8b", developer: Alibaba (Qwen), origin: China, base: Qwen3-8B, params_b: 8.2, thinking: true, licence: Apache-2.0}
+  - {id: qwen2.5-7b, label: Qwen2.5-7B, tag: "qwen2.5:7b", developer: Alibaba (Qwen), origin: China, base: Qwen2.5-7B, params_b: 7.6, licence: Apache-2.0}
+  - {id: glm4-9b, label: GLM-4-9B, tag: "glm4:9b", developer: Zhipu AI / Tsinghua (THUDM), origin: China, base: GLM-4-9B, params_b: 9.4, licence: glm-4}
+  - {id: llama3.1-8b, label: Llama-3.1-8B, tag: "llama3.1:8b", developer: Meta, origin: United States, base: Llama-3.1-8B, params_b: 8.0, licence: Llama 3.1 Community}
+  - {id: gemma3-12b, label: Gemma-3-12B, tag: "gemma3:12b", developer: Google, origin: United States, base: Gemma-3-12B, params_b: 12.2, licence: Gemma}
+  - {id: phi4-14b, label: Phi-4-14B, tag: "phi4:14b", developer: Microsoft, origin: United States, base: Phi-4, params_b: 14.7, licence: MIT, cut_rank: 3}
+  - {id: mistral-7b, label: Mistral-7B, tag: "mistral:7b", developer: Mistral AI, origin: Europe, base: Mistral-7B-v0.3, params_b: 7.2, licence: Apache-2.0}
+  - {id: mistral-nemo-12b, label: Mistral-NeMo-12B, tag: "mistral-nemo:12b", developer: Mistral AI with NVIDIA, origin: Europe, base: Mistral-NeMo-12B, params_b: 12.2, licence: Apache-2.0}
+  - {id: typhoon2-8b, label: Typhoon2-8B, tag: "hf.co/Float16-cloud/llama3.1-typhoon2-8b-instruct-gguf:Q4_K_M", developer: SCB 10X (Typhoon), origin: Thailand, base: Llama-3.1-8B, base_model_id: llama3.1-8b, params_b: 8.0, licence: Llama 3.1 Community, hf_source: typhoon-ai/llama3.1-typhoon2-8b-instruct}
+  - {id: openthaigpt1.5-7b, label: OpenThaiGPT-1.5-7B, tag: "hf.co/mradermacher/openthaigpt1.5-7b-instruct-GGUF:Q4_K_M", developer: OpenThaiGPT, origin: Thailand, base: Qwen2.5-7B, base_model_id: qwen2.5-7b, params_b: 7.6, licence: Qwen (other), hf_source: openthaigpt/openthaigpt1.5-7b-instruct}
+  - {id: eurollm-9b, label: EuroLLM-9B, tag: "hf.co/bartowski/EuroLLM-9B-Instruct-GGUF:Q4_K_M", developer: UTTER consortium (Unbabel, IST Lisbon, U. Edinburgh et al.), origin: Europe, base: EuroLLM-9B, params_b: 9.2, licence: Apache-2.0, optional: true, cut_rank: 2, hf_source: utter-project/EuroLLM-9B-Instruct}
+  - {id: exaone3.5-7.8b, label: EXAONE-3.5-7.8B, tag: "exaone3.5:7.8b", developer: LG AI Research, origin: Korea, base: EXAONE-3.5-7.8B, params_b: 7.8, licence: EXAONE AI Model 1.1 NC, optional: true, cut_rank: 2}
 
 factors:
   investor: [United States, China, France, Thailand, unspecified]

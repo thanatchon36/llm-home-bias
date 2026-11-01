@@ -1,0 +1,3 @@
+2026-11-01 16:16:13,042 INFO runner: ollama 0.40.13 at http://localhost:11434; 240 prompts in set
+2026-11-01 16:16:18,707 INFO runner: eurollm-9b: 20 calls to make (0 cached); format=schema; loaded=[('hf.co/bartowski/EuroLLM-9B-Instruct-GGUF:Q4_K_M', 5.7, 5.7)]
+2026-11-01 16:17:27,180 INFO runner: eurollm-9b: 20/20, 3.4 s/call, 75.9 tok/s, eta 0 min

@@ -1,0 +1,20 @@
+2026-11-01 16:03:15,505 INFO runner: ollama 0.40.13 at http://localhost:11434; 240 prompts in set
+2026-11-01 16:03:23,853 INFO runner: qwen3-8b: 20 calls to make (0 cached); format=schema; loaded=[('qwen3:8b', 5.3, 5.3)]
+2026-11-01 16:04:36,892 INFO runner: qwen3-8b: 20/20, 3.7 s/call, 81.7 tok/s, eta 0 min
+2026-11-01 16:05:05,512 INFO runner: qwen2.5-7b: 20 calls to make (0 cached); format=schema; loaded=[('qwen2.5:7b', 4.6, 4.6)]
+2026-11-01 16:05:59,781 INFO runner: qwen2.5-7b: 20/20, 2.7 s/call, 90.8 tok/s, eta 0 min
+2026-11-01 16:06:17,236 INFO runner: glm4-9b: 20 calls to make (0 cached); format=schema; loaded=[('glm4:9b', 5.3, 5.3)]
+2026-11-01 16:07:08,649 INFO runner: glm4-9b: 20/20, 2.6 s/call, 78.2 tok/s, eta 0 min
+2026-11-01 16:07:15,458 INFO runner: llama3.1-8b: 20 calls to make (0 cached); format=schema; loaded=[('llama3.1:8b', 5.0, 5.0)]
+2026-11-01 16:07:56,279 INFO runner: llama3.1-8b: 20/20, 2.0 s/call, 86.0 tok/s, eta 0 min
+2026-11-01 16:07:56,286 ERROR runner: gemma3-12b (gemma3:12b) not installed; skipped
+2026-11-01 16:07:56,286 ERROR runner: phi4-14b (phi4:14b) not installed; skipped
+2026-11-01 16:08:00,961 INFO runner: mistral-7b: 20 calls to make (0 cached); format=schema; loaded=[('mistral:7b', 4.7, 4.7)]
+2026-11-01 16:08:58,447 INFO runner: mistral-7b: 20/20, 2.9 s/call, 96.4 tok/s, eta 0 min
+2026-11-01 16:08:58,454 ERROR runner: mistral-nemo-12b (mistral-nemo:12b) not installed; skipped
+2026-11-01 16:09:04,031 INFO runner: typhoon2-8b: 20 calls to make (0 cached); format=schema; loaded=[('hf.co/Float16-cloud/llama3.1-typhoon2-8b-instruct-gguf:Q4_K_M', 5.0, 5.0)]
+2026-11-01 16:09:46,994 INFO runner: typhoon2-8b: 20/20, 2.1 s/call, 84.6 tok/s, eta 0 min
+2026-11-01 16:09:52,384 INFO runner: openthaigpt1.5-7b: 20 calls to make (0 cached); format=schema; loaded=[('hf.co/mradermacher/openthaigpt1.5-7b-instruct-GGUF:Q4_K_M', 4.6, 4.6)]
+2026-11-01 16:10:30,142 INFO runner: openthaigpt1.5-7b: 20/20, 1.9 s/call, 90.3 tok/s, eta 0 min
+2026-11-01 16:10:30,148 ERROR runner: eurollm-9b (hf.co/bartowski/EuroLLM-9B-Instruct-GGUF:Q4_K_M) not installed; skipped
+2026-11-01 16:10:30,148 ERROR runner: exaone3.5-7.8b (exaone3.5:7.8b) not installed; skipped

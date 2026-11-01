@@ -1,0 +1,5 @@
+2026-11-01 16:10:34,597 INFO runner: ollama 0.40.13 at http://localhost:11434; 240 prompts in set
+2026-11-01 16:11:03,407 INFO runner: gemma3-12b: 20 calls to make (0 cached); format=schema; loaded=[('gemma3:12b', 8.1, 8.1)]
+2026-11-01 16:12:03,228 INFO runner: gemma3-12b: 20/20, 3.0 s/call, 50.3 tok/s, eta 0 min
+2026-11-01 16:12:54,363 INFO runner: mistral-nemo-12b: 20 calls to make (0 cached); format=schema; loaded=[('mistral-nemo:12b', 7.2, 7.2)]
+2026-11-01 16:13:37,797 INFO runner: mistral-nemo-12b: 20/20, 2.2 s/call, 62.5 tok/s, eta 0 min

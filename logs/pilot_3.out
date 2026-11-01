@@ -1,0 +1,6 @@
+2026-11-01 16:13:54,718 INFO runner: ollama 0.40.13 at http://localhost:11434; 240 prompts in set
+2026-11-01 16:14:06,060 INFO runner: phi4-14b: 20 calls to make (0 cached); format=schema; loaded=[('phi4:14b', 9.3, 9.3)]
+2026-11-01 16:15:09,328 INFO runner: phi4-14b: 20/20, 3.2 s/call, 49.0 tok/s, eta 0 min
+2026-11-01 16:15:09,692 INFO runner: ollama 0.40.13 at http://localhost:11434; 240 prompts in set
+2026-11-01 16:15:12,041 INFO runner: exaone3.5-7.8b: 20 calls to make (0 cached); format=schema; loaded=[('exaone3.5:7.8b', 4.9, 4.9)]
+2026-11-01 16:15:58,123 INFO runner: exaone3.5-7.8b: 20/20, 2.3 s/call, 88.2 tok/s, eta 0 min
