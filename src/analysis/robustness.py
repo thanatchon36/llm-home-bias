@@ -66,7 +66,15 @@ def robustness(cfg: dict[str, Any], replies: pd.DataFrame, panel: pd.DataFrame, 
     nosys = sub[sub["decoding"] == "nosys"]
     if not nosys.empty:
         out["No system prompt, greedy (robust-60)"] = beta_only(nosys)
-    out["Drop renormalised allocations"] = beta_only(base[base["final"] == "ok"])
+    out["Only replies summing to exactly 100"] = beta_only(base[base["final"] == "ok"])
+    # Amendment A1: the brief's original rule (renorm_wide counted as failure, 30% exclusion re-applied).
+    g0 = replies[replies["decoding"] == "greedy"].copy()
+    g0["final"] = g0["final"].replace({"renorm_wide": "parse_failure"})
+    excl0, _ = excluded_models(cfg, g0)
+    keep0 = [m for m in keep if m not in excl0]
+    out["Original 95-105 rule (A1)"] = {**beta_only(base[(base["final"] != "renorm_wide")
+                                                         & base["model_id"].isin(keep0)]),
+                                        "excluded": excl0}
     g = replies[(replies["decoding"] == "greedy") & replies["model_id"].isin(keep)]
     imp = impute_failures(cfg, g)
     out["Failures imputed as equal weights"] = beta_only(pd.concat([base, imp], ignore_index=True))

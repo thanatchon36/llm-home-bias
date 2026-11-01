@@ -85,6 +85,8 @@ def numbers(cfg: dict[str, Any], res: dict[str, Any], rates: pd.DataFrame, tilt:
     m["failMax"] = num(rates["parse_fail_pct"].max())
     m["failMedian"] = num(rates["parse_fail_pct"].median())
     m["renormMedian"] = num(rates["renorm_pct"].median())
+    m["renormWideMedian"] = num(rates["renorm_wide_pct"].median())
+    m["renormWideMax"] = num(rates["renorm_wide_pct"].max())
     m["usShareMean"] = num(alloc["United States"].mean())
     m["usShareMin"] = num(alloc["United States"].min())
     m["usShareMax"] = num(alloc["United States"].max())

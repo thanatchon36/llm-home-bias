@@ -1,0 +1,6 @@
+.venv/bin/python -m src.run.runner --decodings greedy
+2026-11-01 16:19:13,027 INFO runner: ollama 0.40.13 at http://localhost:11434; 240 prompts in set
+2026-11-01 16:19:40,647 INFO runner: qwen3-8b: 240 calls to make (0 cached); format=schema; loaded=[('qwen3:8b', 5.3, 5.3)]
+2026-11-01 16:20:30,260 INFO runner: qwen3-8b: 20/240, 2.5 s/call, 80.3 tok/s, eta 9 min
+2026-11-01 16:21:11,031 INFO runner: qwen3-8b: 40/240, 2.3 s/call, 81.3 tok/s, eta 8 min
+2026-11-01 16:21:52,886 INFO runner: qwen3-8b: 60/240, 2.2 s/call, 81.5 tok/s, eta 7 min

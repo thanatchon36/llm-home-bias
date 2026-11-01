@@ -75,7 +75,8 @@ def table2(cfg: dict[str, Any], res: dict[str, Any], rates: pd.DataFrame) -> pd.
             "Digest": (t.get("digest") or (old.loc[r.model_id, "Digest"] if r.model_id in old.index else ""))[:12],
             "tok/s": round(r.tok_per_s, 1), "s/reply": round(r.s_per_reply, 2),
             "Refusal %": round(r.refusal_pct, 1), "Parse-fail %": round(r.parse_fail_pct, 1),
-            "Renormalised %": round(r.renorm_pct, 1),
+            "Renormalised 95–105 %": round(r.renorm_pct, 1),
+            "Renormalised wide %": round(r.renorm_wide_pct, 1),
             "In regressions": "yes" if r.model_id in res["models_kept"] else "no (30% rule)",
         })
     return pd.DataFrame(rows)

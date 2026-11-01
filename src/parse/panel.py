@@ -13,6 +13,7 @@ from src.prompts.build import load_prompts
 from src.utils import model_by_id, read_jsonl
 
 log = logging.getLogger(__name__)
+USABLE = ["ok", "renormalised", "renorm_wide"]
 
 
 def reply_table(cfg: dict[str, Any], resp_dir: Path) -> pd.DataFrame:
@@ -53,7 +54,7 @@ def long_panel(cfg: dict[str, Any], replies: pd.DataFrame) -> pd.DataFrame:
     inv_mkt, lang_mkts = cfg["investor_market"], cfg["language_markets"]
     cur = cfg["markets"]
     rows = []
-    for r in replies[replies["final"].isin(["ok", "renormalised"])].itertuples(index=False):
+    for r in replies[replies["final"].isin(USABLE)].itertuples(index=False):
         p, m = prompts[r.prompt_id], models[r.model_id]
         home = cfg["origins"][m["origin"]]
         for pos, c in enumerate(p["menu"], start=1):

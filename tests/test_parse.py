@@ -36,7 +36,8 @@ def test_sum_97_is_renormalised():
 
 def test_sum_140_needs_retry():
     r = p(reply([40, 50, 15, 10, 10, 5, 5, 5]))
-    assert r["status"] == "sum_out" and r["weights"] is None and r["total"] == 140
+    assert r["status"] == "sum_out" and r["total"] == 140
+    assert r["weights"]["China"] == pytest.approx(5000 / 140)  # kept for renorm_wide (amendment A1)
 
 
 def test_malformed_json():
@@ -81,5 +82,8 @@ def test_final_status():
     assert final_status([ok])["final"] == "ok"
     retried = final_status([out, ok])
     assert retried["final"] == "ok" and retried["retried"] is True
-    assert final_status([out, bad])["final"] == "parse_failure"
+    wide = final_status([out, out])
+    assert wide["final"] == "renorm_wide" and sum(wide["weights"].values()) == pytest.approx(100)
+    assert final_status([bad, out])["final"] == "renorm_wide"
+    assert final_status([bad, bad])["final"] == "parse_failure"
     assert final_status([bad, p("I cannot provide investment advice.")])["final"] == "refusal"

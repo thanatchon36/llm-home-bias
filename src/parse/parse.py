@@ -4,7 +4,8 @@ Status of one reply (pre-registered in docs/PAP.md):
   ok            valid JSON, 8 known markets, non-negative weights summing to exactly 100
   renormalised  as ok but summing to 95-105 (inclusive); weights rescaled to sum to 100
   refusal       all-zero allocation, or no usable allocation and the text matches a refusal pattern
-  sum_out       valid allocation summing outside 95-105            -> retry once, then parse failure
+  sum_out       valid allocation summing outside 95-105            -> retry once; if still out of range, the
+                earliest valid allocation is renormalised (final status renorm_wide; PAP amendment A1)
   invalid       not JSON / missing or unknown keys / bad values     -> retry once, then parse failure
 """
 
@@ -77,26 +78,32 @@ def parse_reply(content: str, markets: list[str], currencies: list[str], lo: flo
     if total == 0:
         out["status"] = "refusal"
         return out
+    out["weights"] = {m: 100.0 * raw[m] / total for m in markets}
     if total == 100:
         out["status"] = "ok"
     elif lo <= total <= hi:
         out["status"] = "renormalised"
+    elif REFUSAL_RE.search(out["reason"] or ""):
+        out["status"], out["weights"] = "refusal", None
     else:
-        out["status"] = "refusal" if REFUSAL_RE.search(out["reason"] or "") else "sum_out"
-        return out
-    out["weights"] = {m: 100.0 * raw[m] / total for m in markets}
+        out["status"] = "sum_out"
     return out
 
 
 def final_status(attempts: list[dict[str, Any]]) -> dict[str, Any]:
-    """Combine the parsed first attempt and the optional retry into one outcome.
+    """Combine the parsed first attempt and the optional retry into one outcome (PAP §4 and amendment A1).
 
-    The first usable reply wins; a retry is only made after sum_out/invalid. Unusable after the retry ->
-    `parse_failure` (or `refusal` if the retry refused).
+    Order: the first reply summing to 95-105 (ok/renormalised); else the earliest valid allocation with a
+    positive total, renormalised (renorm_wide); else refusal if any reply refused; else parse_failure.
     """
-    for i, a in enumerate(attempts):
+    retried = len(attempts) > 1
+    for a in attempts:
         if a["status"] in ("ok", "renormalised"):
-            return {**a, "final": a["status"], "retried": i > 0}
+            return {**a, "final": a["status"], "retried": retried}
+    for a in attempts:
+        if a["status"] == "sum_out":
+            return {**a, "final": "renorm_wide", "retried": retried}
+    for a in attempts:
         if a["status"] == "refusal":
-            return {**a, "final": "refusal", "retried": i > 0}
-    return {**attempts[-1], "final": "parse_failure", "retried": len(attempts) > 1}
+            return {**a, "final": "refusal", "retried": retried}
+    return {**attempts[-1], "final": "parse_failure", "retried": retried}

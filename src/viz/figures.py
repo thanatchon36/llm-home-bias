@@ -33,6 +33,12 @@ plt.rcParams.update({
 })
 
 
+def pm(x: float, plus: bool = True, d: int = 1) -> str:
+    """Signed number with a typographic minus."""
+    s = f"{x:+.{d}f}" if plus else f"{x:.{d}f}"
+    return s.replace("-", "\u2212")
+
+
 def ordered_models(cfg: dict[str, Any], ids: list[str]) -> list[str]:
     meta = model_by_id(cfg)
     order = {m["id"]: i for i, m in enumerate(cfg["models"])}
@@ -62,10 +68,10 @@ def fig_tilt(cfg: dict[str, Any], res: dict[str, Any], tilt: pd.DataFrame, out: 
     b = res["primary"]["home"]
     if linkedin:
         fig, ax = plt.subplots(figsize=(4, 4), dpi=300)
-        fig.subplots_adjust(left=0.36, right=0.96, top=0.76, bottom=0.2)
+        fig.subplots_adjust(left=0.33, right=0.96, top=0.76, bottom=0.2)
     else:
         fig, ax = plt.subplots(figsize=(7.2, 0.36 * len(ids) + 2.0))
-        fig.subplots_adjust(left=0.24, right=0.97, top=0.86, bottom=0.2)
+        fig.subplots_adjust(left=0.31, right=0.97, top=0.86, bottom=0.2)
     y = np.arange(len(ids))[::-1]
     for yi, mid in zip(y, ids, strict=True):
         c = ORIGIN_COLOURS[meta[mid]["origin"]]
@@ -73,17 +79,18 @@ def fig_tilt(cfg: dict[str, Any], res: dict[str, Any], tilt: pd.DataFrame, out: 
         ax.plot([r.lo, r.hi], [yi, yi], color=c, lw=2.2 if linkedin else 1.8, solid_capstyle="round")
         ax.plot(r.tilt, yi, "o", color=c, ms=6.5 if linkedin else 6, mec="white", mew=0.8, zorder=3)
     ax.axvline(0, color=INK, lw=0.8)
-    ax.set_yticks(y, [f"{label(cfg, m)}  ({t.loc[m, 'home'].replace('United States', 'US')})" for m in ids],
-                  fontsize=7.5 if linkedin else 8.5)
+    names = ([label(cfg, m) for m in ids] if linkedin else
+             [f"{label(cfg, m)}  ({t.loc[m, 'home'].replace('United States', 'US')})" for m in ids])
+    ax.set_yticks(y, names, fontsize=7.5 if linkedin else 8.5)
     for tick, mid in zip(ax.get_yticklabels(), ids, strict=True):
         tick.set_color(ORIGIN_COLOURS[meta[mid]["origin"]])
     ax.grid(axis="x", color=GRID, lw=0.6)
     ax.set_axisbelow(True)
-    ax.set_xlabel("Home tilt: own-home weight minus other-origin models' weight on that market (pp)",
+    ax.set_xlabel("Home-market weight vs other models (pp)" if linkedin else
+                  "Home tilt: own-home weight minus other-origin models' weight on that market (pp)",
                   fontsize=7 if linkedin else 8.5)
-    sign = "+" if b["est"] >= 0 else "−"
-    head = (f"Pooled home effect β = {sign}{abs(b['est']):.1f} pp "
-            f"(95% CI {b['lo']:.1f} to {b['hi']:.1f}; equal weight = 12.5 pp)")
+    head = (f"Pooled home effect β = {pm(b['est'])} pp "
+            f"(95% CI {pm(b['lo'], False)} to {pm(b['hi'], False)}; equal weight = 12.5 pp)")
     if linkedin:
         fig.suptitle(cfg.get("_linkedin_title", head), fontsize=9.5, fontweight="bold", x=0.03, ha="left", y=0.97,
                      wrap=True)
@@ -138,7 +145,7 @@ def fig_heatmap(cfg: dict[str, Any], panel: pd.DataFrame, ref: dict[str, dict[st
 def fig_decomp(cfg: dict[str, Any], res: dict[str, Any], panel: pd.DataFrame, out: Path) -> None:
     meta = model_by_id(cfg)
     fig = plt.figure(figsize=(7.6, 4.6))
-    gs = fig.add_gridspec(2, 4, width_ratios=[1.25, 1, 1, 1], left=0.07, right=0.97, top=0.84, bottom=0.2,
+    gs = fig.add_gridspec(2, 4, width_ratios=[1.25, 1, 1, 1], left=0.15, right=0.97, top=0.84, bottom=0.2,
                           wspace=0.35, hspace=0.45)
     ax = fig.add_subplot(gs[:, 0])
     p = res["primary"]
@@ -148,7 +155,7 @@ def fig_decomp(cfg: dict[str, Any], res: dict[str, Any], panel: pd.DataFrame, ou
         c = p[k]
         ax.plot([c["lo"], c["hi"]], [i, i], color=INK, lw=1.8)
         ax.plot(c["est"], i, "o", color=INK, ms=6)
-        ax.text(c["hi"], i + 0.18, f"{c['est']:+.1f}", fontsize=8, ha="right", color=INK)
+        ax.text(c["est"], i - 0.22, pm(c["est"]), fontsize=8, ha="center", color=INK)
     ax.axvline(0, color=MUTED, lw=0.8)
     ax.set_yticks(range(3), [n[1] for n in names], fontsize=8)
     ax.invert_yaxis()
@@ -179,7 +186,7 @@ def fig_decomp(cfg: dict[str, Any], res: dict[str, Any], panel: pd.DataFrame, ou
         a.set_title(f"{o} models (n={n})", fontsize=7.5, color=ORIGIN_COLOURS[o], loc="left")
     fig.text(0.38, 0.9, "Mean weight on China (pp): prompt language (rows) × investor residence (columns)",
              fontsize=8, color=MUTED)
-    fig.suptitle("Origin, language and investor: what moves the allocation?", x=0.07, ha="left", fontweight="bold",
+    fig.suptitle("Origin, language and investor: what moves the allocation?", x=0.15, ha="left", fontweight="bold",
                  fontsize=10, y=0.97)
     footer(fig, "Left: coefficients from the pre-registered regression (model and market fixed effects, menu-position "
                 "dummies; SE clustered by prompt). Right: cell means over models in each origin group "
@@ -208,7 +215,8 @@ def fig_finetune(cfg: dict[str, Any], res: dict[str, Any], panel: pd.DataFrame, 
         ax.set_xticks([0, 1], [f"{label(cfg, r['base'])}\n(base)", f"{label(cfg, r['finetune'])}\n(Thai fine-tune)"],
                       fontsize=8)
         ax.axhline(12.5, color=MUTED, ls="--", lw=0.8)
-        ax.set_title(f"δ = {r['est']:+.1f} pp (95% CI {r['lo']:.1f} to {r['hi']:.1f})", fontsize=8.5, loc="left")
+        ax.set_title(f"δ = {pm(r['est'])} pp (95% CI {pm(r['lo'], False)} to {pm(r['hi'], False)})", fontsize=8.5,
+                     loc="left")
         ax.grid(axis="y", color=GRID, lw=0.6)
         ax.set_axisbelow(True)
     axes[0].set_ylabel("Mean weight on Thailand (pp)")
@@ -225,11 +233,12 @@ def fig_rates(cfg: dict[str, Any], rates: pd.DataFrame, rates_lang: pd.DataFrame
     ids = ordered_models(cfg, list(rates["model_id"]))
     r = rates.set_index("model_id").loc[ids]
     fig, (a1, a2) = plt.subplots(1, 2, figsize=(7.6, 0.3 * len(ids) + 2.2), gridspec_kw={"width_ratios": [1.3, 1]})
-    fig.subplots_adjust(left=0.2, right=0.97, top=0.84, bottom=0.22, wspace=0.08)
+    fig.subplots_adjust(left=0.2, right=0.97, top=0.84, bottom=0.3, wspace=0.08)
     y = np.arange(len(ids))[::-1]
     left = np.zeros(len(ids))
     for col, c, lab in (("refusal_pct", "#B2182B", "Refusal"), ("parse_fail_pct", "#EF8A62", "Parse failure"),
-                        ("renorm_pct", "#BFD3E6", "Renormalised (sum 95–105)")):
+                        ("renorm_wide_pct", "#8C96C6", "Sum outside 95–105, renormalised"),
+                        ("renorm_pct", "#BFD3E6", "Sum 95–105, renormalised")):
         a1.barh(y, r[col], left=left, color=c, label=lab, height=0.7)
         left += r[col].to_numpy()
     a1.axvline(30, color=INK, ls=":", lw=0.8)
@@ -238,25 +247,28 @@ def fig_rates(cfg: dict[str, Any], rates: pd.DataFrame, rates_lang: pd.DataFrame
     for tick, mid in zip(a1.get_yticklabels(), ids, strict=True):
         tick.set_color(ORIGIN_COLOURS[meta[mid]["origin"]])
     a1.set_xlabel("% of replies (greedy, 240 prompts)")
-    a1.legend(fontsize=7, frameon=False, loc="lower right")
+    a1.set_xlim(0, 100)
+    a1.legend(fontsize=7, frameon=False, loc="upper center", bbox_to_anchor=(0.45, -0.13), ncol=2)
     a1.grid(axis="x", color=GRID, lw=0.6)
     a1.set_axisbelow(True)
-    rl = rates_lang.assign(bad=rates_lang["refusal_pct"] + rates_lang["parse_fail_pct"]).pivot_table(
+    rl = rates_lang.assign(bad=rates_lang["refusal_pct"] + rates_lang["parse_fail_pct"] + rates_lang["renorm_pct"]
+                           + rates_lang["renorm_wide_pct"]).pivot_table(
         index="model_id", columns="language", values="bad").reindex(index=ids, columns=["en", "zh", "fr", "th"])
-    a2.imshow(rl.to_numpy(), cmap="Reds", vmin=0, vmax=max(30, np.nanmax(rl.to_numpy())), aspect="auto")
+    a2.imshow(rl.to_numpy(), cmap="Purples", vmin=0, vmax=100, aspect="auto")
     for i in range(len(ids)):
         for j in range(4):
             v = rl.iat[i, j]
-            a2.text(j, i, f"{v:.0f}", ha="center", va="center", fontsize=7, color="white" if v > 40 else INK)
+            a2.text(j, i, f"{v:.0f}", ha="center", va="center", fontsize=7, color="white" if v > 60 else INK)
     a2.set_xticks(range(4), ["EN", "ZH", "FR", "TH"])
     a2.set_yticks([])
     a2.spines[:].set_visible(False)
     a2.tick_params(length=0)
-    a2.set_title("Refusal + failure by prompt language (%)", fontsize=8.5, loc="left")
-    fig.suptitle("Refusals and unusable replies are rare or common depending on the model", x=0.2, ha="left",
+    a2.set_title("Not summing to exactly 100,\nby prompt language (%)", fontsize=8.5, loc="left")
+    fig.suptitle("Arithmetic, not refusal: how often the allocation misses 100", x=0.2, ha="left",
                  fontweight="bold", fontsize=10, y=0.97)
-    footer(fig, "Parse failure: invalid JSON or a sum outside 95–105 after one stricter retry. Refusal: all-zero "
-                "allocation or refusal text without a usable allocation.")
+    footer(fig, "Each reply gets one stricter retry if invalid or summing outside 95–105. Parse failure: no valid "
+                "allocation after the retry. Refusal: all-zero allocation or refusal text without a usable "
+                "allocation. Sums outside 95–105 after the retry are renormalised (pre-run amendment A1).")
     save(fig, out, "fig5_refusal_parse_rates")
 
 

@@ -143,7 +143,7 @@ def cash(df: pd.DataFrame) -> dict[str, Any]:
 
 
 def cash_home_share(replies: pd.DataFrame, homes: dict[str, str], currency: dict[str, str]) -> pd.DataFrame:
-    r = replies[replies["final"].isin(["ok", "renormalised"])].copy()
+    r = replies[replies["final"].isin(["ok", "renormalised", "renorm_wide"])].copy()
     r["home_cur"] = r["model_id"].map(lambda m: currency[homes[m]])
     r["chose_home"] = r["cash"] == r["home_cur"]
     g = r.groupby("model_id")
@@ -158,5 +158,6 @@ def failure_rates(replies: pd.DataFrame, by: list[str]) -> pd.DataFrame:
         "refusal_pct": g.apply(lambda s: (s == "refusal").mean() * 100),
         "parse_fail_pct": g.apply(lambda s: (s == "parse_failure").mean() * 100),
         "renorm_pct": g.apply(lambda s: (s == "renormalised").mean() * 100),
+        "renorm_wide_pct": g.apply(lambda s: (s == "renorm_wide").mean() * 100),
         "retried_pct": replies.groupby(by)["retried"].mean() * 100,
     }).reset_index()
