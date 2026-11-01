@@ -9,3 +9,4 @@ paper/*.blg
 paper/*.aux
 logs/*.log
 paper/.web.tex
+logs/paper_build.out
