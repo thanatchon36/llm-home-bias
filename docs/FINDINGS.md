@@ -57,3 +57,7 @@ Running log of what was done and seen, in order. Anything not in docs/PAP.md is 
 ## 2026-11-01 18:20 — Post-hoc dispersion check added (Checkpoint 2 decision)
 
 The user approved adding the dispersion-adjusted specification, labelled POST HOC. It is the last row of table3 and the macro `\betaPosthocDisp`. It is computed in `estimate.dispersion_adjusted`, and a synthetic-panel test checks that it recovers β when models are compressed toward equal weight. It does not replace the pre-registered β. Value: +0.12 pp (SE 0.10, 95% CI [−0.08, 0.32]).
+
+## 2026-11-01 18:50 — Checkpoint 3 delegated
+
+The user asked the agent to review the drafts itself at Checkpoint 3 ("checkpoint 3 ให้คุณ review the drafts ได้เองเลยครับ"). The agent therefore proceeds from Phase 4 straight into Phase 5 QA without stopping.

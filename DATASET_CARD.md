@@ -21,7 +21,7 @@ Raw and parsed replies from 12 open-weight instruction-tuned language models. Ea
 | Path | Rows | One row per | What it is |
 |---|---|---|---|
 | `prompts/prompt_set.jsonl` | 240 | prompt | The prompt set: factors, menu order, rendered user message and JSON schema. SHA-256 in `prompts/prompt_set.sha256`. |
-| `data/responses/<model_id>.jsonl` | 480 per model | model × prompt × decoding | **Raw** Ollama replies, stored before any parsing: the full request messages and the complete Ollama response object for every attempt, including any retry. |
+| `data/responses/<model_id>.jsonl` | 420 per model | model × prompt × decoding | **Raw** Ollama replies, stored before any parsing: the full request messages and the complete Ollama response object for every attempt, including any retry. |
 | `data/processed/replies.parquet` | 5,040 | model × prompt × decoding | Parsed reply: status, retry flag, weights summing to 100, cash currency, reason, token counts, timings. |
 | `data/processed/panel.parquet` | ≈36,000 | model × prompt × decoding × market | Long panel used in the regressions: weight `w` (pp), `home`, `investor_home`, `language_home`, menu `position` and the prompt factors. |
 | `data/reference/reference_weights.json` | — | market | Context weights: equal weight, MSCI ACWI country weights (via an ACWI ETF's holdings) and IMF WEO GDP, all renormalised over the 8 markets. |

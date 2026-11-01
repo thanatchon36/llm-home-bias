@@ -108,7 +108,7 @@ Allocation levels are far from both market-cap and GDP weights ([fig. 2](output/
 
 Fine-tuning on Thai data is therefore not associated with a consistent shift towards Thailand.
 
-**Cash.** Every model chooses US dollars for cash in 80.4–96.7% of replies. The home-currency premium is −2.18 pp. US models only appear to prefer their home currency because every model defaults to the dollar.
+**Cash.** Every model chooses US dollars for cash in 80.4–96.7% of replies. The home-currency premium is −2.18 pp. The high home-currency share of US models is the common dollar default, not a home effect.
 
 ## Robustness
 
