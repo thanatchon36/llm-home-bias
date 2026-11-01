@@ -98,6 +98,7 @@ def numbers(cfg: dict[str, Any], res: dict[str, Any], rates: pd.DataFrame, tilt:
     lomo = res["robustness"]["_lomo"]
     m["lomoMin"] = num(min(v["est"] for v in lomo.values()), 1, True)
     m["lomoMax"] = num(max(v["est"] for v in lomo.values()), 1, True)
+    put(m, "betaPosthocDisp", res["robustness"].get("_posthoc_dispersion"))
     for name, v in rb.items():
         put(m, "rb" + key(name)[:24], v)
     return m

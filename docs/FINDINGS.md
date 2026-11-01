@@ -53,3 +53,7 @@ Running log of what was done and seen, in order. Anything not in docs/PAP.md is 
   - A near-equal-weight model mechanically gives less than others to popular markets. The Eurozone, China and the US are all above 12.5 pp on average.
   - Adding model × market-popularity interactions to the primary equation gives β = +0.12 pp (SE 0.10, 95% CI [−0.08, 0.32]).
   - Reading: the small negative pre-registered β partly reflects dispersion differences. Under either reading there is no positive home tilt.
+
+## 2026-11-01 18:20 — Post-hoc dispersion check added (Checkpoint 2 decision)
+
+The user approved adding the dispersion-adjusted specification, labelled POST HOC. It is the last row of table3 and the macro `\betaPosthocDisp`. It is computed in `estimate.dispersion_adjusted`, and a synthetic-panel test checks that it recovers β when models are compressed toward equal weight. It does not replace the pre-registered β. Value: +0.12 pp (SE 0.10, 95% CI [−0.08, 0.32]).

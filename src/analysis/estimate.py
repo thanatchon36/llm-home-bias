@@ -84,6 +84,26 @@ def primary(df: pd.DataFrame) -> dict[str, Any]:
     return summary(res, df, MAIN)
 
 
+def dispersion_adjusted(df: pd.DataFrame) -> dict[str, Any]:
+    """POST HOC (not in the PAP): primary equation plus model-specific slopes on market popularity.
+
+    Popularity is the market's mean weight over all models minus 12.5. A model that stays close to equal weight
+    gives less than other models to popular markets; the model x popularity terms absorb that dispersion, so β
+    compares a model's home weight with what its own dispersion predicts. One model's slope is the reference.
+    """
+    d = df.copy()
+    pop = d.groupby("market")["w"].mean() - 100 / d["market"].nunique()
+    d["pop"] = d["market"].map(pop)
+    slopes = []
+    for m in sorted(d["model_id"].unique())[1:]:
+        col = f"pop_{m}"
+        d[col] = d["pop"] * (d["model_id"] == m)
+        slopes.append(col)
+    res = fit(d, "w", MAIN + slopes)
+    return {**coef(res, "home"), "N": int(res.nobs), "clusters": int(d["prompt_id"].nunique()),
+            "models": int(d["model_id"].nunique())}
+
+
 def by_origin(df: pd.DataFrame) -> dict[str, Any]:
     d = df.copy()
     names = []

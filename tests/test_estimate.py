@@ -76,3 +76,13 @@ def test_wild_bootstrap_covers_truth(panel):
 def test_cash_lpm_scaled_to_pp(panel):
     r = E.cash(panel)
     assert r["home"]["est"] == pytest.approx(100.0, abs=1e-6)
+
+
+def test_dispersion_adjusted_recovers_beta_under_compression(panel):
+    # Compress both China models toward equal weight: raw β is pulled down, the post-hoc spec recovers it.
+    d = panel.copy()
+    k = d["model_id"].isin(["cn1", "cn2"])
+    d.loc[k, "w"] = 12.5 + 0.3 * (d.loc[k, "w"] - 12.5)
+    d.loc[k & (d.market == "China"), "w"] += BETA * 0.7  # keep their home premium at β after compression
+    assert E.primary(d)["home"]["est"] < BETA - 0.3
+    assert E.dispersion_adjusted(d)["est"] == pytest.approx(BETA, abs=0.3)

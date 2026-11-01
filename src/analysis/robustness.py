@@ -58,9 +58,9 @@ def robustness(cfg: dict[str, Any], replies: pd.DataFrame, panel: pd.DataFrame, 
         panel.loc[panel["decoding"] == "nosys", "prompt_id"])
     out: dict[str, Any] = {}
     sub = panel[panel["model_id"].isin(keep)]
-    t07 = sub[sub["decoding"].isin(["t07_s1", "t07_s2", "t07_s3"])]
+    t07 = sub[sub["decoding"].str.startswith("t07_")]
     if not t07.empty:
-        out["Temperature 0.7, 3 seeds (robust-60)"] = beta_only(t07)
+        out[f"Temperature 0.7, {t07['decoding'].nunique()} seeds (robust-60)"] = beta_only(t07)
     if r60:
         out["Greedy, robust-60 subset"] = beta_only(base[base["prompt_id"].isin(r60)])
     nosys = sub[sub["decoding"] == "nosys"]
@@ -84,6 +84,7 @@ def robustness(cfg: dict[str, Any], replies: pd.DataFrame, panel: pd.DataFrame, 
     out["Log-ratio outcome log(w_c / w_Japan)"] = beta_only(lr, "lr")
     lomo = {m: beta_only(base[base["model_id"] != m]) for m in keep}
     out["_lomo"] = lomo
+    out["_posthoc_dispersion"] = E.dispersion_adjusted(base)  # POST HOC, labelled as such everywhere
     return out
 
 

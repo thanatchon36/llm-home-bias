@@ -91,6 +91,10 @@ def table3(res: dict[str, Any]) -> pd.DataFrame:
     lomo = res["robustness"]["_lomo"]
     for m, v in lomo.items():
         rows.append({"Check": f"Leave out {m}", **_b(v, v)})
+    ph = res["robustness"].get("_posthoc_dispersion")
+    if ph:
+        rows.append({"Check": "POST HOC (not pre-registered): model-specific dispersion (model × market popularity)",
+                     **_b(ph, ph)})
     return pd.DataFrame(rows)
 
 
