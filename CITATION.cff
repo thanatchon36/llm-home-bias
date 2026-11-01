@@ -1,0 +1,28 @@
+cff-version: 1.2.0
+message: "Please cite the paper (preferred-citation); if you use the replies dataset or the pipeline, also cite the software."
+title: "llm-home-bias: home-market tilt in investment advice from Chinese, American, European and Thai open-weight LLMs"
+abstract: >-
+  Pre-registered audit of 12 open-weight language models run locally with
+  Ollama on a 240-prompt factorial (investor nationality x prompt language x
+  risk profile x horizon x paraphrase). Each model allocates 100% across
+  eight equity markets; the panel of raw replies, parsed allocations and the
+  estimation code are released. Fully reproducible from the cached replies
+  with `make all`.
+type: software
+authors:
+  - family-names: Chongmankhong
+    given-names: Thanatchon
+version: 1.0.0
+date-released: 2026-11-01
+license: Apache-2.0
+repository-code: "https://github.com/thanatchon36/llm-home-bias"
+keywords: [large-language-models, home-bias, portfolio-allocation, robo-advice, ai-audit, open-weight-models, thailand, open-data]
+preferred-citation:
+  type: generic
+  title: "Do Open-Source LLMs Have a Home Bias? Investment Advice from Chinese, American, European and Thai Models"
+  authors:
+    - family-names: Chongmankhong
+      given-names: Thanatchon
+  year: 2026
+  notes: "Research note."
+  url: "https://github.com/thanatchon36/llm-home-bias/raw/main/paper/paper.pdf"

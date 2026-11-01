@@ -76,7 +76,7 @@ def wild_bootstrap_ci(df: pd.DataFrame, y: str, regs: list[str], name: str, clus
     v = np.random.default_rng(seed).choice(WEBB, size=(reps, len(s)))
     draws = beta[list(X.columns).index(name)] + v @ s
     return {"lo": float(np.percentile(draws, 2.5)), "hi": float(np.percentile(draws, 97.5)),
-            "share_le0": float((draws <= 0).mean()), "clusters": int(len(s)), "reps": reps}
+            "share_le0": float((draws <= 0).mean()), "clusters": len(s), "reps": reps}
 
 
 def primary(df: pd.DataFrame) -> dict[str, Any]:
@@ -115,7 +115,7 @@ def tilt(df: pd.DataFrame, homes: dict[str, str], reps: int, seed: int) -> pd.Da
         boots = d[rng.integers(len(d), size=(reps, len(d)))].mean(axis=1)
         rows.append({"model_id": m, "home": h, "tilt": float(d.mean()), "lo": float(np.percentile(boots, 2.5)),
                      "hi": float(np.percentile(boots, 97.5)), "own": float(sub[m].mean()),
-                     "others": float(sub[others].mean(axis=1).mean()), "n_prompts": int(len(d))})
+                     "others": float(sub[others].mean(axis=1).mean()), "n_prompts": len(d)})
     return pd.DataFrame(rows)
 
 
