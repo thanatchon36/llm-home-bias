@@ -1,5 +1,5 @@
 cff-version: 1.2.0
-message: "Please cite the paper (preferred-citation); if you use the replies dataset or the pipeline, also cite the software."
+message: "Please cite the paper (preferred-citation); if you use the replies dataset or the pipeline, also cite this dataset record."
 title: "llm-home-bias: home-market tilt in investment advice from Chinese, American, European and Thai open-weight LLMs"
 abstract: >-
   Pre-registered audit of 12 open-weight language models run locally with
@@ -8,7 +8,7 @@ abstract: >-
   eight equity markets; the panel of raw replies, parsed allocations and the
   estimation code are released. Fully reproducible from the cached replies
   with `make all`.
-type: software
+type: dataset
 authors:
   - family-names: Chongmankhong
     given-names: Thanatchon
