@@ -6,6 +6,8 @@ from __future__ import annotations
 
 import json
 import logging
+import re
+import textwrap
 from pathlib import Path
 from typing import Any
 
@@ -110,6 +112,12 @@ def takeaway(b: dict[str, float]) -> str:
     return "On average, open-weight LLMs do not allocate more to their home stock market"
 
 
+def doi() -> str | None:
+    """The record DOI from CITATION.cff (present once the Zenodo release exists), for the social card's footer."""
+    m = re.search(r'^doi:\s*"?([^"\s]+)"?', (ROOT / "CITATION.cff").read_text(encoding="utf-8"), re.MULTILINE)
+    return m.group(1) if m else None
+
+
 def fig_tilt(cfg: dict[str, Any], res: dict[str, Any], tilt: pd.DataFrame, out: Path, name: str = "fig1_home_tilt",
              linkedin: bool = False, paper: bool = False) -> None:
     meta = model_by_id(cfg)
@@ -119,7 +127,7 @@ def fig_tilt(cfg: dict[str, Any], res: dict[str, Any], tilt: pd.DataFrame, out: 
     n = len(ids)
     if linkedin:
         fig, ax = plt.subplots(figsize=(4, 4), dpi=300)
-        fig.subplots_adjust(left=0.33, right=0.96, top=0.76, bottom=0.2)
+        fig.subplots_adjust(left=0.33, right=0.96, top=0.745, bottom=0.255)
     elif paper:
         fig, ax = plt.subplots(figsize=(TEXT_WIDTH, 0.28 * n + 1.3))
         fig.subplots_adjust(left=0.3, right=0.98, top=0.97, bottom=0.12)
@@ -151,11 +159,21 @@ def fig_tilt(cfg: dict[str, Any], res: dict[str, Any], tilt: pd.DataFrame, out: 
     head = (f"Pooled home effect β = {pm(b['est'], d=2)} pp "
             f"(95% CI {pm(b['lo'], False, 2)} to {pm(b['hi'], False, 2)}; equal weight = 12.5 pp)")
     if linkedin:
-        fig.suptitle(cfg.get("_linkedin_title", head), fontsize=9.5, fontweight="bold", x=0.03, ha="left", y=0.97,
-                     wrap=True)
-        fig.text(0.03, 0.81, head, fontsize=6.8, color=MUTED, ha="left")
+        g = res["primary"]["investor_home"]["est"]
+        fig.suptitle(textwrap.fill(cfg.get("_linkedin_title", head), 46), fontsize=9.5, fontweight="bold",
+                     x=0.03, ha="left", y=0.975, linespacing=1.15)
+        fig.text(0.03, 0.835, head, fontsize=6.8, color=MUTED, ha="left")
+        fig.text(0.03, 0.80, f"The investor's stated residence moves that market {pm(g, d=2)} pp, "
+                 f"{abs(g / b['est']):.1f}× the home effect.", fontsize=6.8, color=MUTED, ha="left")
+        groups = [o for o in ORIGIN_ORDER if any(meta[m]["origin"] == o for m in ids)]
+        ax.legend(handles=[Line2D([], [], marker="o", ls="", color=ORIGIN_COLOURS[o], ms=4.5, label=short(o))
+                           for o in groups], loc="upper left", fontsize=6, handletextpad=0.3, labelspacing=0.25,
+                  borderaxespad=0.4, facecolor="white", edgecolor="none", framealpha=1)
+        d = doi()
         footer(fig, "dots = mean over 240 prompts; bars = 95% prompt-bootstrap CI.",
-               source=f"{n} open-weight LLMs, local 4-bit, greedy. github.com/thanatchon36/llm-home-bias", y=0.015)
+               source=f"{n} open-weight LLMs, local 4-bit, greedy. Read the note: thanatchon36.github.io/llm-home-bias"
+                      + (f"\nDOI {d} · code, prompts and replies: github.com/thanatchon36/llm-home-bias" if d else ""),
+               y=0.015)
     elif paper:
         ax.text(b["est"], n + 0.35, f"pooled β = {pm(b['est'], d=2)} pp, 95% CI {pm(b['lo'], False, 2)} to "
                 f"{pm(b['hi'], False, 2)}", ha="center", va="center", fontsize=7.5, color=INK,
