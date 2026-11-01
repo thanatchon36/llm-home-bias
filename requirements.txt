@@ -1,5 +1,6 @@
 # Pinned to the versions that produced the committed results (2026-11-01).
 pandas==3.1.0
+tabulate==0.10.0
 numpy==2.5.4
 statsmodels==0.15.0
 matplotlib==3.11.2

@@ -3,13 +3,13 @@
 <h1 align="center">Do open-source LLMs have a home bias?</h1>
 
 [![CI](https://github.com/thanatchon36/llm-home-bias/actions/workflows/ci.yml/badge.svg)](https://github.com/thanatchon36/llm-home-bias/actions/workflows/ci.yml)
-[![Paper](https://img.shields.io/badge/paper-read%20online-2f5f9e)](https://thanatchon36.github.io/llm-home-bias/paper/)
+[![Paper](https://img.shields.io/badge/paper-read%20online-2f5f9e)](https://thanatchon36.github.io/llm-home-bias/)
 [![PDF](https://img.shields.io/badge/paper-PDF-b2182b)](https://github.com/thanatchon36/llm-home-bias/raw/main/paper/paper.pdf)
 [![Data](https://img.shields.io/badge/data-Hugging%20Face-ffcc4d)](https://huggingface.co/datasets/thanatchon36/llm-home-bias)
 [![Pre-registered](https://img.shields.io/badge/pre--registered-PAP-4d4d4d)](docs/PAP.md)
 [![License](https://img.shields.io/badge/license-Apache--2.0-green)](LICENSE)
 
-🌐 **[Read the paper online](https://thanatchon36.github.io/llm-home-bias/paper/)** ·
+🌐 **[Read the paper online](https://thanatchon36.github.io/llm-home-bias/)** ·
 📄 **[Download the PDF](https://github.com/thanatchon36/llm-home-bias/raw/main/paper/paper.pdf)** ·
 🤗 **[Data](https://huggingface.co/datasets/thanatchon36/llm-home-bias)** ·
 📝 **[Pre-analysis plan](docs/PAP.md)** ·
@@ -41,7 +41,7 @@ market. What the investor says about themselves is associated with a shift 4.4 t
 <p align="center"><img src="output/figures/fig1_home_tilt.png" alt="Dot plot of each model's home-market tilt in percentage points with 95% confidence intervals, coloured by origin. Five models allocate significantly more to their home market than other models do, six allocate significantly less, and the pooled effect is −0.42 pp." width="560"></p>
 
 Method, results, robustness and limitations are in the paper:
-**[web version](https://thanatchon36.github.io/llm-home-bias/paper/)** or
+**[web version](https://thanatchon36.github.io/llm-home-bias/)** or
 **[PDF](https://github.com/thanatchon36/llm-home-bias/raw/main/paper/paper.pdf)** (5 pages).
 
 ## Reproduce

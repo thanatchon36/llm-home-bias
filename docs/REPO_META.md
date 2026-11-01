@@ -4,7 +4,7 @@
 
 > The brief's wording said 11 models; the experiment ran 12, including the optional Korean EXAONE-3.5, so the About line says 12.
 
-**Website:** https://thanatchon36.github.io/llm-home-bias/paper/ (GitHub Pages: branch `main`, folder `/docs`)
+**Website:** https://thanatchon36.github.io/llm-home-bias/ (GitHub Pages via `.github/workflows/pages.yml`, which publishes `docs/paper/`)
 
 **Topics:** `llm` `bias` `home-bias` `finance` `open-weight` `ollama` `pre-registered` `experiment` `python`
 
