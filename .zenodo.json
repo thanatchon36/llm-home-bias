@@ -19,7 +19,7 @@
   "license": "apache-2.0",
   "access_right": "open",
   "language": "eng",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "related_identifiers": [
     {"identifier": "https://huggingface.co/datasets/thanatchon36/llm-home-bias", "relation": "isVariantFormOf", "resource_type": "dataset"},
     {"identifier": "https://thanatchon36.github.io/llm-home-bias/", "relation": "isDocumentedBy", "resource_type": "publication-other"}

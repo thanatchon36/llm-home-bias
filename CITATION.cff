@@ -12,7 +12,7 @@ type: dataset
 authors:
   - family-names: Chongmankhong
     given-names: Thanatchon
-version: 1.0.0
+version: 1.0.1
 doi: 10.5281/zenodo.23861180
 date-released: 2026-11-01
 license: Apache-2.0
