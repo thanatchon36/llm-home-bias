@@ -192,7 +192,8 @@ def fig_decomp(cfg: dict[str, Any], res: dict[str, Any], panel: pd.DataFrame, ou
         a.tick_params(length=0)
         a.spines[:].set_visible(False)
         n = sum(1 for m in panel["model_id"].unique() if meta[m]["origin"] == o)
-        a.set_title(f"{o} models (n={n})", fontsize=7.5, color=ORIGIN_COLOURS[o], loc="left")
+        short = "US" if o == "United States" else o
+        a.set_title(f"{short} models (n={n})", fontsize=7.5, color=ORIGIN_COLOURS[o], loc="left")
     fig.text(0.38, 0.9, "Mean weight on China (pp): prompt language (rows) × investor residence (columns)",
              fontsize=8, color=MUTED)
     fig.suptitle("Origin, language and investor: what moves the allocation?", x=0.15, ha="left", fontweight="bold",
