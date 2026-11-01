@@ -106,7 +106,7 @@ def fig_tilt(cfg: dict[str, Any], res: dict[str, Any], tilt: pd.DataFrame, out: 
                      wrap=True)
         fig.text(0.03, 0.81, head, fontsize=6.8, color=MUTED, ha="left")
         footer(fig, "dots = mean over 240 prompts; bars = 95% prompt-bootstrap CI.",
-               source=f"{len(ids)} open-weight LLMs, local 4-bit, greedy. github.com/<my-handle>/llm-home-bias", y=0.015)
+               source=f"{len(ids)} open-weight LLMs, local 4-bit, greedy. github.com/thanatchon36/llm-home-bias", y=0.015)
     else:
         ax.set_title("Home-market tilt of open-weight LLMs", loc="left", pad=24)
         ax.text(0, 1.02, head, transform=ax.transAxes, fontsize=8.5, color=MUTED)

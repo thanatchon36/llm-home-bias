@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="t">
+  <title id="t">llm-home-bias</title>
+  <rect width="128" height="128" rx="28" fill="#12233f"/>
+  <!-- baseline -->
+  <path d="M18 102 H110" stroke="#3b5578" stroke-width="3" stroke-linecap="round"/>
+  <!-- eight market weights, close to equal -->
+  <g fill="#7fb0ec">
+    <rect x="20" y="58" width="8" height="44" rx="2"/>
+    <rect x="31.5" y="62" width="8" height="40" rx="2"/>
+    <rect x="43" y="55" width="8" height="47" rx="2"/>
+    <rect x="77.5" y="60" width="8" height="42" rx="2"/>
+    <rect x="89" y="64" width="8" height="38" rx="2"/>
+    <rect x="100.5" y="59" width="8" height="43" rx="2"/>
+  </g>
+  <!-- the home market: a house -->
+  <path d="M54 102 V62 L64 52 L74 62 V102 Z" fill="#ffd166"/>
+  <path d="M50 64 L64 49 L78 64" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- equal weight -->
+  <path d="M16 58 H112" stroke="#ffffff" stroke-width="2" stroke-dasharray="4 4" opacity="0.6"/>
+  <!-- question mark -->
+  <path d="M58 26 C58 18 70 18 70 26 C70 32 64 32 64 38" fill="none" stroke="#ffd166" stroke-width="3.5" stroke-linecap="round"/>
+  <circle cx="64" cy="44" r="2.2" fill="#ffd166"/>
+</svg>

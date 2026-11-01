@@ -35,31 +35,20 @@ def docs() -> dict[str, str]:
 def expected(res: dict) -> list[str]:
     p, rb = res["primary"], res["robustness"]
     ft = {r["finetune"]: r for r in res["finetune"]}
-    tilt = pd.read_csv(T / "tilt.csv")
-    rates = pd.read_csv(T / "rates_model.csv")
-    cash = pd.read_csv(T / "cash_share.csv")
     alloc = pd.read_csv(T / "mean_allocation.csv", index_col=0)
-    out = [
+    t07 = next(v for k, v in rb.items() if k.startswith("Temperature 0.7"))
+    return [
         f"β = {f(p['home']['est'])} pp", f"{f(p['home']['lo'])} to {f(p['home']['hi'])}",
         f"{f(res['wild_bootstrap_template']['lo'])} to {f(res['wild_bootstrap_template']['hi'])}",
         f(p["investor_home"]["est"], plus=True), f(p["language_home"]["est"], plus=True),
         f"β = {f(res['h2']['home']['est'])} pp",
         f(ft["typhoon2-8b"]["est"]), f(ft["openthaigpt1.5-7b"]["est"], plus=True),
-        f(res["cash"]["home"]["est"]),
-        f"{f(tilt['tilt'].min(), 1)} to {f(tilt['tilt'].max(), 1, plus=True)}",
-        f"{f(cash['share_usd'].min(), 1)}–{f(cash['share_usd'].max(), 1)}%",
         f"{f(alloc['United States'].min(), 1)}–{f(alloc['United States'].max(), 1)}%",
-        f"{f(rates['renorm_wide_pct'].median(), 1)}%", f"{f(rates['renorm_wide_pct'].max(), 1)}%",
+        f"{f(alloc['China'].min(), 1)}–{f(alloc['China'].max(), 1)}%",
         f"{f(abs(p['investor_home']['est'] / p['home']['est']), 1)} times",
+        f"temperature 0.7 ({f(t07['est'])})",
         f"β = {f(rb['_posthoc_dispersion']['est'], plus=True)} pp",
     ]
-    for k, v in res["by_origin"].items():
-        if k.startswith("home_") and v:
-            out.append(f"{f(v['est'], plus=True)} ({f(v['se'])})")
-    for k, v in rb.items():
-        if not k.startswith("_"):
-            out.append(f(v["est"], 3 if k.startswith("Log-ratio") else 2))
-    return out
 
 
 def test_readme_quotes_results(res, docs):

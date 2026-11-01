@@ -442,7 +442,7 @@ z
    <text style="font-size: 6.8px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #59636e" x="8.64" y="54.72" transform="rotate(-0 8.64 54.72)">Pooled home effect β = −0.4 pp (95% CI −0.6 to −0.3; equal weight = 12.5 pp)</text>
   </g>
   <g id="text_20">
-   <text style="font-size: 6.5px; font-family: 'DejaVu Sans'; fill: #59636e" transform="translate(2.88 273.666064)">12 open-weight LLMs, local 4-bit, greedy. github.com/&lt;my-handle&gt;/llm-home-bias</text>
+   <text style="font-size: 6.5px; font-family: 'DejaVu Sans'; fill: #59636e" transform="translate(2.88 273.666064)">12 open-weight LLMs, local 4-bit, greedy. github.com/thanatchon36/llm-home-bias</text>
    <text style="font-size: 6.5px; font-family: 'DejaVu Sans'; fill: #59636e" transform="translate(2.88 281.467842)">Note: dots = mean over 240 prompts; bars = 95% prompt-bootstrap CI.</text>
   </g>
  </g>

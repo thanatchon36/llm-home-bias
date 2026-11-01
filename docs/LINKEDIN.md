@@ -11,7 +11,7 @@ Three findings:
 
 Limits: small 4-bit models, one prompt instrument, greedy decoding. Outputs describe behaviour, not intent or advice quality.
 
-Code, data and all 5,040 responses: https://github.com/<my-handle>/llm-home-bias 📊
+Code, data and all 5,040 responses: https://github.com/thanatchon36/llm-home-bias 📊
 
 #LLM #AIinFinance #HomeBias #OpenSource
 

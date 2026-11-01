@@ -14,7 +14,7 @@ configs:
 
 # Dataset card: LLM Home Bias
 
-Raw and parsed replies from 12 open-weight instruction-tuned language models. Each model was asked to split an international equity portfolio across eight markets: United States, China, Eurozone, Japan, United Kingdom, India, South Korea and Thailand. The same 240 factorial prompts went to every model. The data accompany the research note *Do Open-Source LLMs Have a Home Bias? Investment Advice from Chinese, American, European and Thai Models* (repository: https://github.com/<my-handle>/llm-home-bias). The design is pre-registered in `docs/PAP.md`.
+Raw and parsed replies from 12 open-weight instruction-tuned language models. Each model was asked to split an international equity portfolio across eight markets: United States, China, Eurozone, Japan, United Kingdom, India, South Korea and Thailand. The same 240 factorial prompts went to every model. The data accompany the research note *Do Open-Source LLMs Have a Home Bias? Investment Advice from Chinese, American, European and Thai Models* (repository: https://github.com/thanatchon36/llm-home-bias). The design is pre-registered in `docs/PAP.md`.
 
 ## Contents
 
