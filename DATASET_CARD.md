@@ -106,7 +106,7 @@ The data are meant for research on the geographic tilt and behaviour of language
 
 ## Citation
 
-The code, prompts, replies and research note are archived on Zenodo. DOI [10.5281/zenodo.23861180](https://doi.org/10.5281/zenodo.23861180) covers all versions and always resolves to the latest one; the version this card describes, v1.0.3, is DOI [10.5281/zenodo.23862502](https://doi.org/10.5281/zenodo.23862502). See `CITATION.cff` in the repository, or:
+The code, prompts, replies and research note are archived on Zenodo. DOI [10.5281/zenodo.23861180](https://doi.org/10.5281/zenodo.23861180) covers all versions and always resolves to the latest one; the version this card describes, v1.0.4, is DOI [10.5281/zenodo.23862769](https://doi.org/10.5281/zenodo.23862769). See `CITATION.cff` in the repository, or:
 
 ```bibtex
 @techreport{chongmankhong2026homebias,
