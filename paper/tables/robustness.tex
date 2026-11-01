@@ -4,6 +4,9 @@
 Check & $\beta$ (pp) & SE & 95\% CI & N \\
 \midrule
 Primary (greedy, 240 prompts) & -0.42 & 0.09 & [-0.59, -0.25] & 23008 \\
+Temperature 0.7, 2 seeds (robust-60) & -0.17 & 0.16 & [-0.48, 0.13] & 11472 \\
+Greedy, robust-60 subset & -0.37 & 0.17 & [-0.71, -0.03] & 5752 \\
+No system prompt, greedy (robust-60) & -0.65 & 0.16 & [-0.98, -0.33] & 5712 \\
 Only replies summing to exactly 100 & -0.67 & 0.14 & [-0.95, -0.40] & 12784 \\
 Original 95-105 rule (A1) & -0.33 & 0.12 & [-0.58, -0.09] & 13496 \\
 Failures imputed as equal weights & -0.42 & 0.09 & [-0.59, -0.25] & 23040 \\

@@ -61,3 +61,13 @@ The user approved adding the dispersion-adjusted specification, labelled POST HO
 ## 2026-11-01 18:50 — Checkpoint 3 delegated
 
 The user asked the agent to review the drafts itself at Checkpoint 3 ("checkpoint 3 ให้คุณ review the drafts ได้เองเลยครับ"). The agent therefore proceeds from Phase 4 straight into Phase 5 QA without stopping.
+
+## 2026-11-01 19:38 — Robustness run complete (Phase 3)
+
+- 2,160 robustness replies (12 models × 60 prompts × {nosys, t07_s1, t07_s2}); 5,040 replies in total.
+- β on the robust-60 subset:
+  - greedy −0.37 pp [−0.71, −0.03];
+  - temperature 0.7, 2 seeds −0.17 pp [−0.48, 0.13] (not significant);
+  - no system prompt −0.65 pp [−0.98, −0.33].
+- The primary estimates are unchanged: they use the greedy run only.
+- The point estimate is negative in every pre-registered check. No check shows a positive home tilt.

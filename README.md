@@ -116,6 +116,9 @@ Fine-tuning on Thai data is therefore not associated with a consistent shift tow
 
 | Check | β |
 |---|---|
+| Temperature 0.7, two seeds (60-prompt subset) | −0.17 (95% CI −0.48 to 0.13) |
+| Greedy, same 60-prompt subset | −0.37 |
+| No system prompt (60-prompt subset) | −0.65 |
 | Only replies summing to exactly 100 | −0.67 |
 | Original 95–105 rule (4 models excluded) | −0.33 |
 | English prompts only | −0.70 |
@@ -123,9 +126,7 @@ Fine-tuning on Thai data is therefore not associated with a consistent shift tow
 | Log-ratio outcome (log units) | −0.026 |
 | Leave one model out | −0.82 to −0.01 |
 
-The negative sign holds in each of these checks. The estimate loses significance without Typhoon2, Phi-4 or Mistral-NeMo, so the negative sign rests on a few models.
-
-ROBUST-RUN-PLACEHOLDER (temperature 0.7 with two seeds, and no system prompt, both on a 60-prompt subset).
+The point estimate is negative in every check. It is not significant under temperature-0.7 sampling, and it loses significance without Typhoon2, Phi-4 or Mistral-NeMo, so the negative sign rests on a few models and on greedy decoding. No check shows a positive home tilt.
 
 **Post hoc** (not pre-registered): models differ in how far they stay from equal weight. A model that sits close to 12.5% everywhere mechanically gives less than other models to popular markets. Allowing each model its own slope on market popularity gives β = +0.12 pp (95% CI −0.08 to 0.32). Under either reading, there is no positive home tilt larger than about a third of a percentage point.
 

@@ -1,0 +1,123 @@
+.venv/bin/python -m src.run.runner --decodings nosys,t07_s1,t07_s2
+2026-11-01 18:13:09,962 INFO runner: ollama 0.40.13 at http://localhost:11434; 240 prompts in set
+2026-11-01 18:13:15,731 INFO runner: qwen3-8b: 180 calls to make (240 cached); format=schema; loaded=[('qwen3:8b', 5.3, 5.3)]
+2026-11-01 18:13:56,632 INFO runner: qwen3-8b: 20/180, 2.0 s/call, 81.9 tok/s, eta 5 min
+2026-11-01 18:14:48,955 INFO runner: qwen3-8b: 40/180, 2.3 s/call, 82.0 tok/s, eta 5 min
+2026-11-01 18:15:30,539 INFO runner: qwen3-8b: 60/180, 2.2 s/call, 81.7 tok/s, eta 4 min
+2026-11-01 18:16:18,754 INFO runner: qwen3-8b: 80/180, 2.3 s/call, 81.8 tok/s, eta 4 min
+2026-11-01 18:17:08,739 INFO runner: qwen3-8b: 100/180, 2.3 s/call, 81.5 tok/s, eta 3 min
+2026-11-01 18:17:57,153 INFO runner: qwen3-8b: 120/180, 2.3 s/call, 81.0 tok/s, eta 2 min
+2026-11-01 18:18:47,351 INFO runner: qwen3-8b: 140/180, 2.4 s/call, 81.1 tok/s, eta 2 min
+2026-11-01 18:19:37,751 INFO runner: qwen3-8b: 160/180, 2.4 s/call, 81.2 tok/s, eta 1 min
+2026-11-01 18:20:20,682 INFO runner: qwen3-8b: 180/180, 2.4 s/call, 81.3 tok/s, eta 0 min
+2026-11-01 18:20:26,064 INFO runner: qwen2.5-7b: 180 calls to make (240 cached); format=schema; loaded=[('qwen2.5:7b', 4.6, 4.6)]
+2026-11-01 18:21:00,451 INFO runner: qwen2.5-7b: 20/180, 1.7 s/call, 84.6 tok/s, eta 5 min
+2026-11-01 18:21:42,157 INFO runner: qwen2.5-7b: 40/180, 1.9 s/call, 84.7 tok/s, eta 4 min
+2026-11-01 18:22:12,547 INFO runner: qwen2.5-7b: 60/180, 1.8 s/call, 85.7 tok/s, eta 4 min
+2026-11-01 18:22:50,204 INFO runner: qwen2.5-7b: 80/180, 1.8 s/call, 87.3 tok/s, eta 3 min
+2026-11-01 18:23:27,656 INFO runner: qwen2.5-7b: 100/180, 1.8 s/call, 88.0 tok/s, eta 2 min
+2026-11-01 18:24:04,711 INFO runner: qwen2.5-7b: 120/180, 1.8 s/call, 88.4 tok/s, eta 2 min
+2026-11-01 18:24:46,620 INFO runner: qwen2.5-7b: 140/180, 1.9 s/call, 89.0 tok/s, eta 1 min
+2026-11-01 18:25:24,637 INFO runner: qwen2.5-7b: 160/180, 1.9 s/call, 89.2 tok/s, eta 1 min
+2026-11-01 18:26:03,923 INFO runner: qwen2.5-7b: 180/180, 1.9 s/call, 89.4 tok/s, eta 0 min
+2026-11-01 18:26:09,409 INFO runner: glm4-9b: 180 calls to make (240 cached); format=schema; loaded=[('glm4:9b', 5.3, 5.3)]
+2026-11-01 18:26:52,571 INFO runner: glm4-9b: 20/180, 2.2 s/call, 76.5 tok/s, eta 6 min
+2026-11-01 18:27:35,330 INFO runner: glm4-9b: 40/180, 2.1 s/call, 76.2 tok/s, eta 5 min
+2026-11-01 18:28:11,973 INFO runner: glm4-9b: 60/180, 2.0 s/call, 76.9 tok/s, eta 4 min
+2026-11-01 18:28:53,043 INFO runner: glm4-9b: 80/180, 2.0 s/call, 77.7 tok/s, eta 3 min
+2026-11-01 18:29:35,148 INFO runner: glm4-9b: 100/180, 2.1 s/call, 77.9 tok/s, eta 3 min
+2026-11-01 18:30:12,727 INFO runner: glm4-9b: 120/180, 2.0 s/call, 78.1 tok/s, eta 2 min
+2026-11-01 18:30:51,407 INFO runner: glm4-9b: 140/180, 2.0 s/call, 78.3 tok/s, eta 1 min
+2026-11-01 18:31:29,791 INFO runner: glm4-9b: 160/180, 2.0 s/call, 78.4 tok/s, eta 1 min
+2026-11-01 18:32:03,583 INFO runner: glm4-9b: 180/180, 2.0 s/call, 78.5 tok/s, eta 0 min
+2026-11-01 18:32:08,926 INFO runner: llama3.1-8b: 180 calls to make (240 cached); format=schema; loaded=[('llama3.1:8b', 5.0, 5.0)]
+2026-11-01 18:32:35,131 INFO runner: llama3.1-8b: 20/180, 1.3 s/call, 85.2 tok/s, eta 3 min
+2026-11-01 18:33:09,015 INFO runner: llama3.1-8b: 40/180, 1.5 s/call, 84.6 tok/s, eta 4 min
+2026-11-01 18:33:40,125 INFO runner: llama3.1-8b: 60/180, 1.5 s/call, 85.1 tok/s, eta 3 min
+2026-11-01 18:34:08,088 INFO runner: llama3.1-8b: 80/180, 1.5 s/call, 85.6 tok/s, eta 2 min
+2026-11-01 18:34:39,073 INFO runner: llama3.1-8b: 100/180, 1.5 s/call, 86.0 tok/s, eta 2 min
+2026-11-01 18:35:05,933 INFO runner: llama3.1-8b: 120/180, 1.5 s/call, 86.0 tok/s, eta 1 min
+2026-11-01 18:35:32,342 INFO runner: llama3.1-8b: 140/180, 1.5 s/call, 86.1 tok/s, eta 1 min
+2026-11-01 18:36:05,546 INFO runner: llama3.1-8b: 160/180, 1.5 s/call, 86.2 tok/s, eta 0 min
+2026-11-01 18:36:38,245 INFO runner: llama3.1-8b: 180/180, 1.5 s/call, 86.3 tok/s, eta 0 min
+2026-11-01 18:36:47,367 INFO runner: gemma3-12b: 180 calls to make (240 cached); format=schema; loaded=[('gemma3:12b', 8.1, 8.1)]
+2026-11-01 18:37:48,280 INFO runner: gemma3-12b: 20/180, 3.0 s/call, 51.5 tok/s, eta 8 min
+2026-11-01 18:38:47,695 INFO runner: gemma3-12b: 40/180, 3.0 s/call, 51.9 tok/s, eta 7 min
+2026-11-01 18:39:40,958 INFO runner: gemma3-12b: 60/180, 2.9 s/call, 51.4 tok/s, eta 6 min
+2026-11-01 18:40:34,535 INFO runner: gemma3-12b: 80/180, 2.8 s/call, 51.8 tok/s, eta 5 min
+2026-11-01 18:41:39,975 INFO runner: gemma3-12b: 100/180, 2.9 s/call, 52.1 tok/s, eta 4 min
+2026-11-01 18:42:37,522 INFO runner: gemma3-12b: 120/180, 2.9 s/call, 51.9 tok/s, eta 3 min
+2026-11-01 18:43:37,214 INFO runner: gemma3-12b: 140/180, 2.9 s/call, 52.0 tok/s, eta 2 min
+2026-11-01 18:44:40,763 INFO runner: gemma3-12b: 160/180, 3.0 s/call, 52.1 tok/s, eta 1 min
+2026-11-01 18:45:37,612 INFO runner: gemma3-12b: 180/180, 2.9 s/call, 52.3 tok/s, eta 0 min
+2026-11-01 18:45:45,715 INFO runner: phi4-14b: 180 calls to make (240 cached); format=schema; loaded=[('phi4:14b', 9.3, 9.3)]
+2026-11-01 18:46:29,580 INFO runner: phi4-14b: 20/180, 2.2 s/call, 49.4 tok/s, eta 6 min
+2026-11-01 18:47:31,690 INFO runner: phi4-14b: 40/180, 2.6 s/call, 49.3 tok/s, eta 6 min
+2026-11-01 18:48:32,651 INFO runner: phi4-14b: 60/180, 2.8 s/call, 49.2 tok/s, eta 6 min
+2026-11-01 18:49:18,730 INFO runner: phi4-14b: 80/180, 2.7 s/call, 49.1 tok/s, eta 4 min
+2026-11-01 18:50:27,433 INFO runner: phi4-14b: 100/180, 2.8 s/call, 48.9 tok/s, eta 4 min
+2026-11-01 18:51:17,833 INFO runner: phi4-14b: 120/180, 2.8 s/call, 48.8 tok/s, eta 3 min
+2026-11-01 18:52:02,276 INFO runner: phi4-14b: 140/180, 2.7 s/call, 48.7 tok/s, eta 2 min
+2026-11-01 18:53:04,867 INFO runner: phi4-14b: 160/180, 2.7 s/call, 48.4 tok/s, eta 1 min
+2026-11-01 18:53:52,759 INFO runner: phi4-14b: 180/180, 2.7 s/call, 48.3 tok/s, eta 0 min
+2026-11-01 18:53:57,542 INFO runner: mistral-7b: 180 calls to make (240 cached); format=schema; loaded=[('mistral:7b', 4.7, 4.7)]
+2026-11-01 18:54:55,270 INFO runner: mistral-7b: 20/180, 2.9 s/call, 94.6 tok/s, eta 8 min
+2026-11-01 18:56:20,552 INFO runner: mistral-7b: 40/180, 3.6 s/call, 92.6 tok/s, eta 8 min
+2026-11-01 18:57:12,906 INFO runner: mistral-7b: 60/180, 3.3 s/call, 92.8 tok/s, eta 7 min
+2026-11-01 18:58:10,112 INFO runner: mistral-7b: 80/180, 3.2 s/call, 93.2 tok/s, eta 5 min
+2026-11-01 18:59:12,843 INFO runner: mistral-7b: 100/180, 3.2 s/call, 93.3 tok/s, eta 4 min
+2026-11-01 19:00:07,199 INFO runner: mistral-7b: 120/180, 3.1 s/call, 93.4 tok/s, eta 3 min
+2026-11-01 19:01:07,110 INFO runner: mistral-7b: 140/180, 3.1 s/call, 93.6 tok/s, eta 2 min
+2026-11-01 19:02:04,059 INFO runner: mistral-7b: 160/180, 3.0 s/call, 93.6 tok/s, eta 1 min
+2026-11-01 19:02:52,194 INFO runner: mistral-7b: 180/180, 3.0 s/call, 93.7 tok/s, eta 0 min
+2026-11-01 19:02:59,225 INFO runner: mistral-nemo-12b: 180 calls to make (240 cached); format=schema; loaded=[('mistral-nemo:12b', 7.2, 7.2)]
+2026-11-01 19:03:44,813 INFO runner: mistral-nemo-12b: 20/180, 2.3 s/call, 61.2 tok/s, eta 6 min
+2026-11-01 19:04:40,439 INFO runner: mistral-nemo-12b: 40/180, 2.5 s/call, 60.1 tok/s, eta 6 min
+2026-11-01 19:05:34,801 INFO runner: mistral-nemo-12b: 60/180, 2.6 s/call, 60.1 tok/s, eta 5 min
+2026-11-01 19:06:18,325 INFO runner: mistral-nemo-12b: 80/180, 2.5 s/call, 60.4 tok/s, eta 4 min
+2026-11-01 19:07:09,725 INFO runner: mistral-nemo-12b: 100/180, 2.5 s/call, 60.5 tok/s, eta 3 min
+2026-11-01 19:08:00,653 INFO runner: mistral-nemo-12b: 120/180, 2.5 s/call, 60.6 tok/s, eta 3 min
+2026-11-01 19:08:45,847 INFO runner: mistral-nemo-12b: 140/180, 2.5 s/call, 60.7 tok/s, eta 2 min
+2026-11-01 19:09:32,004 INFO runner: mistral-nemo-12b: 160/180, 2.5 s/call, 60.8 tok/s, eta 1 min
+2026-11-01 19:10:19,721 INFO runner: mistral-nemo-12b: 180/180, 2.4 s/call, 60.8 tok/s, eta 0 min
+2026-11-01 19:10:25,308 INFO runner: typhoon2-8b: 180 calls to make (240 cached); format=schema; loaded=[('hf.co/Float16-cloud/llama3.1-typhoon2-8b-instruct-gguf:Q4_K_M', 5.0, 5.0)]
+2026-11-01 19:11:09,699 INFO runner: typhoon2-8b: 20/180, 2.2 s/call, 83.9 tok/s, eta 6 min
+2026-11-01 19:11:49,294 INFO runner: typhoon2-8b: 40/180, 2.1 s/call, 83.6 tok/s, eta 5 min
+2026-11-01 19:12:23,673 INFO runner: typhoon2-8b: 60/180, 2.0 s/call, 83.6 tok/s, eta 4 min
+2026-11-01 19:13:04,186 INFO runner: typhoon2-8b: 80/180, 2.0 s/call, 83.5 tok/s, eta 3 min
+2026-11-01 19:13:45,976 INFO runner: typhoon2-8b: 100/180, 2.0 s/call, 83.5 tok/s, eta 3 min
+2026-11-01 19:14:25,189 INFO runner: typhoon2-8b: 120/180, 2.0 s/call, 83.5 tok/s, eta 2 min
+2026-11-01 19:15:01,709 INFO runner: typhoon2-8b: 140/180, 2.0 s/call, 83.4 tok/s, eta 1 min
+2026-11-01 19:15:41,809 INFO runner: typhoon2-8b: 160/180, 2.0 s/call, 83.4 tok/s, eta 1 min
+2026-11-01 19:16:20,878 INFO runner: typhoon2-8b: 180/180, 2.0 s/call, 83.4 tok/s, eta 0 min
+2026-11-01 19:16:26,024 INFO runner: openthaigpt1.5-7b: 180 calls to make (240 cached); format=schema; loaded=[('hf.co/mradermacher/openthaigpt1.5-7b-instruct-GGUF:Q4_K_M', 4.6, 4.6)]
+2026-11-01 19:17:06,910 INFO runner: openthaigpt1.5-7b: 20/180, 2.0 s/call, 88.2 tok/s, eta 5 min
+2026-11-01 19:17:47,379 INFO runner: openthaigpt1.5-7b: 40/180, 2.0 s/call, 87.4 tok/s, eta 5 min
+2026-11-01 19:18:22,951 INFO runner: openthaigpt1.5-7b: 60/180, 1.9 s/call, 87.0 tok/s, eta 4 min
+2026-11-01 19:19:04,256 INFO runner: openthaigpt1.5-7b: 80/180, 2.0 s/call, 87.7 tok/s, eta 3 min
+2026-11-01 19:19:48,445 INFO runner: openthaigpt1.5-7b: 100/180, 2.0 s/call, 87.8 tok/s, eta 3 min
+2026-11-01 19:20:24,207 INFO runner: openthaigpt1.5-7b: 120/180, 2.0 s/call, 87.6 tok/s, eta 2 min
+2026-11-01 19:20:58,629 INFO runner: openthaigpt1.5-7b: 140/180, 1.9 s/call, 87.7 tok/s, eta 1 min
+2026-11-01 19:21:39,384 INFO runner: openthaigpt1.5-7b: 160/180, 2.0 s/call, 87.6 tok/s, eta 1 min
+2026-11-01 19:22:10,295 INFO runner: openthaigpt1.5-7b: 180/180, 1.9 s/call, 87.4 tok/s, eta 0 min
+2026-11-01 19:22:16,751 INFO runner: eurollm-9b: 180 calls to make (240 cached); format=schema; loaded=[('hf.co/bartowski/EuroLLM-9B-Instruct-GGUF:Q4_K_M', 5.7, 5.7)]
+2026-11-01 19:23:24,650 INFO runner: eurollm-9b: 20/180, 3.4 s/call, 73.9 tok/s, eta 9 min
+2026-11-01 19:24:37,863 INFO runner: eurollm-9b: 40/180, 3.5 s/call, 73.6 tok/s, eta 8 min
+2026-11-01 19:25:49,691 INFO runner: eurollm-9b: 60/180, 3.5 s/call, 72.9 tok/s, eta 7 min
+2026-11-01 19:26:47,646 INFO runner: eurollm-9b: 80/180, 3.4 s/call, 73.3 tok/s, eta 6 min
+2026-11-01 19:27:54,043 INFO runner: eurollm-9b: 100/180, 3.4 s/call, 73.4 tok/s, eta 4 min
+2026-11-01 19:28:59,715 INFO runner: eurollm-9b: 120/180, 3.4 s/call, 73.5 tok/s, eta 3 min
+2026-11-01 19:29:55,226 INFO runner: eurollm-9b: 140/180, 3.3 s/call, 73.7 tok/s, eta 2 min
+2026-11-01 19:30:57,328 INFO runner: eurollm-9b: 160/180, 3.3 s/call, 73.6 tok/s, eta 1 min
+2026-11-01 19:31:55,171 INFO runner: eurollm-9b: 180/180, 3.2 s/call, 73.7 tok/s, eta 0 min
+2026-11-01 19:32:00,581 INFO runner: exaone3.5-7.8b: 180 calls to make (240 cached); format=schema; loaded=[('exaone3.5:7.8b', 4.9, 4.9)]
+2026-11-01 19:32:29,570 INFO runner: exaone3.5-7.8b: 20/180, 1.4 s/call, 85.8 tok/s, eta 4 min
+2026-11-01 19:33:11,847 INFO runner: exaone3.5-7.8b: 40/180, 1.8 s/call, 85.3 tok/s, eta 4 min
+2026-11-01 19:33:43,896 INFO runner: exaone3.5-7.8b: 60/180, 1.7 s/call, 85.1 tok/s, eta 3 min
+2026-11-01 19:34:23,056 INFO runner: exaone3.5-7.8b: 80/180, 1.8 s/call, 85.7 tok/s, eta 3 min
+2026-11-01 19:35:07,329 INFO runner: exaone3.5-7.8b: 100/180, 1.9 s/call, 85.7 tok/s, eta 2 min
+2026-11-01 19:35:48,118 INFO runner: exaone3.5-7.8b: 120/180, 1.9 s/call, 85.8 tok/s, eta 2 min
+2026-11-01 19:36:23,671 INFO runner: exaone3.5-7.8b: 140/180, 1.9 s/call, 85.8 tok/s, eta 1 min
+2026-11-01 19:37:14,872 INFO runner: exaone3.5-7.8b: 160/180, 2.0 s/call, 85.9 tok/s, eta 1 min
+2026-11-01 19:37:50,310 INFO runner: exaone3.5-7.8b: 180/180, 1.9 s/call, 85.8 tok/s, eta 0 min
+ROBUST_DONE

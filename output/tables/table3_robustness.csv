@@ -1,5 +1,8 @@
 Check,β (pp),SE,95% CI,p,N,Models
 "Primary (greedy, 240 prompts)",-0.42,0.09,"[-0.59, -0.25]",0.0,23008,12
+"Temperature 0.7, 2 seeds (robust-60)",-0.17,0.16,"[-0.48, 0.13]",0.2624,11472,12
+"Greedy, robust-60 subset",-0.37,0.17,"[-0.71, -0.03]",0.0324,5752,12
+"No system prompt, greedy (robust-60)",-0.65,0.16,"[-0.98, -0.33]",0.0001,5712,12
 Only replies summing to exactly 100,-0.67,0.14,"[-0.95, -0.40]",0.0,12784,12
 Original 95-105 rule (A1),-0.33,0.12,"[-0.58, -0.09]",0.0068,13496,8
 Failures imputed as equal weights,-0.42,0.09,"[-0.59, -0.25]",0.0,23040,12
