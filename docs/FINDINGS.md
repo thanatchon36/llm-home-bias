@@ -35,3 +35,21 @@ Running log of what was done and seen, in order. Anything not in docs/PAP.md is 
 - Reference weights fetched (data/reference/): MSCI ACWI country weights from the SPDR MSCI ACWI UCITS ETF
   daily holdings (2026-10-29; MSCI's own factsheet lists only the top 5 countries, consistent within 0.7 pp);
   IMF WEO Oct-2026 NGDPD for 2025 (euro-area aggregate code EURO).
+
+## 2026-11-01 18:13 — Primary greedy run complete (Phase 2)
+
+- 2,880 replies (12 models × 240 prompts), 18:13. Throughput 48–94 tok/s; 1.4–3.3 s per reply incl. retries.
+- Refusal + parse failure ≤ 0.8% for every model → no model excluded under the 30% rule. Renormalised outside 95–105 (A1 `renorm_wide`): EuroLLM 82.5%, Mistral-7B 64.6%, Qwen2.5 45.4%, Qwen3 37.1%, others ≤ 30%.
+- **H1 not supported.** Pooled β = −0.42 pp (SE 0.09, clustered by prompt; wild template bootstrap 95% CI [−0.75, −0.09]). The sign is opposite to H1, and the magnitude is small relative to equal weight (12.5 pp).
+- By origin group: China +0.60 (SE 0.15), Europe −2.07 (0.13), Korea −0.40 (0.16), Thailand +0.07 (0.12), US −0.17 (0.26).
+- Per-model tilt: −3.5 pp (Mistral-NeMo) to +1.9 pp (OpenThaiGPT); 6 positive, 6 negative.
+- γ InvestorHome = +1.88 pp (0.21) and λ LanguageHome = +0.46 pp (0.13). The investor's stated residence is associated with ≈4× more weight shift than model origin.
+- **H2 not supported:** β = −1.02 pp (0.29; only 12 prompts and 12 clusters).
+- **H3 mixed:** Typhoon2 vs Llama-3.1 δ = −1.04 pp (0.26); OpenThaiGPT vs Qwen2.5 δ = +1.26 pp (0.27).
+- Cash: home-currency LPM β = −2.18 pp. USD is chosen in 80–97% of replies by every model. US models' "home share" (81–89%) is just the USD share.
+- Allocation levels: every model gives the US 8–23% (ACWI ≈ 65%) and gives China its largest or second-largest weight (14–23%).
+- **Post hoc diagnostic (not in the PAP; scratch only, not in results.json):**
+  - Models differ in how close they stay to equal weight. EuroLLM's slope on the other-origin mean allocation is 0.36; Phi-4's is 1.21.
+  - A near-equal-weight model mechanically gives less than others to popular markets. The Eurozone, China and the US are all above 12.5 pp on average.
+  - Adding model × market-popularity interactions to the primary equation gives β = +0.12 pp (SE 0.10, 95% CI [−0.08, 0.32]).
+  - Reading: the small negative pre-registered β partly reflects dispersion differences. Under either reading there is no positive home tilt.

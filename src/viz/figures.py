@@ -60,6 +60,15 @@ def save(fig: plt.Figure, out: Path, name: str, dpi: int = 300) -> None:
     log.info("figure %s", name)
 
 
+def takeaway(b: dict[str, float]) -> str:
+    """One-sentence title for the LinkedIn chart, chosen by the sign and CI of the pooled β (no hand-typed result)."""
+    if b["lo"] > 0:
+        return "On average, open-weight LLMs allocate more to their home stock market"
+    if b["hi"] < 0:
+        return "On average, open-weight LLMs allocate slightly less, not more, to their home stock market"
+    return "On average, open-weight LLMs do not allocate more to their home stock market"
+
+
 def fig_tilt(cfg: dict[str, Any], res: dict[str, Any], tilt: pd.DataFrame, out: Path, name: str = "fig1_home_tilt",
              linkedin: bool = False) -> None:
     meta = model_by_id(cfg)
@@ -98,7 +107,7 @@ def fig_tilt(cfg: dict[str, Any], res: dict[str, Any], tilt: pd.DataFrame, out: 
         footer(fig, "dots = mean over 240 prompts; bars = 95% prompt-bootstrap CI.",
                source=f"{len(ids)} open-weight LLMs, local 4-bit, greedy. github.com/<my-handle>/llm-home-bias", y=0.015)
     else:
-        ax.set_title("Do open-weight LLMs allocate more to their home equity market?", loc="left", pad=24)
+        ax.set_title("Home-market tilt of open-weight LLMs", loc="left", pad=24)
         ax.text(0, 1.02, head, transform=ax.transAxes, fontsize=8.5, color=MUTED)
         footer(fig, "Dots: mean over prompts of the model's weight on its home market minus the mean weight that "
                     "models from other origin groups give that market on the same prompt. Bars: 95% CI, cluster "
@@ -304,5 +313,5 @@ def make_all(cfg: dict[str, Any]) -> None:
     fig_finetune(cfg, res, base, out)
     fig_rates(cfg, pd.read_csv(tables / "rates_model.csv"), pd.read_csv(tables / "rates_model_language.csv"), out)
     li = dict(cfg)
-    li["_linkedin_title"] = cfg.get("linkedin_title", "Do open-weight LLMs favour their home stock market?")
+    li["_linkedin_title"] = takeaway(res["primary"]["home"])
     fig_tilt(li, res, tilt, out, name="fig_linkedin", linkedin=True)
