@@ -1,6 +1,8 @@
 ---
 pretty_name: LLM Home Bias — equity allocations from 12 open-weight models
-license: cc-by-4.0
+license: [cc-by-4.0, other]
+license_name: exaone-ai-model-license-1.1-nc
+license_link: https://huggingface.co/LGAI-EXAONE/EXAONE-3.5-7.8B-Instruct/blob/main/LICENSE
 language: [en, zh, fr, th]
 task_categories: [text-generation]
 tags: [llm-evaluation, bias, home-bias, finance, portfolio-allocation, open-weight, ollama, pre-registered]
@@ -67,24 +69,31 @@ There are 240 prompts, the full cross of 5 × 4 × 3 × 2 × 2:
 
 ## Models and licences
 
-Model outputs remain subject to the licence or terms of the model that generated them. The CC BY 4.0 licence above covers the prompt set, the parsed tables and the documentation.
+The CC BY 4.0 licence above covers the prompt set, the parsed tables and the documentation. Model outputs remain subject to the terms of the model that generated them. Those terms were read against the licence texts on 1 November 2026 (links in the table): eleven of the twelve models let their replies be published and reused, including commercially; the EXAONE replies are research-only and are not covered by CC BY 4.0 (see below).
 
 | model_id | Ollama tag | Developer | Origin | Licence |
 |---|---|---|---|---|
 | qwen3-8b | `qwen3:8b` (thinking off) | Alibaba (Qwen) | China | Apache-2.0 |
 | qwen2.5-7b | `qwen2.5:7b` | Alibaba (Qwen) | China | Apache-2.0 |
-| glm4-9b | `glm4:9b` | Zhipu AI / THUDM | China | GLM-4 licence |
-| llama3.1-8b | `llama3.1:8b` | Meta | United States | Llama 3.1 Community Licence |
-| gemma3-12b | `gemma3:12b` | Google | United States | Gemma Terms of Use |
+| glm4-9b | `glm4:9b` | Zhipu AI / THUDM | China | [glm-4-9b License](https://huggingface.co/zai-org/glm-4-9b-chat/blob/main/LICENSE) |
+| llama3.1-8b | `llama3.1:8b` | Meta | United States | [Llama 3.1 Community License](https://www.llama.com/llama3_1/license/) |
+| gemma3-12b | `gemma3:12b` | Google | United States | [Gemma Terms of Use](https://ai.google.dev/gemma/terms) |
 | phi4-14b | `phi4:14b` | Microsoft | United States | MIT |
 | mistral-7b | `mistral:7b` (v0.3) | Mistral AI | Europe | Apache-2.0 |
 | mistral-nemo-12b | `mistral-nemo:12b` | Mistral AI with NVIDIA | Europe | Apache-2.0 |
 | eurollm-9b | `hf.co/bartowski/EuroLLM-9B-Instruct-GGUF:Q4_K_M` | UTTER consortium | Europe | Apache-2.0 |
-| typhoon2-8b | `hf.co/Float16-cloud/llama3.1-typhoon2-8b-instruct-gguf:Q4_K_M` | SCB 10X | Thailand | Llama 3.1 Community Licence |
-| openthaigpt1.5-7b | `hf.co/mradermacher/openthaigpt1.5-7b-instruct-GGUF:Q4_K_M` | OpenThaiGPT | Thailand | Qwen licence |
-| exaone3.5-7.8b | `exaone3.5:7.8b` | LG AI Research | Korea | EXAONE AI Model Licence 1.1 – NC (non-commercial) |
+| typhoon2-8b | `hf.co/Float16-cloud/llama3.1-typhoon2-8b-instruct-gguf:Q4_K_M` | SCB 10X | Thailand | [Llama 3.1 Community License](https://www.llama.com/llama3_1/license/) |
+| openthaigpt1.5-7b | `hf.co/mradermacher/openthaigpt1.5-7b-instruct-GGUF:Q4_K_M` | OpenThaiGPT | Thailand | [Qwen License Agreement](https://huggingface.co/openthaigpt/openthaigpt1.5-7b-instruct/blob/main/LICENSE) |
+| exaone3.5-7.8b | `exaone3.5:7.8b` | LG AI Research | Korea | [EXAONE AI Model License Agreement 1.1 – NC](https://huggingface.co/LGAI-EXAONE/EXAONE-3.5-7.8B-Instruct/blob/main/LICENSE), research only |
 
-[VERIFY] Check the output-use terms for the Llama 3.1, Gemma, GLM-4 and EXAONE licences before any commercial use. The EXAONE replies may be used non-commercially only.
+What the licences say about the replies:
+
+- **Llama 3.1 Community License** (`llama3.1-8b`, `typhoon2-8b`): the licence governs the "Llama Materials" (weights, code, documentation), which this dataset does not contain, and Meta claims no rights in outputs. One condition carries over to users of the replies: an AI model created, trained or improved with Llama outputs must have "Llama" at the beginning of its name (Section 1.b.i). The Llama Acceptable Use Policy applies to use of the model.
+- **Gemma Terms of Use** (`gemma3-12b`): "Google claims no rights in Outputs you generate using Gemma" (Section 3.3). A model trained on Gemma outputs so that it performs like Gemma is a Model Derivative and carries the Gemma terms and Prohibited Use Policy (Section 1.1.e).
+- **glm-4-9b License** (`glm4-9b`): the licence covers the model weights and does not mention outputs. Academic use of the model is free; commercial use of the model requires a free registration with Zhipu AI, and products or services that use the model must display "Built with glm-4" (Section 2).
+- **Qwen License Agreement** (`openthaigpt1.5-7b`): no claim on outputs; a model trained or improved with Qwen outputs must display "Built with Qwen" or "Improved using Qwen" (Section 3.b); commercial products with more than 100 million monthly active users need a separate licence.
+- **Apache-2.0 and MIT** (`qwen3-8b`, `qwen2.5-7b`, `phi4-14b`, `mistral-7b`, `mistral-nemo-12b`, `eurollm-9b`): no terms on outputs.
+- **EXAONE AI Model License Agreement 1.1 – NC** (`exaone3.5-7.8b`): the outputs remain the property of LG Management Development Institute Co., Ltd. (Section 4.2). They may be used, modified and distributed for research purposes only; they must not be used commercially and must not be used to develop or improve other models (Section 3.1); any publication of results must cite the model's name and version and the EXAONE 3.5 technical report, arXiv:2412.04862 (Section 4.3). The `exaone3.5-7.8b` rows in `data/responses/`, `replies.parquet` and `panel.parquet` are therefore redistributed under that licence, not under CC BY 4.0. Drop them (`model_id != "exaone3.5-7.8b"`) before any commercial use and before using the replies as training data.
 
 ## Intended use and limitations
 

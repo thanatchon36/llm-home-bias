@@ -90,3 +90,15 @@ The user asked the agent to review the drafts itself at Checkpoint 3 ("checkpoin
 - All sections proofread; wording stays with "allocates more to" / "is associated with". No estimate changed; `tests/test_numbers.py` still passes.
 - The web version (`paper/web.py`) strips `@{}` column specs, `\addlinespace` and `\quad` so pandoc renders the three tables; numeric cells no longer wrap.
 - EuroLLM's developer in `config.yaml` corrected to the UTTER consortium.
+
+## 2026-11-01 22:49 — Licence review closes the [VERIFY] item
+
+Read against the licence texts (Llama 3.1 Community License; Gemma Terms of Use, last modified 1 April 2026; glm-4-9b License; EXAONE AI Model License Agreement 1.1-NC). The Ollama tags ship the same texts.
+
+- **Llama 3.1** (`llama3.1-8b`, `typhoon2-8b`): governs the Llama Materials, which the dataset does not contain; no rights claimed in outputs. Carried over to reusers: a model trained or improved with Llama outputs must be named "Llama…" (1.b.i).
+- **Gemma** (`gemma3-12b`): "Google claims no rights in Outputs" (3.3); a model trained on Gemma outputs to perform like Gemma is a Model Derivative (1.1.e).
+- **glm-4-9b** (`glm4-9b`): silent on outputs; the model is free for research, commercial use of the model needs a free registration, products built on it display "Built with glm-4".
+- **EXAONE** (`exaone3.5-7.8b`): outputs remain LG's property (4.2) and may be distributed for research only; no commercial use and no use to develop or improve other models (3.1); publications must cite the model and the EXAONE 3.5 report, arXiv:2412.04862 (4.3).
+- Also checked in passing: OpenThaiGPT 1.5 ships the Qwen License Agreement (no claim on outputs; "Built with Qwen" for models trained on them).
+
+Decision: keep the EXAONE replies for reproducibility, labelled research-only and excluded from CC BY 4.0 (HF card metadata `license: [cc-by-4.0, other]`), and cite the EXAONE 3.5 report in the paper (`\cite{exaone35}`).

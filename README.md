@@ -82,7 +82,7 @@ parsed replies and the regression panel in `data/processed/`, and the reference 
 holdings, IMF WEO GDP) in `data/reference/`. Everything is mirrored on
 [Hugging Face](https://huggingface.co/datasets/thanatchon36/llm-home-bias) and documented in the
 [dataset card](DATASET_CARD.md). Model outputs remain subject to the licence of the model that generated them;
-EXAONE replies may be used non-commercially only.
+the EXAONE replies are research-only and are not covered by CC BY 4.0 (see the licence notes there).
 
 ## Citation
 
@@ -102,7 +102,8 @@ See [`CITATION.cff`](CITATION.cff), or:
 ## License
 
 Code and text: [Apache-2.0](LICENSE). Prompt set, parsed tables and documentation: CC BY 4.0. Model outputs remain
-subject to each model's licence; see the [dataset card](DATASET_CARD.md).
+subject to each model's licence, summarised in the [dataset card](DATASET_CARD.md); the EXAONE-3.5 replies are
+research-only under the EXAONE AI Model License 1.1-NC and must not be used commercially or to train other models.
 
 *Views and errors are the author's own. This is an independent research note, not investment advice. The study was
 carried out with Claude (Anthropic) via Claude Code, working from the author's written brief.*
