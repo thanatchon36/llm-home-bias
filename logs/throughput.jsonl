@@ -12,3 +12,27 @@
 {"model_id": "phi4-14b", "decodings": ["greedy"], "subset": "pilot20", "calls": 20, "wall_s": 63.3, "eval_tokens": 2561, "tok_per_s": 49.0, "ts": "2026-11-01T09:15:09+00:00"}
 {"model_id": "exaone3.5-7.8b", "decodings": ["greedy"], "subset": "pilot20", "calls": 20, "wall_s": 46.1, "eval_tokens": 3842, "tok_per_s": 88.22, "ts": "2026-11-01T09:15:58+00:00"}
 {"model_id": "eurollm-9b", "decodings": ["greedy"], "subset": "pilot20", "calls": 20, "wall_s": 68.5, "eval_tokens": 4971, "tok_per_s": 75.85, "ts": "2026-11-01T09:17:27+00:00"}
+{"model_id": "qwen3-8b", "decodings": ["greedy"], "subset": null, "calls": 240, "wall_s": 591.9, "eval_tokens": 44451, "tok_per_s": 80.95, "ts": "2026-11-01T09:29:32+00:00"}
+{"model_id": "qwen2.5-7b", "decodings": ["greedy"], "subset": null, "calls": 240, "wall_s": 513.7, "eval_tokens": 42619, "tok_per_s": 90.57, "ts": "2026-11-01T09:38:11+00:00"}
+{"model_id": "glm4-9b", "decodings": ["greedy"], "subset": null, "calls": 240, "wall_s": 424.6, "eval_tokens": 32260, "tok_per_s": 79.56, "ts": "2026-11-01T09:45:21+00:00"}
+{"model_id": "llama3.1-8b", "decodings": ["greedy"], "subset": null, "calls": 240, "wall_s": 353.1, "eval_tokens": 28300, "tok_per_s": 86.43, "ts": "2026-11-01T09:51:20+00:00"}
+{"model_id": "gemma3-12b", "decodings": ["greedy"], "subset": null, "calls": 240, "wall_s": 641.3, "eval_tokens": 31202, "tok_per_s": 52.52, "ts": "2026-11-01T10:02:10+00:00"}
+{"model_id": "phi4-14b", "decodings": ["greedy"], "subset": null, "calls": 240, "wall_s": 622.3, "eval_tokens": 28031, "tok_per_s": 48.67, "ts": "2026-11-01T10:12:41+00:00"}
+{"model_id": "mistral-7b", "decodings": ["greedy"], "subset": null, "calls": 240, "wall_s": 741.9, "eval_tokens": 63822, "tok_per_s": 93.77, "ts": "2026-11-01T10:25:43+00:00"}
+{"model_id": "mistral-nemo-12b", "decodings": ["greedy"], "subset": null, "calls": 240, "wall_s": 575.8, "eval_tokens": 33576, "tok_per_s": 62.7, "ts": "2026-11-01T10:35:26+00:00"}
+{"model_id": "typhoon2-8b", "decodings": ["greedy"], "subset": null, "calls": 240, "wall_s": 494.7, "eval_tokens": 40411, "tok_per_s": 85.76, "ts": "2026-11-01T10:43:46+00:00"}
+{"model_id": "openthaigpt1.5-7b", "decodings": ["greedy"], "subset": null, "calls": 240, "wall_s": 460.8, "eval_tokens": 38888, "tok_per_s": 90.96, "ts": "2026-11-01T10:51:32+00:00"}
+{"model_id": "eurollm-9b", "decodings": ["greedy"], "subset": null, "calls": 240, "wall_s": 783.9, "eval_tokens": 57602, "tok_per_s": 76.65, "ts": "2026-11-01T11:04:42+00:00"}
+{"model_id": "exaone3.5-7.8b", "decodings": ["greedy"], "subset": null, "calls": 240, "wall_s": 501.6, "eval_tokens": 42075, "tok_per_s": 88.81, "ts": "2026-11-01T11:13:09+00:00"}
+{"model_id": "qwen3-8b", "decodings": ["nosys", "t07_s1", "t07_s2"], "subset": null, "calls": 180, "wall_s": 425.0, "eval_tokens": 32265, "tok_per_s": 81.28, "ts": "2026-11-01T11:20:20+00:00"}
+{"model_id": "qwen2.5-7b", "decodings": ["nosys", "t07_s1", "t07_s2"], "subset": null, "calls": 180, "wall_s": 337.9, "eval_tokens": 28620, "tok_per_s": 89.45, "ts": "2026-11-01T11:26:03+00:00"}
+{"model_id": "glm4-9b", "decodings": ["nosys", "t07_s1", "t07_s2"], "subset": null, "calls": 180, "wall_s": 354.2, "eval_tokens": 25885, "tok_per_s": 78.47, "ts": "2026-11-01T11:32:03+00:00"}
+{"model_id": "llama3.1-8b", "decodings": ["nosys", "t07_s1", "t07_s2"], "subset": null, "calls": 180, "wall_s": 269.3, "eval_tokens": 22112, "tok_per_s": 86.34, "ts": "2026-11-01T11:36:38+00:00"}
+{"model_id": "gemma3-12b", "decodings": ["nosys", "t07_s1", "t07_s2"], "subset": null, "calls": 180, "wall_s": 530.2, "eval_tokens": 25738, "tok_per_s": 52.26, "ts": "2026-11-01T11:45:37+00:00"}
+{"model_id": "phi4-14b", "decodings": ["nosys", "t07_s1", "t07_s2"], "subset": null, "calls": 180, "wall_s": 487.0, "eval_tokens": 21914, "tok_per_s": 48.3, "ts": "2026-11-01T11:53:52+00:00"}
+{"model_id": "mistral-7b", "decodings": ["nosys", "t07_s1", "t07_s2"], "subset": null, "calls": 180, "wall_s": 534.7, "eval_tokens": 45762, "tok_per_s": 93.7, "ts": "2026-11-01T12:02:52+00:00"}
+{"model_id": "mistral-nemo-12b", "decodings": ["nosys", "t07_s1", "t07_s2"], "subset": null, "calls": 180, "wall_s": 440.5, "eval_tokens": 25578, "tok_per_s": 60.82, "ts": "2026-11-01T12:10:19+00:00"}
+{"model_id": "typhoon2-8b", "decodings": ["nosys", "t07_s1", "t07_s2"], "subset": null, "calls": 180, "wall_s": 355.6, "eval_tokens": 28193, "tok_per_s": 83.4, "ts": "2026-11-01T12:16:20+00:00"}
+{"model_id": "openthaigpt1.5-7b", "decodings": ["nosys", "t07_s1", "t07_s2"], "subset": null, "calls": 180, "wall_s": 344.3, "eval_tokens": 28887, "tok_per_s": 87.44, "ts": "2026-11-01T12:22:10+00:00"}
+{"model_id": "eurollm-9b", "decodings": ["nosys", "t07_s1", "t07_s2"], "subset": null, "calls": 180, "wall_s": 578.4, "eval_tokens": 40277, "tok_per_s": 73.66, "ts": "2026-11-01T12:31:55+00:00"}
+{"model_id": "exaone3.5-7.8b", "decodings": ["nosys", "t07_s1", "t07_s2"], "subset": null, "calls": 180, "wall_s": 349.7, "eval_tokens": 28431, "tok_per_s": 85.85, "ts": "2026-11-01T12:37:50+00:00"}

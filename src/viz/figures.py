@@ -30,6 +30,7 @@ plt.rcParams.update({
     "font.family": "DejaVu Sans", "font.size": 9, "axes.edgecolor": MUTED, "axes.labelcolor": INK,
     "xtick.color": INK, "ytick.color": INK, "axes.spines.top": False, "axes.spines.right": False,
     "axes.titleweight": "bold", "axes.titlesize": 10, "figure.dpi": 100, "svg.fonttype": "none",
+    "svg.hashsalt": "llm-home-bias",  # deterministic SVG ids
 })
 
 
@@ -55,7 +56,7 @@ def footer(fig: plt.Figure, note: str, source: str = SOURCE, y: float = 0.01) ->
 
 def save(fig: plt.Figure, out: Path, name: str, dpi: int = 300) -> None:
     fig.savefig(out / f"{name}.png", dpi=dpi)
-    fig.savefig(out / f"{name}.svg")
+    fig.savefig(out / f"{name}.svg", metadata={"Date": None})
     plt.close(fig)
     log.info("figure %s", name)
 

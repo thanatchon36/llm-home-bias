@@ -1,10 +1,10 @@
 PY ?= .venv/bin/python
 
-.PHONY: all venv prompts test smoke pilot run robust parse estimate figures tables paper-assets paper clean
+.PHONY: all venv prompts test smoke pilot run robust parse estimate figures tables paper-assets check paper clean
 
 # From the cached responses in data/responses/: prompts -> tests -> parse -> estimate -> figures -> tables -> paper numbers.
 # No GPU needed; `make run` / `make robust` regenerate the responses (GPU, Ollama).
-all: prompts test parse estimate figures tables paper-assets
+all: prompts test parse estimate figures tables paper-assets check
 
 venv:
 	python3 -m venv .venv && .venv/bin/pip install -q -r requirements.txt
@@ -45,9 +45,13 @@ tables:
 paper-assets:
 	$(PY) -m src.pipeline paper
 
+# Numbers quoted in README / LinkedIn / Thai summary match the regenerated results.
+check:
+	$(PY) -m pytest -q tests/test_numbers.py
+
 # Build paper/paper.pdf (pinned Tectonic; needs network on first run for the binary and TeX bundle).
 paper: paper-assets
 	bash paper/build.sh
 
 clean:
-	rm -rf data/processed/*.parquet output/figures/*.png output/figures/*.svg output/tables/*
+	rm -f data/processed/panel.parquet data/processed/replies.parquet && rm -rf output/figures/*.png output/figures/*.svg output/tables/*
