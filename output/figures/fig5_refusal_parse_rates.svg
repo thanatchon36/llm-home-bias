@@ -209,7 +209,7 @@ L -3.5 0
       </g>
      </g>
      <g id="text_14">
-      <text style="font-size: 8px; font-family: 'Source Sans 3'; text-anchor: end; fill: #9b59b6" x="102.44" y="196.351023" transform="rotate(-0 102.44 196.351023)">Mistral-7B</text>
+      <text style="font-size: 8px; font-family: 'Source Sans 3'; text-anchor: end; fill: #cc79a7" x="102.44" y="196.351023" transform="rotate(-0 102.44 196.351023)">Mistral-7B</text>
      </g>
     </g>
     <g id="ytick_8">
@@ -219,7 +219,7 @@ L -3.5 0
       </g>
      </g>
      <g id="text_15">
-      <text style="font-size: 8px; font-family: 'Source Sans 3'; text-anchor: end; fill: #9b59b6" x="102.44" y="214.202626" transform="rotate(-0 102.44 214.202626)">Mistral-NeMo-12B</text>
+      <text style="font-size: 8px; font-family: 'Source Sans 3'; text-anchor: end; fill: #cc79a7" x="102.44" y="214.202626" transform="rotate(-0 102.44 214.202626)">Mistral-NeMo-12B</text>
      </g>
     </g>
     <g id="ytick_9">
@@ -229,7 +229,7 @@ L -3.5 0
       </g>
      </g>
      <g id="text_16">
-      <text style="font-size: 8px; font-family: 'Source Sans 3'; text-anchor: end; fill: #9b59b6" x="102.44" y="232.054229" transform="rotate(-0 102.44 232.054229)">EuroLLM-9B</text>
+      <text style="font-size: 8px; font-family: 'Source Sans 3'; text-anchor: end; fill: #cc79a7" x="102.44" y="232.054229" transform="rotate(-0 102.44 232.054229)">EuroLLM-9B</text>
      </g>
     </g>
     <g id="ytick_10">

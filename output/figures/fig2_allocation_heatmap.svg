@@ -101,7 +101,7 @@ L 256.842 220.5096
 L 211.356 220.5096 
 L 211.356 196.1568 
 z
-" clip-path="url(#p4a9799d5a0)" style="fill: none; stroke: #9b59b6; stroke-width: 1.8; stroke-linejoin: miter"/>
+" clip-path="url(#p4a9799d5a0)" style="fill: none; stroke: #cc79a7; stroke-width: 1.8; stroke-linejoin: miter"/>
    </g>
    <g id="patch_10">
     <path d="M 211.356 220.5096 
@@ -110,7 +110,7 @@ L 256.842 244.8624
 L 211.356 244.8624 
 L 211.356 220.5096 
 z
-" clip-path="url(#p4a9799d5a0)" style="fill: none; stroke: #9b59b6; stroke-width: 1.8; stroke-linejoin: miter"/>
+" clip-path="url(#p4a9799d5a0)" style="fill: none; stroke: #cc79a7; stroke-width: 1.8; stroke-linejoin: miter"/>
    </g>
    <g id="patch_11">
     <path d="M 211.356 244.8624 
@@ -119,7 +119,7 @@ L 256.842 269.2152
 L 211.356 269.2152 
 L 211.356 244.8624 
 z
-" clip-path="url(#p4a9799d5a0)" style="fill: none; stroke: #9b59b6; stroke-width: 1.8; stroke-linejoin: miter"/>
+" clip-path="url(#p4a9799d5a0)" style="fill: none; stroke: #cc79a7; stroke-width: 1.8; stroke-linejoin: miter"/>
    </g>
    <g id="patch_12">
     <path d="M 438.786 269.2152 
@@ -238,19 +238,19 @@ z
     <g id="ytick_7">
      <g id="line2d_15"/>
      <g id="text_15">
-      <text style="font-size: 8px; font-family: 'Source Sans 3'; text-anchor: end; fill: #9b59b6" x="116.884" y="212.3332" transform="rotate(-0 116.884 212.3332)">Mistral-7B</text>
+      <text style="font-size: 8px; font-family: 'Source Sans 3'; text-anchor: end; fill: #cc79a7" x="116.884" y="212.3332" transform="rotate(-0 116.884 212.3332)">Mistral-7B</text>
      </g>
     </g>
     <g id="ytick_8">
      <g id="line2d_16"/>
      <g id="text_16">
-      <text style="font-size: 8px; font-family: 'Source Sans 3'; text-anchor: end; fill: #9b59b6" x="116.884" y="236.686" transform="rotate(-0 116.884 236.686)">Mistral-NeMo-12B</text>
+      <text style="font-size: 8px; font-family: 'Source Sans 3'; text-anchor: end; fill: #cc79a7" x="116.884" y="236.686" transform="rotate(-0 116.884 236.686)">Mistral-NeMo-12B</text>
      </g>
     </g>
     <g id="ytick_9">
      <g id="line2d_17"/>
      <g id="text_17">
-      <text style="font-size: 8px; font-family: 'Source Sans 3'; text-anchor: end; fill: #9b59b6" x="116.884" y="261.0388" transform="rotate(-0 116.884 261.0388)">EuroLLM-9B</text>
+      <text style="font-size: 8px; font-family: 'Source Sans 3'; text-anchor: end; fill: #cc79a7" x="116.884" y="261.0388" transform="rotate(-0 116.884 261.0388)">EuroLLM-9B</text>
      </g>
     </g>
     <g id="ytick_10">

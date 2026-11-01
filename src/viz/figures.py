@@ -26,8 +26,8 @@ from src.utils import ROOT, model_by_id
 log = logging.getLogger(__name__)
 logging.getLogger("fontTools").setLevel(logging.WARNING)  # font subsetting is chatty at INFO
 
-ORIGIN_COLOURS = {"China": "#D55E00", "United States": "#0072B2", "Europe": "#9B59B6", "Thailand": "#009E73",
-                  "Korea": "#E69F00"}
+ORIGIN_COLOURS = {"China": "#D55E00", "United States": "#0072B2", "Europe": "#CC79A7", "Thailand": "#009E73",
+                  "Korea": "#E69F00"}  # Okabe–Ito; adjacent pairs pass the colour-vision-deficiency check
 ORIGIN_ORDER = ["China", "United States", "Europe", "Thailand", "Korea"]
 INK, MUTED, GRID, BAND = "#1f2328", "#59636e", "#d0d7de", "#eceff3"
 SOURCE = ("Source: author's experiment; open-weight models run locally with Ollama (4-bit Q4_K_M), "

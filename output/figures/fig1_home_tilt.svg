@@ -252,7 +252,7 @@ L -3.5 0
       </g>
      </g>
      <g id="text_15">
-      <text style="font-size: 8.5px; font-family: 'Source Sans 3'; text-anchor: end; fill: #9b59b6" x="153.704" y="230.228735" transform="rotate(-0 153.704 230.228735)">Mistral-7B  (Eurozone)</text>
+      <text style="font-size: 8.5px; font-family: 'Source Sans 3'; text-anchor: end; fill: #cc79a7" x="153.704" y="230.228735" transform="rotate(-0 153.704 230.228735)">Mistral-7B  (Eurozone)</text>
      </g>
     </g>
     <g id="ytick_8">
@@ -262,7 +262,7 @@ L -3.5 0
       </g>
      </g>
      <g id="text_16">
-      <text style="font-size: 8.5px; font-family: 'Source Sans 3'; text-anchor: end; fill: #9b59b6" x="153.704" y="254.448606" transform="rotate(-0 153.704 254.448606)">Mistral-NeMo-12B  (Eurozone)</text>
+      <text style="font-size: 8.5px; font-family: 'Source Sans 3'; text-anchor: end; fill: #cc79a7" x="153.704" y="254.448606" transform="rotate(-0 153.704 254.448606)">Mistral-NeMo-12B  (Eurozone)</text>
      </g>
     </g>
     <g id="ytick_9">
@@ -272,7 +272,7 @@ L -3.5 0
       </g>
      </g>
      <g id="text_17">
-      <text style="font-size: 8.5px; font-family: 'Source Sans 3'; text-anchor: end; fill: #9b59b6" x="153.704" y="278.668477" transform="rotate(-0 153.704 278.668477)">EuroLLM-9B  (Eurozone)</text>
+      <text style="font-size: 8.5px; font-family: 'Source Sans 3'; text-anchor: end; fill: #cc79a7" x="153.704" y="278.668477" transform="rotate(-0 153.704 278.668477)">EuroLLM-9B  (Eurozone)</text>
      </g>
     </g>
     <g id="ytick_10">
@@ -359,17 +359,17 @@ L 249.548033 201.758865
    <g id="line2d_39">
     <path d="M 383.803437 225.978735 
 L 422.389848 225.978735 
-" clip-path="url(#p015074532b)" style="fill: none; stroke: #9b59b6; stroke-width: 1.8; stroke-linecap: round"/>
+" clip-path="url(#p015074532b)" style="fill: none; stroke: #cc79a7; stroke-width: 1.8; stroke-linecap: round"/>
    </g>
    <g id="line2d_40">
     <path d="M 176.256 250.198606 
 L 207.493537 250.198606 
-" clip-path="url(#p015074532b)" style="fill: none; stroke: #9b59b6; stroke-width: 1.8; stroke-linecap: round"/>
+" clip-path="url(#p015074532b)" style="fill: none; stroke: #cc79a7; stroke-width: 1.8; stroke-linecap: round"/>
    </g>
    <g id="line2d_41">
     <path d="M 209.582724 274.418477 
 L 244.097453 274.418477 
-" clip-path="url(#p015074532b)" style="fill: none; stroke: #9b59b6; stroke-width: 1.8; stroke-linecap: round"/>
+" clip-path="url(#p015074532b)" style="fill: none; stroke: #cc79a7; stroke-width: 1.8; stroke-linecap: round"/>
    </g>
    <g id="line2d_42">
     <path d="M 254.229713 298.638348 
@@ -450,7 +450,7 @@ z
    </g>
    <g id="line2d_51">
     <defs>
-     <path id="m1ae32a56d8" d="M 0 3 
+     <path id="m77b75089df" d="M 0 3 
 C 0.795609 3 1.55874 2.683901 2.12132 2.12132 
 C 2.683901 1.55874 3 0.795609 3 0 
 C 3 -0.795609 2.683901 -1.55874 2.12132 -2.12132 
@@ -463,17 +463,17 @@ z
 " style="stroke: #ffffff; stroke-width: 0.8"/>
     </defs>
     <g clip-path="url(#p015074532b)">
-     <use xlink:href="#m1ae32a56d8" x="403.685486" y="225.978735" style="fill: #9b59b6; stroke: #ffffff; stroke-width: 0.8"/>
+     <use xlink:href="#m77b75089df" x="403.685486" y="225.978735" style="fill: #cc79a7; stroke: #ffffff; stroke-width: 0.8"/>
     </g>
    </g>
    <g id="line2d_52">
     <g clip-path="url(#p015074532b)">
-     <use xlink:href="#m1ae32a56d8" x="191.668816" y="250.198606" style="fill: #9b59b6; stroke: #ffffff; stroke-width: 0.8"/>
+     <use xlink:href="#m77b75089df" x="191.668816" y="250.198606" style="fill: #cc79a7; stroke: #ffffff; stroke-width: 0.8"/>
     </g>
    </g>
    <g id="line2d_53">
     <g clip-path="url(#p015074532b)">
-     <use xlink:href="#m1ae32a56d8" x="227.55574" y="274.418477" style="fill: #9b59b6; stroke: #ffffff; stroke-width: 0.8"/>
+     <use xlink:href="#m77b75089df" x="227.55574" y="274.418477" style="fill: #cc79a7; stroke: #ffffff; stroke-width: 0.8"/>
     </g>
    </g>
    <g id="line2d_54">
