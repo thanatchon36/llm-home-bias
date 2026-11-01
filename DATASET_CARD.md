@@ -14,7 +14,7 @@ configs:
 
 # Dataset card: LLM Home Bias
 
-Raw and parsed replies from 12 open-weight instruction-tuned language models. Each model was asked to split an international equity portfolio across eight markets: United States, China, Eurozone, Japan, United Kingdom, India, South Korea and Thailand. The same 240 factorial prompts went to every model. The data accompany the research note *Do Open-Source LLMs Have a Home Bias? Investment Advice from Chinese, American, European and Thai Models* (repository: https://github.com/thanatchon36/llm-home-bias). The design is pre-registered in `docs/PAP.md`.
+Raw and parsed replies from 12 open-weight instruction-tuned language models. Each model was asked to split an international equity portfolio across eight markets: United States, China, Eurozone, Japan, United Kingdom, India, South Korea and Thailand. The same 240 factorial prompts went to every model. The data accompany the research note *Do Open-Source LLMs Have a Home Bias? Investment Advice from Chinese, American, European and Thai Models* (repository: https://github.com/thanatchon36/llm-home-bias; read it at https://thanatchon36.github.io/llm-home-bias/; archived with DOI [10.5281/zenodo.23861180](https://doi.org/10.5281/zenodo.23861180)). The design is pre-registered in `docs/PAP.md`.
 
 ## Contents
 
@@ -97,4 +97,15 @@ The data are meant for research on the geographic tilt and behaviour of language
 
 ## Citation
 
-DOI: [10.5281/zenodo.23861180](https://doi.org/10.5281/zenodo.23861180) (all versions). See `CITATION.cff`.
+The code, prompts, replies and research note are archived on Zenodo under DOI [10.5281/zenodo.23861180](https://doi.org/10.5281/zenodo.23861180), which always resolves to the latest version. See `CITATION.cff` in the repository, or:
+
+```bibtex
+@techreport{chongmankhong2026homebias,
+  author = {Chongmankhong, Thanatchon},
+  title  = {Do Open-Source {LLMs} Have a Home Bias? Investment Advice from Chinese, American, European and Thai Models},
+  year   = {2026},
+  type   = {Research note},
+  doi    = {10.5281/zenodo.23861180},
+  url    = {https://doi.org/10.5281/zenodo.23861180}
+}
+```
